@@ -13,12 +13,12 @@ class Time():
     def __init__(self):
         pass
 
-    def available(timezone):
+    def available(self,timezone):
         if(timezone=='EST'):
             temp = time.ctime(monthtime+renametime-5*3600)
         if(timezone=='PST'):
             temp = time.ctime(monthtime+renametime-8*3600)
 
-    def available():
+    def available(self):
         temp = time.ctime(monthtime+renametime)
         return temp
