@@ -35,10 +35,15 @@ async def on_message(message):
         await client.send_message(message.channel, 'Done sleeping')
 
     elif message.content.startswith('!available EST'):
-        await client.send_message(message.channel,'Rename available at'+Time.available('EST')+' EST')     
+        await client.send_message(message.channel,'Rename available at '+Time.available('EST')+' EST')
         
+    elif message.content.startswith('!available PST'):
+        await client.send_message(message.channel,'Rename available at '+Time.available('PST')+' PST')
+
     elif message.content.startswith('!available'):
-        temp = time.ctime(RENAMETIME+CDDUR)
-        await client.send_message(message.channel,'Rename available at '+temp+'UTC')
+        await client.send_message(message.channel,'Rename available at '+Time.available('UTC')+' UTC')
+
+    elif message.content.startswith("cv"):
+        await client.send_message(message.channel,'REEEEEEEEEE')
 
 client.run(token)
