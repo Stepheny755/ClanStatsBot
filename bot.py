@@ -2,13 +2,14 @@ import discord
 import asyncio
 import time
 
-TOKEN = 'NTM3NDQ4MzA0MDM2ODA2NzAx.DylZ2w.czaCIm0N0qoA9eNgI2EC8jLNGV4'
+from stats import Stats
+from clan import Clan,Time
+
+token = open('token.txt',"r").read().strip()
+print(token)
+
 RENAMETIME=1547524924
 CDDUR = 2592000
-
-description = ''
-
-bot = commands.Bot(command_prefix='!',description=description)
 
 client = discord.Client()
 
@@ -40,4 +41,4 @@ async def on_message(message):
 
 
 
-client.run(TOKEN)
+client.run(token)
