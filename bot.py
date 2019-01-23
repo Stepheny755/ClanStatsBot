@@ -34,11 +34,11 @@ async def on_message(message):
         await asyncio.sleep(5)
         await client.send_message(message.channel, 'Done sleeping')
 
+    elif message.content.startswith('!available ST'):
+        await client.send_message(message.channel,'Rename available at'+Time.available('EST')+' EST')     
+        
     elif message.content.startswith('!available'):
         temp = time.ctime(RENAMETIME+CDDUR)
         await client.send_message(message.channel,'Rename available at '+temp+'UTC')
-
-    elif message.content.startswith('!availableEST'):
-        await client.send_message(message.channel,'Rename available at'+Time.available('EST')+' EST')
 
 client.run(token)
