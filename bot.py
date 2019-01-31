@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import time
+import sys
 
 from stats import Stats
 from clan import Clan,Time
@@ -32,7 +33,7 @@ async def on_message(message):
 
     elif message.content.startswith('!sleep'):
         await asyncio.sleep(5)
-        await client.send_message(message.channel, 'Done sleeping')
+        await client.send(message.channel, 'Done sleeping')
 
     elif message.content.startswith('!available EST'):
         await client.send_message(message.channel,'Rename available at '+Time.available('EST')+' EST')
@@ -43,7 +44,20 @@ async def on_message(message):
     elif message.content.startswith('!available'):
         await client.send_message(message.channel,'Rename available at '+Time.available('UTC')+' UTC')
 
-    elif message.content.startswith("cv"):
-        await client.send_message(message.channel,'REEEEEEEEEE')
+    #elif message.content.find("cv"):
+        #await client.send_message(message.channel,'ree')
+  
+    #elif(int(message.content.find('cv'))>=0):
+        #print(str(message.channel)+": "+message.content+" "+str(message.timestamp))
+        #await client.send_message(message.channel,'ree')
+
+    elif(message.content.startswith('cv')):
+        await client.send_message(message.channel,'reee')
+
+    elif(message.content.startswith('!stop')):
+        exit()
+        sys.exit()
+    
+    print(str(message.channel)+": "+message.content)
 
 client.run(token)
