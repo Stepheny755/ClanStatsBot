@@ -10,6 +10,7 @@ class Data():
     def __init__(self):
         pass
 
+    
 
     def testread(self,filename):
         rdarr = []
@@ -22,10 +23,16 @@ class Data():
             out = csv.writer(w)
             out.writerows(output)
     
-
-
-
-
+    def read(self,filename):
+        rdarr = []
+        with open(os.path.join(adir,filename).strip(),'r') as r:
+            rdarr = list(csv.reader(r,delimiter=','))
+        return rdarr
+ 
+    def write(self,filename,output):
+        with open(os.path.join(adir,filename).strip(),'w+') as w:
+            out = csv.writer(w)
+            out.writerows(output)
 
 
 if(__name__=="__main__"):
