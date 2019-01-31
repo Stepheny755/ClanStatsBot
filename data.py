@@ -3,7 +3,7 @@ import json
 import csv
 import os
 
-#dir = "Data"
+dir = "Data/testdata"
 
 class Data():
     def __init__(self):
@@ -11,14 +11,10 @@ class Data():
 
 
     def read(self,filename):
-        with open(filename,'r') as f: #os.path.join(dir,filename).strip(),'r') as f:
-            print(f)
+        with open(os.path.join(dir,filename).strip(),'r') as f:
             input = csv.reader(f,delimiter=',')
-            print(input)
             for row in input:
                 print(row)
-                print(', '.join(row))
-                print(input)
 
 
 
