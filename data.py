@@ -7,10 +7,11 @@ tdir = "Data/testdata"
 adir = "Data"
 
 class Data():
-    def __init__(self):
-        pass
 
-    
+    name = ''
+
+    def __init__(self,inp):
+        self.name = inp
 
     def testread(self,filename):
         rdarr = []
@@ -37,9 +38,9 @@ class Data():
 
 if(__name__=="__main__"):
 
-    d = Data()
-    d.write('test1.csv',[['jacky','cool'],['jacky','smart']])
-    c = d.read('Book1.csv')
+    d = Data('MIA')
+    d.testwrite('test1.csv',[['jacky','cool'],['jacky','smart']])
+    c = d.testread('Book1.csv')
     for i in c:
         for z in i:
             print(z)

@@ -7,7 +7,7 @@ renametime = 1547524924
 class Clan():
 
     def __init__(self):
-        pass        
+        pass
 
 
 
