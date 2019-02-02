@@ -1,4 +1,5 @@
 import numpy as np
+import json,requests
 
 #TODO:
 #Pull API Data for players from WG API
@@ -6,5 +7,38 @@ import numpy as np
 #Token?
 
 class API():
-    def __init__():
-        pass
+
+    ID = ''
+    claninfoep = 'https://api.worldofwarships.com/wows/clans/info/'
+    clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
+    accountep = 'https://api.worldofwarships.com/wows/account/info/'
+
+    def __init__(self):
+        self.ID=open('ID.txt',"r").read().strip()
+    
+    def getClanMembers(self,name):
+        
+        data={'application_id':self.ID}
+        
+
+    def getClanID(self,name):
+        data={'application_id':self.ID,'search':name.strip()}
+        r = requests.post(self.clanlistep,data)
+        return json.loads(r.text)['data'][0]['clan_id']
+
+    def getClanTag(self,ID):
+        data={'application_id':self.ID,'clan_id':ID}
+        r = requests.post(self.claninfoep,data)
+        return json.loads(r.text)['data'][ID]['tag']
+
+    def getClanName(self,ID):
+        data={'application_id':self.ID,'clan_id':ID}
+        r = requests.post(self.claninfoep,data)
+        return json.loads(r.text)['data'][ID]['name']
+
+if(__name__=="__main__"):
+    a = API()
+    print(a.ID)
+    print(a.getClanID('MIA-E'))
+    print(a.getClanTag('1000044001'))
+    print(a.getClanName('1000044001'))

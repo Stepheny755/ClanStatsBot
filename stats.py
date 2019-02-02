@@ -1,12 +1,36 @@
-
-
+import numpy as np
 
 class Stats():
     def __init__(self):
         print("works")
 
-    def calculatePR(dmg,wins,frags):
-        dmgratio = dmg/expecteddmg
+    expectedDmg = 63330
+    expectedWR = 49.45
+    Battles = 2526388
+    expectedWins = 0
+    expectedKills = 0.81
+
+    def calculatePR(self,dmg,kills,Wins): #player): #player is an object of Player()
         
 
+        self.expectedWins = (self.expectedWR/100)*self.Battles
 
+        print(self.expectedWins)
+
+        rDmg = dmg/self.expectedDmg
+        rWR = Wins/self.expectedWR
+        rKills = kills/self.expectedKills
+
+        nDmg = max(0,(rDmg-0.4)/(1-0.4))
+        nWR = max(0,(rWR-0.7)/(1-0.7))
+        nKills = max(0,(rKills-0.1)/(1-0.1))
+
+        return (700*nDmg + 300*nKills + 150*nWR)
+
+
+if(__name__=="__main__"):
+    a = float(input("dmg: "))
+    b = float(input("kills: "))
+    c = float(input("wr: "))
+    d = Stats()
+    print(d.calculatePR(a,b,c))
