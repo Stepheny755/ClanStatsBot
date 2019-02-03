@@ -30,7 +30,7 @@ class API():
     def getPlayerStats(self,ID):
         data={'application_id':self.ID,'account_id':ID}
         r = requests.post(self.accinfoep,data)
-        return json.loads(r.text)['data']
+        return json.loads(r.text)['data'][ID]
     
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
