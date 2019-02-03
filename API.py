@@ -53,5 +53,5 @@ if(__name__=="__main__"):
     print(a.getClanID('MIA-E'))
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
-    print(a.getPlayerStats(a.getPlayerID))
+    print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     
