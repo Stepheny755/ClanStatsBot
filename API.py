@@ -1,5 +1,6 @@
 import numpy as np
 import json,requests
+import urllib.request
 
 #TODO:
 #Pull API Data for players from WG API
@@ -13,6 +14,10 @@ class API():
     clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
     accinfoep = 'https://api.worldofwarships.com/wows/account/info/'
     acclistep = 'https://api.worldofwarships.com/wows/account/list/'
+    
+    wowsnumep = 'https://wows-numbers.com/personal/rating/expected/json/'
+    #Data for expected values used to calculate PR pulled 
+    #from the official wows-numbers website: https://wows-numbers.com
 
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
@@ -47,6 +52,14 @@ class API():
         r = requests.post(self.claninfoep,data)
         return json.loads(r.text)['data'][str(ID)]['name']
 
+    def expectedValues(self):
+        r = urllib.request.urlopen(self.wowsnumep)
+        print(r)
+        data = json.loads(response.read())
+        print(r)
+        print(data)
+        return data
+
 if(__name__=="__main__"):
     a = API()
     print(a.ID)
@@ -54,4 +67,5 @@ if(__name__=="__main__"):
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
     print(a.getPlayerStats(a.getPlayerID('Modulatus')))
+    print(a.expectedValues())
     
