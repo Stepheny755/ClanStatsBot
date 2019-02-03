@@ -11,21 +11,27 @@ class API():
     ID = ''
     claninfoep = 'https://api.worldofwarships.com/wows/clans/info/'
     clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
-    accountep = 'https://api.worldofwarships.com/wows/account/info/'
+    accinfoep = 'https://api.worldofwarships.com/wows/account/info/'
+    acclistep = 'https://api.worldofwarships.com/wows/account/list/'
 
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
     
     def getClanMembers(self,name):
         data={'application_id':self.ID,'search':name.strip()}
-        r = requests.post(self.
-
-    def getPlayerName(self,ID):
-
+        r = requests.post(self.acclistep,data)
+        return json.loads(r.text)['data'][0]['account_id']
 
     def getPlayerID(self,name):
-        data={'application_id':self.ID}
+        data={'application_id':self.ID,'search':name.strip()}
+        r = requests.post(self.acclistep,data)
+        return json.loads(r.text)['data'][0]['account_id']
 
+    def getPlayerStats(self,ID):
+        data={'application_id':self.ID,'search':name.strip()}
+        r = requests.post(self.accinfoep,data)
+        return json.loads(r.text)['data'][ID]
+    
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
         r = requests.post(self.clanlistep,data)
@@ -47,3 +53,5 @@ if(__name__=="__main__"):
     print(a.getClanID('MIA-E'))
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
+    print(a.getPlayerStats(a.getPlayerID)
+    
