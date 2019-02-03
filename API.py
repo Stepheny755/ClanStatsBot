@@ -40,12 +40,12 @@ class API():
     def getClanTag(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
         r = requests.post(self.claninfoep,data)
-        return json.loads(r.text)['data'][ID]['tag']
+        return json.loads(r.text)['data'][str(ID)]['tag']
 
     def getClanName(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
         r = requests.post(self.claninfoep,data)
-        return json.loads(r.text)['data'][ID]['name']
+        return json.loads(r.text)['data'][str(ID)]['name']
 
 if(__name__=="__main__"):
     a = API()
