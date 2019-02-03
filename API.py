@@ -53,9 +53,9 @@ class API():
         return json.loads(r.text)['data'][str(ID)]['name']
 
     def expectedValues(self):
-        r = urllib.request.urlopen(self.wowsnumep)
+        r = requests.get(self.wowsnumep)
         print(r)
-        data = json.loads(response.read())
+        data = json.loads(r.text)
         print(r)
         print(data)
         return data
