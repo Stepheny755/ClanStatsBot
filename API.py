@@ -17,9 +17,14 @@ class API():
         self.ID=open('ID.txt',"r").read().strip()
     
     def getClanMembers(self,name):
-        
+        data={'application_id':self.ID,'search':name.strip()}
+        r = requests.post(self.
+
+    def getPlayerName(self,ID):
+
+
+    def getPlayerID(self,name):
         data={'application_id':self.ID}
-        
 
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
