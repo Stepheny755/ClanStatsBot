@@ -28,7 +28,7 @@ class API():
         return json.loads(r.text)['data'][0]['account_id']
 
     def getPlayerStats(self,ID):
-        data={'application_id':self.ID,'search':name.strip()}
+        data={'application_id':self.ID,'account_id':ID}
         r = requests.post(self.accinfoep,data)
         return json.loads(r.text)['data'][ID]
     
