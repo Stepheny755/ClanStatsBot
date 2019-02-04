@@ -33,7 +33,7 @@ class Stats():
         dt = Data()
         api = API()
 
-
+        temp = api.expectedValues()
 
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
