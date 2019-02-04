@@ -30,7 +30,8 @@ class Stats():
         return (700*nDmg + 300*nKills + 150*nWR)
 
     def saveExpValues():
-        pass
+        dt = Data()
+        api = API()
 
 
 
@@ -40,4 +41,5 @@ if(__name__=="__main__"):
     #c = float(input("wr: "))
     #d = Stats()
     #print(d.calculatePR(a,b,c))
-
+    d = Stats()
+    print(d.saveExpValues())
