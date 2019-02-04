@@ -9,9 +9,9 @@ All the data used in this bot is either retrieved from the Wargaming API for Wor
 ## Structure
 
 * bot.py
-  * clan.py
   * stats.py
     * data.py
     * API.py
+  * clan.py
   * player.py
 * util.py
