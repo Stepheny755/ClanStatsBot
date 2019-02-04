@@ -19,8 +19,11 @@ class Data():
             rdarr = list(csv.reader(r,delimiter=','))
         return rdarr
  
-    def testwrite(self,filename,output):
-        with open(os.path.join(tdir,filename).strip(),'w+') as w:
+    def testwrite(self,relativepath,filename,output):
+        temppath = os.path.join(tdir,relativepath).strip()
+        if not os.path.exists(temppath):
+            os.makedirs(temppath)
+        with open(os.path.join(temppath,filename).strip(),'w+') as w:
             out = csv.writer(w)
             out.writerows(output)
     
@@ -30,8 +33,11 @@ class Data():
             rdarr = list(csv.reader(r,delimiter=','))
         return rdarr
  
-    def write(self,filename,output):
-        with open(os.path.join(adir,filename).strip(),'w+') as w:
+    def write(self,relativepath,filename,output):
+        temppath = os.path.join(adir,relativepath).strip()
+        if not os.path.exists(temppath):
+            os.makedirs(temppath)
+        with open(os.path.join(temppath,filename).strip(),'w+') as w:
             out = csv.writer(w)
             out.writerows(output)
 
@@ -43,7 +49,7 @@ class Data():
 if(__name__=="__main__"):
 
     d = Data('MIA')
-    d.testwrite('test1.csv',[['jacky','cool'],['jacky','smart']])
+    d.testwrite('test','test1.csv',[['jacky','cool'],['jacky','smart']])
     c = d.testread('Book1.csv')
     print(c)
     for i in c:
