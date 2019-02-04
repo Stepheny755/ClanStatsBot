@@ -29,7 +29,7 @@ class Stats():
 
         return (700*nDmg + 300*nKills + 150*nWR)
 
-    def saveExpValues():
+    def saveExpValues(self):
         dt = Data()
         api = API()
 
