@@ -1,3 +1,5 @@
+from data import Data
+from API import API
 
 class Update():
     def saveExpValues(self):
@@ -30,4 +32,5 @@ class Update():
 
 
 if(__name__=="__main__"):
- 
+    u = Update()
+    u.saveExpValues()
