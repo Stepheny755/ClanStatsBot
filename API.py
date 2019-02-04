@@ -1,3 +1,4 @@
+
 import numpy as np
 import json,requests
 import urllib.request
@@ -14,7 +15,8 @@ class API():
     clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
     accinfoep = 'https://api.worldofwarships.com/wows/account/info/'
     acclistep = 'https://api.worldofwarships.com/wows/account/list/'
-    
+    pediaep = 
+
     wowsnumep = 'https://wows-numbers.com/personal/rating/expected/json/'
     #Data for expected values used to calculate PR pulled 
     #from the official wows-numbers website: https://wows-numbers.com
@@ -52,12 +54,13 @@ class API():
         r = requests.post(self.claninfoep,data)
         return json.loads(r.text)['data'][str(ID)]['name']
 
+    def getShipName(self,ID):
+        data 
+
+
     def expectedValues(self):
         r = requests.get(self.wowsnumep)
-        print(r)
         data = json.loads(r.text)
-        print(r)
-        print(data)
         return data
 
 if(__name__=="__main__"):
@@ -67,5 +70,5 @@ if(__name__=="__main__"):
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
     print(a.getPlayerStats(a.getPlayerID('Modulatus')))
-    print(a.expectedValues())
+    #print(a.expectedValues())
     
