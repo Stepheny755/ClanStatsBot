@@ -12,8 +12,9 @@ If you would like to copy the source code, you can [generate your own Wargamimg 
 
 * bot.py
   * stats.py
-    * data.py
-    * API.py
   * clan.py
   * player.py
+  
 * util.py
+  * data.py
+  * API.py
