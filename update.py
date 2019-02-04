@@ -13,7 +13,7 @@ class Update():
         for shipid,shipdata in temp['data'].items():
             lst = []
             lst.append(shipid)
-            print(shipid)
+            print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
             name = api.getShipName(shipid)
             if name is not None:
                 lst.append(name)
