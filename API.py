@@ -15,7 +15,7 @@ class API():
     clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
     accinfoep = 'https://api.worldofwarships.com/wows/account/info/'
     acclistep = 'https://api.worldofwarships.com/wows/account/list/'
-    pediaep = 
+    pediaep = 'https://api.worldofwarships.com/wows/encyclopedia/ships/'
 
     wowsnumep = 'https://wows-numbers.com/personal/rating/expected/json/'
     #Data for expected values used to calculate PR pulled 
@@ -55,8 +55,9 @@ class API():
         return json.loads(r.text)['data'][str(ID)]['name']
 
     def getShipName(self,ID):
-        data 
-
+        data={'application_id':self.ID,'ship_id':ID}
+        r = requests.post(self.pediaep,data)
+        return json.loads(r.text)['data'][str(ID)]['name']
 
     def expectedValues(self):
         r = requests.get(self.wowsnumep)
@@ -71,4 +72,4 @@ if(__name__=="__main__"):
     print(a.getClanName('1000044001'))
     print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.expectedValues())
-    
+    print(a.getShipNAme(3760109552))
