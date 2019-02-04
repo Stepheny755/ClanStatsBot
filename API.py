@@ -72,4 +72,4 @@ if(__name__=="__main__"):
     print(a.getClanName('1000044001'))
     print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.expectedValues())
-    print(a.getShipNAme(3760109552))
+    print(a.getShipName(3760109552))

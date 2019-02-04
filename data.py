@@ -41,6 +41,7 @@ if(__name__=="__main__"):
     d = Data('MIA')
     d.testwrite('test1.csv',[['jacky','cool'],['jacky','smart']])
     c = d.testread('Book1.csv')
+    print(c)
     for i in c:
         for z in i:
             print(z)

@@ -1,24 +1,26 @@
 import numpy as np
 
+from API import API
+from data import Data
+
 class Stats():
     def __init__(self):
         print("works")
 
-    expectedDmg = 63330
-    expectedWR = 49.45
-    Battles = 2526388
+    expectedDmg = 12975.9242622
+    expectedWR = 47.8895036
     expectedWins = 0
-    expectedKills = 0.81
+    expectedKills = 0.535497704918
 
-    def calculatePR(self,dmg,kills,Wins): #player): #player is an object of Player()
+    def calculatePR(self,dmg,kills,WR): #player): #player is an object of Player()
         
 
-        self.expectedWins = (self.expectedWR/100)*self.Battles
+        #self.expectedWins = (self.expectedWR/100)*self.Battles
 
-        print(self.expectedWins)
+        #print(self.expectedWins)
 
         rDmg = dmg/self.expectedDmg
-        rWR = Wins/self.expectedWR
+        rWR = WR/self.expectedWR
         rKills = kills/self.expectedKills
 
         nDmg = max(0,(rDmg-0.4)/(1-0.4))
@@ -27,10 +29,15 @@ class Stats():
 
         return (700*nDmg + 300*nKills + 150*nWR)
 
+    def saveExpValues():
+        pass
+
+
 
 if(__name__=="__main__"):
-    a = float(input("dmg: "))
-    b = float(input("kills: "))
-    c = float(input("wr: "))
-    d = Stats()
-    print(d.calculatePR(a,b,c))
+    #a = float(input("dmg: "))
+    #b = float(input("kills: "))
+    #c = float(input("wr: "))
+    #d = Stats()
+    #print(d.calculatePR(a,b,c))
+
