@@ -37,10 +37,10 @@ class Stats():
         temp = api.expectedValues()
         time = temp['time']
 
-        for value in temp['data']:
-            for i in temp:
-                print(i)
-            print(value)
+        for shipid,shipdata in temp['data'].items():
+            print(shipid)
+            for key in shipdata:
+                print(shipdata[key])
             
         print(time)
         return temp['data']
