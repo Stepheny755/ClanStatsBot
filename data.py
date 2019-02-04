@@ -35,6 +35,10 @@ class Data():
             out = csv.writer(w)
             out.writerows(output)
 
+    def find(self):
+        #TODO: Find value (either ID or name of ship) in expected value csv, and return associated dmg,frag, and WR data
+        pass
+
 
 if(__name__=="__main__"):
 

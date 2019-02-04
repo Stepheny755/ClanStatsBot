@@ -1,4 +1,5 @@
 import numpy as np
+import json
 
 from API import API
 from data import Data
@@ -30,11 +31,19 @@ class Stats():
         return (700*nDmg + 300*nKills + 150*nWR)
 
     def saveExpValues(self):
-        dt = Data()
+        dt = Data('test')
         api = API()
 
         temp = api.expectedValues()
-        return temp
+        time = temp['time']
+
+        for value in temp['data']:
+            for i in temp:
+                print(i)
+            print(value)
+            
+        print(time)
+        return temp['data']
 
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
@@ -43,4 +52,4 @@ if(__name__=="__main__"):
     #d = Stats()
     #print(d.calculatePR(a,b,c))
     d = Stats()
-    print(d.saveExpValues())
+    d.saveExpValues()
