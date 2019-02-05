@@ -8,16 +8,14 @@ class Stats():
     def __init__(self):
         print("works")
 
-    expectedDmg = 12975.9242622
-    expectedWR = 47.8895036
+    expectedDmg = 10587.423605547
+    expectedWR = 46.05060493065
     expectedWins = 0
-    expectedKills = 0.535497704918
+    expectedKills = 0.44863235747298
 
     def calculatePR(self,dmg,kills,WR): #player): #player is an object of Player()
         
-
         #self.expectedWins = (self.expectedWR/100)*self.Battles
-
         #print(self.expectedWins)
 
         rDmg = dmg/self.expectedDmg
@@ -31,12 +29,12 @@ class Stats():
         return (700*nDmg + 300*nKills + 150*nWR)
 
 if(__name__=="__main__"):
-    #a = float(input("dmg: "))
-    #b = float(input("kills: "))
-    #c = float(input("wr: "))
-    #d = Stats()
-    #print(d.calculatePR(a,b,c))
+    a = float(input("dmg: "))
+    b = float(input("kills: "))
+    c = float(input("wr: "))
     d = Stats()
-    d.saveExpValues()
+    print(d.calculatePR(a,b,c))
+    #d = Stats()
+    #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')

@@ -5,6 +5,7 @@ import os
 
 tdir = "Data/testdata"
 adir = "Data"
+wdir = "Data/wowsnumbers"
 
 class Data():
 
@@ -27,9 +28,10 @@ class Data():
             out = csv.writer(w)
             out.writerows(output)
     
-    def read(self,filename):
+    def read(self,relativepath,filename):
         rdarr = []
-        with open(os.path.join(adir,filename).strip(),'r') as r:
+        temppath = os.path.join(adir,relativepath).strip()
+        with open(os.path.join(temppath,filename).strip(),'r') as r:
             rdarr = list(csv.reader(r,delimiter=','))
         return rdarr
  
@@ -41,18 +43,30 @@ class Data():
             out = csv.writer(w)
             out.writerows(output)
 
-    def find(self):
+    def getMostRecent(self):
         #TODO: Find value (either ID or name of ship) in expected value csv, and return associated dmg,frag, and WR data
-        pass
+        lst = []
+        for file in os.listdir(wdir):
+            if file.endswith('.csv'):
+                lst.append(file)
+        return max(lst)
 
+    def getExpectedData(self):
+        filename = self.getMostRecent()
+        file = self.read('wowsnumbers',filename)
+        print(file)
+        pass
 
 if(__name__=="__main__"):
 
     d = Data('MIA')
     d.testwrite('test','test1.csv',[['jacky','cool'],['jacky','smart']])
     c = d.testread('Book1.csv')
-    print(c)
-    for i in c:
-        for z in i:
-            print(z)
+    c = d.read("",'ClanList')
+    #print(c)
+    #for i in c:
+        #for z in i:
+            #print(z)
     print("done")
+    #print(d.getMostRecent())
+    print(d.getExpectedData())
