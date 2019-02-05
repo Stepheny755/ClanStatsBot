@@ -5,8 +5,6 @@ import urllib.request
 
 #TODO:
 #Pull API Data for players from WG API
-#Pull Server Average Data for ships from wows-numbers (and credit OG author)
-
 
 class API():
 
