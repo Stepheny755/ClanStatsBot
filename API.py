@@ -24,10 +24,10 @@ class API():
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
     
-    def getClanMembers(self,name):
-        data={'application_id':self.ID,'search':name.strip()}
-        r = requests.post(self.acclistep,data)
-        return json.loads(r.text)['data'][0]['account_id']
+    def getClanMembers(self,ID):
+        data={'application_id':self.ID,'clan_id':ID}
+        r = requests.post(self.claninfoep,data)
+        return json.loads(r.text)['data'][str(ID)]['members_ids']
 
     def getPlayerID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
@@ -75,6 +75,7 @@ if(__name__=="__main__"):
     print(a.getClanID('MIA-E'))
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
-    print(a.getPlayerStats(a.getPlayerID('Modulatus')))
+    print(a.getClanMembers(a.getClanID('MIA-E'))
+    #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.expectedValues())
-    print(a.getShipName(4287510224))
+    #print(a.getShipName(4287510224))
