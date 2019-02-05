@@ -13,6 +13,8 @@ class Util():
         t = time.gmtime(a)
         return time.asctime(t)
 
+    def getGMTTime(self):
+        return calendar.timegm(time.gmtime())
 
 if(__name__=='__main__'):
     test = Util()

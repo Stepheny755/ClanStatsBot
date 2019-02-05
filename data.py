@@ -1,7 +1,7 @@
 import numpy as np
-import json
-import csv
-import os
+import json,csv,os
+
+from util import Util
 
 tdir = "Data/testdata"
 adir = "Data"
@@ -11,8 +11,9 @@ class Data():
 
     name = ''
 
-    def __init__(self,inp):
-        self.name = inp
+    def __init__(self): #,inp):
+        #self.name = inp
+        pass
 
     def testread(self,filename):
         rdarr = []
@@ -54,19 +55,29 @@ class Data():
     def getExpectedData(self):
         filename = self.getMostRecent()
         file = self.read('wowsnumbers',filename)
-        print(file)
+        #print(file)
+        pass
+
+    def trackClan(self,clanname,data):
+        temppath = os.path.join(adir,clanname).strip()
+        if not os.path.exists(temppath):
+            os.makedirs(temppath)
+        u = Util()
+        time = u.getGMTTime()
+        self.write(clanname,str(time)+'.csv',data)
         pass
 
 if(__name__=="__main__"):
 
-    d = Data('MIA')
-    d.testwrite('test','test1.csv',[['jacky','cool'],['jacky','smart']])
-    c = d.testread('Book1.csv')
-    c = d.read("",'ClanList')
+    d = Data()
+    #d.testwrite('test','test1.csv',[['jacky','cool'],['jacky','smart']])
+    #c = d.testread('Book1.csv')
+    #c = d.read("",'ClanList')
     #print(c)
     #for i in c:
         #for z in i:
             #print(z)
     print("done")
     #print(d.getMostRecent())
-    print(d.getExpectedData())
+    #print(d.getExpectedData())
+    print(d.trackClan('MIA',[['mod','shitter'],['ddak','absolut trash'],['warlord','legend']]))
