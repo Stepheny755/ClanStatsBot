@@ -3,6 +3,7 @@ import json
 
 from API import API
 from data import Data
+from update import Update
 
 class Stats():
     def __init__(self):
@@ -28,13 +29,25 @@ class Stats():
 
         return (700*nDmg + 300*nKills + 150*nWR)
 
+    def pullExpectedData(self):
+        dt = Data('test')
+        api = API()
+
+        file = dt.getExpectedData()
+
+        for 
+        print(file)
+
 if(__name__=="__main__"):
-    a = float(input("dmg: "))
-    b = float(input("kills: "))
-    c = float(input("wr: "))
-    d = Stats()
-    print(d.calculatePR(a,b,c))
+    #a = float(input("dmg: "))
+    #b = float(input("kills: "))
+    #c = float(input("wr: "))
     #d = Stats()
+    #print(d.calculatePR(a,b,c))
+    s = Stats()
+    u = Update()
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
+    #u.saveExpValues()
+    s.pullExpectedData()
