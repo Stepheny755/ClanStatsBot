@@ -17,9 +17,9 @@ If you would like to copy the source code, you can [generate your own Wargamimg 
     * util.py
     * data.py
     * API.py
+    * update.py
+      * data.py
+      * API.py
   * clan.py
   * player.py
   
-* update.py
-  * data.py
-  * API.py
