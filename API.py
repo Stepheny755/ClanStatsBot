@@ -32,6 +32,11 @@ class API():
         r = requests.post(self.acclistep,data)
         return json.loads(r.text)['data'][0]['account_id']
 
+    def getPlayerName(self,ID):
+        data={'application_id':self.ID,'account_id':ID}
+        r = requests.post(self.accinfoep,data)
+        return json.loads(r.text)['data'][str(ID)]['nickname']
+
     def getPlayerStats(self,ID):
         data={'application_id':self.ID,'account_id':ID}
         r = requests.post(self.accinfoep,data)
@@ -74,6 +79,7 @@ if(__name__=="__main__"):
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
     print(a.getClanMembers(a.getClanID('MIA-E')))
+    print(a.getPlayerName(a.getPlayerID('Modulatus')))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.expectedValues())
     #print(a.getShipName(4287510224))

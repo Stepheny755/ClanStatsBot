@@ -3,7 +3,7 @@ import asyncio
 import time
 import sys
 
-from stats import Stats
+#from stats import Stats
 from clan import Clan,Time
 from API import API
 
@@ -60,9 +60,15 @@ async def on_message(message):
         sys.exit()
 
     elif(message.content.startswith('!getID')):
-        str = message.content
+        temp = message.content
+        inputname = temp[7:]
         api = API()
-        return api.getPlayerID(str[7:])
+
+        playerID = api.getPlayerID(playername)
+        playername = api.getPlayerName(playerID)
+    
+        ret = playername+"'s ID: "+playerID
+        await client.send_message(message.channel,ret)
     
     print(str(message.channel)+": "+message.content)
 
