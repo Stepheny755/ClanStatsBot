@@ -5,6 +5,7 @@ import sys
 
 from stats import Stats
 from clan import Clan,Time
+from API import API
 
 token = open('token.txt',"r").read().strip()
 
@@ -57,6 +58,11 @@ async def on_message(message):
     elif(message.content.startswith('!stop')):
         exit()
         sys.exit()
+
+    elif(message.content.startswith('!getID')):
+        str = message.content
+        api = API()
+        return api.getPlayerID(str[7:])
     
     print(str(message.channel)+": "+message.content)
 
