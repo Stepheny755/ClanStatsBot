@@ -9,10 +9,7 @@ class Stats():
     def __init__(self):
         print("works")
 
-    expectedDmg = 10587.423605547
-    expectedWR = 46.05060493065
-    expectedWins = 0
-    expectedKills = 0.44863235747298
+    expected = []
 
     def calculatePR(self,dmg,kills,WR): #player): #player is an object of Player()
         
@@ -30,13 +27,20 @@ class Stats():
         return (700*nDmg + 300*nKills + 150*nWR)
 
     def pullExpectedData(self):
-        dt = Data('test')
+        dt = Data()
         api = API()
 
         file = dt.getExpectedData()
+        val = []
 
-        for 
-        print(file)
+        for i in file:
+            val.append(i)
+
+        self.expected = val
+        return val
+
+    def getShipData(self,ID):
+        self.pullExpectedData() #remove this in the future as to not overload wowsnumbers
 
 if(__name__=="__main__"):
     #a = float(input("dmg: "))

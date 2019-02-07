@@ -56,7 +56,7 @@ class Data():
         filename = self.getMostRecent()
         file = self.read('wowsnumbers',filename)
         #print(file)
-        pass
+        return file
 
     def trackClan(self,clanname,data):
         temppath = os.path.join(adir,clanname).strip()
