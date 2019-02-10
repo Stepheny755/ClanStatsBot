@@ -16,46 +16,67 @@ class API():
     pediaep = 'https://api.worldofwarships.com/wows/encyclopedia/ships/'
 
     wowsnumep = 'https://wows-numbers.com/personal/rating/expected/json/'
-    #Data for expected values used to calculate PR pulled 
+    #Data for expected values used to calculate PR pulled
     #from the official wows-numbers website: https://wows-numbers.com
 
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
-    
+
     def getClanMembers(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
         r = requests.post(self.claninfoep,data)
-        return json.loads(r.text)['data'][str(ID)]['members_ids']
+        try:
+            return json.loads(r.text)['data'][str(ID)]['members_ids']
+        except:
+            return None
 
     def getPlayerID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
         r = requests.post(self.acclistep,data)
-        return json.loads(r.text)['data'][0]['account_id']
+        try:
+            return json.loads(r.text)['data'][0]['account_id']
+        except:
+            return None
 
     def getPlayerName(self,ID):
         data={'application_id':self.ID,'account_id':ID}
         r = requests.post(self.accinfoep,data)
-        return json.loads(r.text)['data'][str(ID)]['nickname']
+        try:
+            return json.loads(r.text)['data'][str(ID)]['nickname']
+        except:
+            return None
 
     def getPlayerStats(self,ID):
         data={'application_id':self.ID,'account_id':ID}
         r = requests.post(self.accinfoep,data)
-        return json.loads(r.text)['data'][str(ID)]
-    
+        try:
+            return json.loads(r.text)['data'][str(ID)]
+        except:
+            return None
+
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
         r = requests.post(self.clanlistep,data)
-        return json.loads(r.text)['data'][0]['clan_id']
+        try:
+            return json.loads(r.text)['data'][0]['clan_id']
+        except:
+            return None
 
     def getClanTag(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
         r = requests.post(self.claninfoep,data)
-        return json.loads(r.text)['data'][str(ID)]['tag']
+        try:
+            return json.loads(r.text)['data'][str(ID)]['tag']
+        except:
+            return None
 
     def getClanName(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
         r = requests.post(self.claninfoep,data)
-        return json.loads(r.text)['data'][str(ID)]['name']
+        try:
+            return json.loads(r.text)['data'][str(ID)]['name']
+        except:
+            return None
 
     def getShipName(self,ID):
         data={'application_id':self.ID,'ship_id':ID}
@@ -79,7 +100,7 @@ if(__name__=="__main__"):
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
     print(a.getClanMembers(a.getClanID('MIA-E')))
-    print(a.getPlayerName(a.getPlayerID('Modulatus')))
+    print(a.getPlayerName(a.getPlayerID('Modulasdasdasdasdsadatus')))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.expectedValues())
     #print(a.getShipName(4287510224))
