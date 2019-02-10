@@ -1,5 +1,6 @@
 from data import Data
 from API import API
+from util import Util
 
 class Update():
     def saveExpValues(self):
@@ -25,6 +26,28 @@ class Update():
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
         return temp['data']
 
+    def saveStats(self):
+        dt = Data()
+        api = API()
+        ut = Util()
+
+        curtime = ut.getGMTTime()
+
+        clanlist = dt.read('','ClanList')
+
+        for clan in clanlist:
+            IDs = api.getClanMembers(api.getClanID(clan[0]))
+            for player in IDs:
+                name = api.getPlayerName(player)
+                stats = api.getPlayerStats(player)
+
+                temppath = str(clan[0])+"/"+str(name)
+                filename = str(curtime)+".txt"
+                print(temppath+" "+filename)
+                print(stats)
+                dt.write(temppath,filename,stats)
+
 if(__name__=="__main__"):
     u = Update()
-    u.saveExpValues()
+    #u.saveExpValues()
+    u.saveStats()

@@ -20,7 +20,7 @@ class Data():
         with open(os.path.join(tdir,filename).strip(),'r') as r:
             rdarr = list(csv.reader(r,delimiter=','))
         return rdarr
- 
+
     def testwrite(self,relativepath,filename,output):
         temppath = os.path.join(tdir,relativepath).strip()
         if not os.path.exists(temppath):
@@ -28,14 +28,14 @@ class Data():
         with open(os.path.join(temppath,filename).strip(),'w+') as w:
             out = csv.writer(w)
             out.writerows(output)
-    
+
     def read(self,relativepath,filename):
         rdarr = []
         temppath = os.path.join(adir,relativepath).strip()
         with open(os.path.join(temppath,filename).strip(),'r') as r:
             rdarr = list(csv.reader(r,delimiter=','))
         return rdarr
- 
+
     def write(self,relativepath,filename,output):
         temppath = os.path.join(adir,relativepath).strip()
         if not os.path.exists(temppath):
@@ -80,4 +80,5 @@ if(__name__=="__main__"):
     print("done")
     #print(d.getMostRecent())
     #print(d.getExpectedData())
-    print(d.trackClan('MIA',[['mod','shitter'],['ddak','absolut trash'],['warlord','legend']]))
+    #print(d.trackClan('MIA',[['mod','shitter'],['ddak','absolut trash'],['warlord','legend']]))
+    print(d.read('','ClanList'))

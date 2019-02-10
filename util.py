@@ -14,7 +14,7 @@ class Util():
         return time.asctime(t)
 
     def getGMTTime(self):
-        return calendar.timegm(time.gmtime())
+        return int(calendar.timegm(time.gmtime()))
 
 if(__name__=='__main__'):
     test = Util()
