@@ -3,7 +3,7 @@ from API import API
 
 class Update():
     def saveExpValues(self):
-        dt = Data('test')
+        dt = Data()
         api = API()
 
         temp = api.expectedValues()
@@ -15,8 +15,8 @@ class Update():
             lst.append(shipid)
             print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
             name = api.getShipName(shipid)
-            if name is not None:
-                lst.append(name)
+            if name is None:
+                lst.append("None")
             for key in shipdata:
                 lst.append(shipdata[key])
             out.append(lst)

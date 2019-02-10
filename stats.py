@@ -40,7 +40,11 @@ class Stats():
         return val
 
     def getShipData(self,ID):
-        self.pullExpectedData() #remove this in the future as to not overload wowsnumbers
+        data = self.pullExpectedData() #remove this in the future as to not overload wowsnumbers
+        for ship in data:
+            if(ship[0]==ID):
+                return ship
+            #print(ship)
 
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
@@ -54,4 +58,5 @@ if(__name__=="__main__"):
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
-    s.pullExpectedData()
+    #print(s.pullExpectedData())
+    print(s.getShipData('4292818736'))
