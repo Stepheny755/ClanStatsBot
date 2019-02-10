@@ -37,15 +37,17 @@ class Update():
 
         for clan in clanlist:
             IDs = api.getClanMembers(api.getClanID(clan[0]))
-            for player in IDs:
-                name = api.getPlayerName(player)
-                stats = api.getPlayerStats(player)
+            print(IDs)
+            if IDs is not None:
+                for player in IDs:
+                    name = api.getPlayerName(player)
+                    stats = api.getPlayerStats(player)
 
-                temppath = str(clan[0])+"/"+str(name)
-                filename = str(curtime)+".txt"
-                print(temppath+" "+filename)
-                print(stats)
-                dt.write(temppath,filename,stats)
+                    temppath = str(clan[0])+"/"+str(name)
+                    filename = str(curtime)+".txt"
+                    print(temppath+" "+filename)
+                    print(stats)
+                    dt.write(temppath,filename,stats)
 
 if(__name__=="__main__"):
     u = Update()
