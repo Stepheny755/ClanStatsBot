@@ -1,8 +1,22 @@
 from data import Data
 from API import API
 from util import Util
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 class Update():
+
+    sched = BlockingScheduler()
+
+    def __init__(self):
+        print("Scheduler Started")
+        self.sched.start()
+
+    @sched.scheduled_job('cron', hour=0, timezone='UTC')
+    def scheduled_job():
+        self.saveExpValues()
+        self.saveStats()
+        print('Saved Data from wowsnumbers and API')
+
     def saveExpValues(self):
         dt = Data()
         api = API()
@@ -52,4 +66,4 @@ class Update():
 if(__name__=="__main__"):
     u = Update()
     #u.saveExpValues()
-    u.saveStats()
+    #u.saveStats()

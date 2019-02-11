@@ -6,6 +6,7 @@ import sys
 #from stats import Stats
 from clan import Clan,Time
 from API import API
+from update import Update
 
 token = open('token.txt',"r").read().strip()
 
@@ -38,7 +39,7 @@ async def on_message(message):
 
     elif message.content.startswith('!available EST'):
         await client.send_message(message.channel,'Rename available at '+Time.available('EST')+' EST')
-        
+
     elif message.content.startswith('!available PST'):
         await client.send_message(message.channel,'Rename available at '+Time.available('PST')+' PST')
 
@@ -47,7 +48,7 @@ async def on_message(message):
 
     #elif message.content.find("cv"):
         #await client.send_message(message.channel,'ree')
-  
+
     #elif(int(message.content.find('cv'))>=0):
         #print(str(message.channel)+": "+message.content+" "+str(message.timestamp))
         #await client.send_message(message.channel,'ree')
@@ -66,10 +67,11 @@ async def on_message(message):
 
         playerID = api.getPlayerID(playername)
         playername = api.getPlayerName(playerID)
-    
+
         ret = playername+"'s ID: "+playerID
         await client.send_message(message.channel,ret)
-    
+
     print(str(message.channel)+": "+message.content)
 
+u = Update()
 client.run(token)
