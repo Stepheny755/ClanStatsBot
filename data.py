@@ -44,6 +44,23 @@ class Data():
             out = csv.writer(w)
             out.writerows(output)
 
+    def append(self,relativepath,filename,output):
+        print("run")
+        temppath = os.path.join(adir,relativepath).strip()
+        if not os.path.exists(temppath):
+            os.makedirs(temppath)
+        with open(os.path.join(temppath,filename).strip(),'a+') as a:
+            a.write(output+"\n")
+
+    def addToClanlist(self,name):
+        templist = self.read('','ClanList')
+        for clanname in templist:
+            if(clanname[0]==name):
+                print(clanname[0])
+                print('returned')
+                return
+        self.append('','ClanList',name)
+
     def getMostRecent(self):
         #TODO: Find value (either ID or name of ship) in expected value csv, and return associated dmg,frag, and WR data
         lst = []
@@ -77,8 +94,9 @@ if(__name__=="__main__"):
     #for i in c:
         #for z in i:
             #print(z)
-    print("done")
+    #print("done")
     #print(d.getMostRecent())
     #print(d.getExpectedData())
     #print(d.trackClan('MIA',[['mod','shitter'],['ddak','absolut trash'],['warlord','legend']]))
+    d.addToClanlist('asd')
     print(d.read('','ClanList'))
