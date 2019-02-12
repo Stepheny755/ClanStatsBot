@@ -17,6 +17,8 @@ class Update():
         self.saveStats()
         print('Saved Data from wowsnumbers and API')
 
+    #TODO:post data differences for players
+
     def saveExpValues(self):
         dt = Data()
         api = API()
