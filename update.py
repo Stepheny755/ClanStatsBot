@@ -1,11 +1,11 @@
 from data import Data
 from API import API
 from util import Util
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 class Update():
 
-    sched = BlockingScheduler()
+    sched = AsyncIOScheduler()
 
     def __init__(self):
         print("Scheduler Started")
