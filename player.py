@@ -1,6 +1,10 @@
 from API import API
+from data import Data
 
 class Player():
+
+    playerName = ''
+    playerID = ''
 
     avgDmg = 0
     avgKills = 0
@@ -13,13 +17,19 @@ class Player():
     draws = 0
     battles = 0
 
-    def __init__(self,name):
+    def __init__(self,clan,name):
         #TODO:get Player 'name' Data from WG API
-        self.avgDmg=1000
-        self.wins=75800
-        self.losses=2200
-        self.battles=
-        print(Player.calcwr(self.wins,self.losses))
+        api = API()
+        dt = Data()
+
+        self.playerName=name
+        self.playerID=api.getPlayerID(name)
+
+        #TODO:If directory playerclan/playername does not exist and contains no files, then pull data directly from wg api without saving (temp lookup)
+        temppath = str(str(clan).strip()+"/"+str(name).strip())
+        print(dt.getSMostRecent(temppath)['last_battle_time'])
+
+        #print(Player.calcwr(self.wins,self.losses))
         pass
 
     def calcwr(w,l):
@@ -28,4 +38,4 @@ class Player():
 
 
 if(__name__=="__main__"):
-    p = Player("modsucks")
+    p = Player("MIA-E","Modulatus")
