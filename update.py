@@ -9,7 +9,7 @@ class Update():
 
     def __init__(self):
         print("Scheduler Started")
-        self.sched.start()
+        #self.sched.start()
 
     @sched.scheduled_job('cron', hour=0, timezone='UTC')
     def scheduled_job():
@@ -63,9 +63,10 @@ class Update():
                     filename = str(curtime)+".txt"
                     print(temppath+" "+filename)
                     print(stats)
-                    dt.write(temppath,filename,stats)
+
+                    dt.writetxt(temppath,filename,stats)
 
 if(__name__=="__main__"):
     u = Update()
     #u.saveExpValues()
-    #u.saveStats()
+    u.saveStats()
