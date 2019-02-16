@@ -11,10 +11,11 @@ class Update():
         print("Scheduler Started")
         self.sched.start()
 
-    @sched.scheduled_job('cron', hour=1, minute=19, timezone='UTC')
+    @sched.scheduled_job('cron', hour=1, minute=21, timezone='UTC')
     def scheduled_job():
-        self.saveExpValues()
-        self.saveStats()
+        u = Update()
+        u.saveExpValues()
+        u.saveStats()
         print('Saved Data from wowsnumbers and API')
 
     #TODO:post data differences for players
