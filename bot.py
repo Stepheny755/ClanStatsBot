@@ -83,7 +83,7 @@ async def on_message(message):
         playerstats = api.getPlayerStats(playerID)
         print(playerstats)
 
-        ret = str(api.getPlayerStats(playerID))
+        ret = str(api.getPlayerStats(playerID))[:200]
         await client.send_message(message.channel,ret)
 
     print(str(message.channel)+": "+message.content)
