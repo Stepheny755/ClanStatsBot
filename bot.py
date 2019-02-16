@@ -77,10 +77,10 @@ async def on_message(message):
 
 if(__name__=="__main__"):
     sched = AsyncIOScheduler()
+    sched.add_job(scheduled_job,'cron',hour=5,minute=5,timezone='UTC')
     sched.start()
     client.run(token)
 
-@sched.scheduled_job('cron', hour=4, minute=21, timezone='UTC')
 def scheduled_job():
     u = Update()
     u.saveExpValues()
