@@ -73,5 +73,15 @@ async def on_message(message):
 
     print(str(message.channel)+": "+message.content)
 
-u = Update()
-client.run(token)
+if(__name__=="__main__"):
+    sched = AsyncIOScheduler()
+    sched.start()
+    client.run(token)
+
+@sched.scheduled_job('cron', hour=4, minute=20, timezone='UTC')
+def scheduled_job():
+    u = Update()
+    u.saveExpValues()
+    u.saveStats()
+    t = Util()
+    print("Update Finished: "+str(t.getGMTTime()))

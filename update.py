@@ -3,20 +3,13 @@ from API import API
 from util import Util
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+import time
+
 class Update():
 
-    sched = AsyncIOScheduler()
-
     def __init__(self):
-        print("Scheduler Started")
-        self.sched.start()
-
-    @sched.scheduled_job('cron', hour=1, minute=21, timezone='UTC')
-    def scheduled_job():
-        u = Update()
-        u.saveExpValues()
-        u.saveStats()
-        print('Saved Data from wowsnumbers and API')
+        u = Util()
+        print("Updated Started: "+str(u.getGMTTime()))
 
     #TODO:post data differences for players
 
@@ -67,7 +60,21 @@ class Update():
 
                     dt.writetxt(temppath,filename,stats)
 
+
+
 if(__name__=="__main__"):
+    sched = AsyncIOScheduler()
+    sched.start()
+    input('any key to exit')
+    #while True:
+        #time.sleep(10)
+    #u.saveExpValues()
+    #u.saveStats()
+
+@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
+def scheduled_job():
     u = Update()
     u.saveExpValues()
     u.saveStats()
+    t = Util()
+    print("Update Finished: "+str(t.getGMTTime()))

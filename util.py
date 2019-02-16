@@ -13,7 +13,7 @@ class Util():
         t = time.gmtime(a)
         return time.asctime(t)
 
-    def getGMTTime(self):
+    def getGMTTime(self): #GMT == UTC
         return int(calendar.timegm(time.gmtime()))
 
 if(__name__=='__main__'):
