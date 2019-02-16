@@ -77,7 +77,7 @@ async def on_message(message):
 
 if(__name__=="__main__"):
     sched = AsyncIOScheduler()
-    sched.add_job(scheduled_job,'cron',hour=5,minute=5,timezone='UTC')
+    sched.add_job(scheduled_job,'cron',hour=5,minute=6,timezone='UTC')
     sched.start()
     client.run(token)
 
