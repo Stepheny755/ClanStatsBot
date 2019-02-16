@@ -50,6 +50,7 @@ class Player():
 
         for i in stats:
             print(i)
+            print(stats[i])
 
 
         for i in lst:

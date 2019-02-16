@@ -9,9 +9,9 @@ class Update():
 
     def __init__(self):
         print("Scheduler Started")
-        #self.sched.start()
+        self.sched.start()
 
-    @sched.scheduled_job('cron', hour=0, timezone='UTC')
+    @sched.scheduled_job('cron', hour=1, minute=19, timezone='UTC')
     def scheduled_job():
         self.saveExpValues()
         self.saveStats()
@@ -68,5 +68,5 @@ class Update():
 
 if(__name__=="__main__"):
     u = Update()
-    #u.saveExpValues()
+    u.saveExpValues()
     u.saveStats()
