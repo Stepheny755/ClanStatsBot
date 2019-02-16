@@ -75,11 +75,13 @@ async def on_message(message):
 
     elif(message.content.startswith("!stats")):
         temp = message.content
-        api = API()
         inputname = temp[7:]
+        api = API()
 
         playerID = api.getPlayerID(inputname)
         playername = api.getPlayerName(playerID)
+        playerstats = api.getPlayerStats(playerID)
+        print(playerstats)
 
         ret = str(api.getPlayerStats(playerID))
         await client.send_message(message.channel,ret)
