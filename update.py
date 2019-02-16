@@ -71,10 +71,10 @@ if(__name__=="__main__"):
     #u.saveExpValues()
     #u.saveStats()
 
-@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
-def scheduled_job():
-    u = Update()
-    u.saveExpValues()
-    u.saveStats()
-    t = Util()
-    print("Update Finished: "+str(t.getGMTTime()))
+#@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
+#def scheduled_job():
+#    u = Update()
+#    u.saveExpValues()
+#    u.saveStats()
+#    t = Util()
+#    print("Update Finished: "+str(t.getGMTTime()))

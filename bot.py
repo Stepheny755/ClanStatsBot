@@ -3,10 +3,12 @@ import asyncio
 import time
 import sys
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 #from stats import Stats
 from clan import Clan,Time
 from API import API
 from update import Update
+
 
 token = open('token.txt',"r").read().strip()
 
@@ -78,7 +80,7 @@ if(__name__=="__main__"):
     sched.start()
     client.run(token)
 
-@sched.scheduled_job('cron', hour=4, minute=20, timezone='UTC')
+@sched.scheduled_job('cron', hour=4, minute=21, timezone='UTC')
 def scheduled_job():
     u = Update()
     u.saveExpValues()
