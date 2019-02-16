@@ -60,8 +60,6 @@ class Update():
 
                     dt.writetxt(temppath,filename,stats)
 
-
-
 if(__name__=="__main__"):
     sched = AsyncIOScheduler()
     sched.start()

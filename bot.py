@@ -8,7 +8,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from clan import Clan,Time
 from API import API
 from update import Update
-
+from util import Util
 
 token = open('token.txt',"r").read().strip()
 
@@ -76,6 +76,7 @@ async def on_message(message):
     print(str(message.channel)+": "+message.content)
 
 def scheduled_job():
+    print("Updated Started")
     u = Update()
     u.saveExpValues()
     u.saveStats()
@@ -84,6 +85,6 @@ def scheduled_job():
 
 if(__name__=="__main__"):
     sched = AsyncIOScheduler()
-    sched.add_job(scheduled_job,'cron',hour=5,minute=7,timezone='UTC')
+    sched.add_job(scheduled_job,'cron',hour=4,minute=20,timezone='UTC')
     sched.start()
     client.run(token)
