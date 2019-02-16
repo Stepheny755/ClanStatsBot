@@ -70,13 +70,13 @@ async def on_message(message):
         playerID = api.getPlayerID(inputname)
         playername = api.getPlayerName(playerID)
 
-        ret = playername+"'s ID: "+playerID
+        ret = playername+"'s ID: "+str(playerID)
         await client.send_message(message.channel,ret)
 
     elif(message.content.startswith("!stats")):
         temp = message.content
-        inputname = temp[7:]
         api = API()
+        inputname = temp[7:]
 
         playerID = api.getPlayerID(inputname)
         playername = api.getPlayerName(playerID)
@@ -99,4 +99,6 @@ if(__name__=="__main__"):
     sched = AsyncIOScheduler()
     sched.add_job(scheduled_job,'cron',hour=4,minute=20,timezone='UTC')
     sched.start()
+    print("Scheduler Started")
     client.run(token)
+    print("Bot Started")
