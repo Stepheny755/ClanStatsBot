@@ -67,16 +67,28 @@ async def on_message(message):
         inputname = temp[7:]
         api = API()
 
-        playerID = api.getPlayerID(playername)
+        playerID = api.getPlayerID(inputname)
         playername = api.getPlayerName(playerID)
 
         ret = playername+"'s ID: "+playerID
+        await client.send_message(message.channel,ret)
+
+    elif(message.content.startswith("!stats")):
+        temp = message.content
+        inputname = temp[7:]
+        api = API()
+
+        playerID = api.getPlayerID(inputname)
+        playername = api.getPlayerName(playerID)
+
+        ret = str(api.getPlayerStats(playerID))
         await client.send_message(message.channel,ret)
 
     print(str(message.channel)+": "+message.content)
 
 def scheduled_job():
     print("Updated Started")
+    #TODO: send a discord message
     u = Update()
     u.saveExpValues()
     u.saveStats()
