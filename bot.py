@@ -95,7 +95,7 @@ async def on_message(message):
         embed.add_field(name="Field5", value="hi2", inline=False)
         embed.add_field(name="Field6", value="hi2", inline=False)
         embed.add_field(name="Field7", value="hi2\ntest", inline=False)
-        embed.add_field(name="Field8", value="hi2", inline=False)
+        embed.add_field(name="Field8", value="```CSS\ntext```", inline=False)
         embed.add_field(name="Field9", value="hi2", inline=False)
         embed.set_author(name='Someone', icon_url=client.user.default_avatar_url)
         embed.set_footer(text='Text')
