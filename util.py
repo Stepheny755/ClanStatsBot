@@ -1,6 +1,8 @@
 import numpy as np
 import time,calendar
 
+
+#Throw all the miscellaneous functions in here
 class Util():
     def __init__(self):
         pass
@@ -15,6 +17,8 @@ class Util():
 
     def getGMTTime(self): #GMT == UTC
         return int(calendar.timegm(time.gmtime()))
+
+
 
 if(__name__=='__main__'):
     test = Util()
