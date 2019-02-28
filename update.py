@@ -61,13 +61,14 @@ class Update():
                     dt.writetxt(temppath,filename,stats)
 
 if(__name__=="__main__"):
-    sched = AsyncIOScheduler()
-    sched.start()
-    input('any key to exit')
+    #sched = AsyncIOScheduler()
+    #sched.start()
+    #input('any key to exit')
     #while True:
         #time.sleep(10)
-    #u.saveExpValues()
-    #u.saveStats()
+    u = Update()
+    u.saveExpValues()
+    u.saveStats()
 
 #@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
 #def scheduled_job():
