@@ -25,6 +25,7 @@ class Stats():
         nKills = max(0,(rKills-0.1)/(1-0.1))
 
         return (700*nDmg + 300*nKills + 150*nWR)
+        #may need to save PR in update.py as the average PR of the partial values of all ships
 
     def pullExpectedData(self):
         dt = Data()
