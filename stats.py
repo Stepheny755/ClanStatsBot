@@ -12,7 +12,7 @@ class Stats():
     expected = []
 
     def calculatePR(self,dmg,kills,WR): #player): #player is an object of Player()
-        
+
         #self.expectedWins = (self.expectedWR/100)*self.Battles
         #print(self.expectedWins)
 
@@ -46,6 +46,25 @@ class Stats():
                 return ship
             #print(ship)
 
+    def getServerAvg(self):
+        data = self.pullExpectedData()
+        count = 0
+        tdg = 0.0 #total damage
+        twr = 0.0 #total wr
+        tkl = 0.0 #total avg kills
+        for i in data:
+            print(i)
+            if(len(i)!=1):
+                count+=1
+                tdg+=float("%.3f" % float(i[1]))
+                tkl+=float("%.3f" % float(i[2]))
+                twr+=float("%.3f" % float(i[3]))
+        print(tdg/count)
+        print(tkl/count)
+        print(twr/count)
+
+        print(count)
+
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
     #b = float(input("kills: "))
@@ -53,10 +72,12 @@ if(__name__=="__main__"):
     #d = Stats()
     #print(d.calculatePR(a,b,c))
     s = Stats()
-    u = Update()
+    a = API()
+    #u = Update()
+    s.getServerAvg()
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
     #print(s.pullExpectedData())
-    print(s.getShipData('4292818736'))
+    print(s.getShipData(a.getShip))

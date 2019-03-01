@@ -88,6 +88,11 @@ class API():
         else:
             pass
 
+    def getShipID(self,name):
+
+
+
+
     def expectedValues(self):
         r = requests.get(self.wowsnumep)
         data = json.loads(r.text)
@@ -100,5 +105,4 @@ if(__name__=="__main__"):
     print(a.getClanTag('1000044001'))
     print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
-    print(a.expectedValues())
     #print(a.getShipName(4287510224))
