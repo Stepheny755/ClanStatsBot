@@ -47,6 +47,25 @@ class Stats():
                 return ship
             #print(ship)
 
+    def getServerAvg(self):
+        data = self.pullExpectedData()
+        count = 0
+        tdg = 0.0 #total damage
+        twr = 0.0 #total wr
+        tkl = 0.0 #total avg kills
+        for i in data:
+            print(i)
+            if(len(i)!=1):
+                count+=1
+                tdg+=float("%.3f" % float(i[1]))
+                tkl+=float("%.3f" % float(i[2]))
+                twr+=float("%.3f" % float(i[3]))
+        print(tdg/count)
+        print(tkl/count)
+        print(twr/count)
+
+        print(count)
+
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
     #b = float(input("kills: "))
@@ -54,14 +73,24 @@ if(__name__=="__main__"):
     #d = Stats()
     #print(d.calculatePR(a,b,c))
     s = Stats()
+<<<<<<< HEAD
     #u = Update()
+=======
+    a = API()
+    #u = Update()
+    s.getServerAvg()
+>>>>>>> fdf0f5526372e5112919c475453c3792493ade07
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
     #print(s.pullExpectedData())
+<<<<<<< HEAD
     d=input("dmg:")
     wr=input("wr:")
     ak=input("avg kills:")
     print(s.calculatePR(d,ak,wr))
     #print(s.getShipData('4292818736'))
+=======
+    print(s.getShipData(a.getShip))
+>>>>>>> fdf0f5526372e5112919c475453c3792493ade07
