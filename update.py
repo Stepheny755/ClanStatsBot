@@ -12,6 +12,7 @@ class Update():
         print("Updated Started: "+str(u.getGMTTime()))
 
     #TODO:post data differences for players
+    #TODO: Remake Update (Save Avg Dmg, WR, Battles Played, Spotting, Potential, Capping, PR and WTR)
 
     def saveExpValues(self):
         dt = Data()

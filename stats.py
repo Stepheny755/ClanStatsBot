@@ -12,13 +12,13 @@ class Stats():
     expected = []
 
     def calculatePR(self,dmg,kills,WR): #player): #player is an object of Player()
-        
+
         #self.expectedWins = (self.expectedWR/100)*self.Battles
         #print(self.expectedWins)
 
-        rDmg = dmg/self.expectedDmg
-        rWR = WR/self.expectedWR
-        rKills = kills/self.expectedKills
+        rDmg = dmg#/self.expectedDmg
+        rWR = WR#/self.expectedWR
+        rKills = kills#/self.expectedKills
 
         nDmg = max(0,(rDmg-0.4)/(1-0.4))
         nWR = max(0,(rWR-0.7)/(1-0.7))
@@ -53,10 +53,14 @@ if(__name__=="__main__"):
     #d = Stats()
     #print(d.calculatePR(a,b,c))
     s = Stats()
-    u = Update()
+    #u = Update()
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
     #print(s.pullExpectedData())
-    print(s.getShipData('4292818736'))
+    d=input("dmg:")
+    wr=input("wr:")
+    ak=input("avg kills:")
+    print(s.calculatePR(d,ak,wr))
+    #print(s.getShipData('4292818736'))
