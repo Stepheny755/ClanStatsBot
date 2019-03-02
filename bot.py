@@ -119,5 +119,5 @@ if(__name__=="__main__"):
     sched.add_job(scheduled_job,'cron',hour=4,minute=20,timezone='UTC')
     sched.start()
     print("Scheduler Started")
-    client.run(token)
     print("Bot Started")
+    client.run(token)
