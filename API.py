@@ -55,13 +55,30 @@ class API():
         except:
             return None
 
-    def getPlayerShipStats(self,pID,sID):
-        data={'application_id':self.ID,'account_id':pID,'ship_id':sID}
+    def getPlayerShipStats(self,pID):
+        data={'application_id':self.ID,'account_id':pID}
         r = requests.post(self.shipstatep,data)
         try:
-            return json.loads(r.text)['data'][str(pID)][0]['pvp']
+            return json.loads(r.text)['data'][str(pID)]
         except:
             return None
+
+    def getShipDmg(self,data):
+        return float(data['pvp']['damage_dealt'])
+
+    def getShipWins(self,data):
+        if(data['pvp']['wins']==0 or data['pvp']['battles']==0):
+            return 0.0
+        return float(data['pvp']['wins']/data['pvp']['battles']*100)
+
+    def getShipKills(self,data):
+        return float(data['pvp']['frags'])
+
+    def getShipBattles(self,data):
+        return int(data['pvp']['battles'])
+
+    def getShipID(self,data):
+        return int(data['ship_id'])
 
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
@@ -104,9 +121,12 @@ class API():
 
 if(__name__=="__main__"):
     a = API()
-    print(a.ID)
-    print(a.getClanID('MIA-E'))
-    print(a.getClanTag('1000044001'))
-    print(a.getClanName('1000044001'))
+    #print(a.ID)
+    #print(a.getClanID('MIA-E'))
+    #print(a.getClanTag('1000044001'))
+    #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
+    temp = a.getPlayerShipStats(a.getPlayerID("Modulatus"))
+    for i in temp:
+        print(str(a.getShipDmg(i))+" "+str(a.getShipWins(i))+" "+str(a.getShipKills(i))+" "+str(a.getShipID(i))+" "+str(a.getShipBattles(i)))

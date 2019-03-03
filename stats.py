@@ -11,6 +11,11 @@ class Stats():
 
     expected = []
 
+    def PRnumerator(self):
+        pass
+    def PRdenominator(self):
+        pass
+
     def PRratios(self,dmg,kills,WR,sID):
         d = Data()
         val = d.getShipStats(sID)
@@ -25,8 +30,19 @@ class Stats():
         nKills = float(max(0,(kills-0.1)/(1.0-0.1)))
         return nDmg,nKills,nWR
 
-    def PRcalculate(self,dmg,kills,WR): #player): #player is an object of Player()
-        return (700*dmg + 300*kills + 150*WR)
+    def PRcalculate(self,playerID): #player PR calculation
+        a = API()
+        d = Data()
+
+        data = a.getPlayerShipStats(playerID)
+        for ship in data:
+            d = a.getShipDmg(i)
+            k = a.getShipKills(i)
+            w = a.getShipWins(i)
+            id = a.getShipID(i)
+        #return (700*dmg + 300*kills + 150*WR)
+        pass
+
         #may need to save PR in update.py as the average PR of the partial values of all ships
 
     def pullExpectedData(self):
@@ -41,13 +57,6 @@ class Stats():
 
         self.expected = val
         return val
-
-    def getShipData(self,ID):
-        data = self.pullExpectedData() #remove this in the future as to not overload wowsnumbers
-        for ship in data:
-            if(ship[0]==ID):
-                return ship
-            #print(ship)
 
     def getServerAvg(self):
         data = self.pullExpectedData()
@@ -95,7 +104,7 @@ if(__name__=="__main__"):
     for i in range(3):
         b.append(float((a[i]+a1[i])))
     #a = s.PRnorm(b[0],b[1],b[2])
-    a = s.PRnorm(2.03525425704,2.79879641255,1.00513501602)
+    a = s.PRnorm(1.44653083935,2.51747177976,1.24949075502)
     #a = s.PRnorm(b[0],b[1],b[2])
     c = s.PRcalculate(a[0],a[1],a[2])
     print(a)
