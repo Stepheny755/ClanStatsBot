@@ -11,11 +11,12 @@ class API():
     ID = ''
     claninfoep = 'https://api.worldofwarships.com/wows/clans/info/'
     clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
-    accinfoep = 'https://api.worldofwarships.com/wows/account/info/'
-    acclistep = 'https://api.worldofwarships.com/wows/account/list/'
-    pediaep = 'https://api.worldofwarships.com/wows/encyclopedia/ships/'
+    accinfoep =  'https://api.worldofwarships.com/wows/account/info/'
+    acclistep =  'https://api.worldofwarships.com/wows/account/list/'
+    pediaep =    'https://api.worldofwarships.com/wows/encyclopedia/ships/'
+    shipstatep = 'https://api.worldofwarships.com/wows/ships/stats/'
 
-    wowsnumep = 'https://wows-numbers.com/personal/rating/expected/json/'
+    wowsnumep =  'https://wows-numbers.com/personal/rating/expected/json/'
     #Data for expected values used to calculate PR pulled
     #from the official wows-numbers website: https://wows-numbers.com
 
@@ -51,6 +52,14 @@ class API():
         r = requests.post(self.accinfoep,data)
         try:
             return json.loads(r.text)['data'][str(ID)]
+        except:
+            return None
+
+    def getPlayerShipStats(self,pID,sID):
+        data={'application_id':self.ID,'account_id':pID,'ship_id':sID}
+        r = requests.post(self.shipstatep,data)
+        try:
+            return json.loads(r.text)['data'][str(ID)]['pvp']
         except:
             return None
 
