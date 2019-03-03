@@ -88,11 +88,6 @@ class API():
         else:
             pass
 
-    def getShipID(self,name):
-        pass
-
-
-
     def expectedValues(self):
         r = requests.get(self.wowsnumep)
         data = json.loads(r.text)

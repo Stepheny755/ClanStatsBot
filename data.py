@@ -86,6 +86,13 @@ class Data():
         #print(file)
         return file
 
+    def getShipID(self,name):
+        data = self.getExpectedData()
+        for ship in data:
+            if(ship[1]==name):
+                return int(ship[0])
+        return None
+
     def getSMostRecent(self,path):
         lst = []
         rpath = os.path.join(adir,path).strip()
@@ -121,5 +128,6 @@ if(__name__=="__main__"):
     #print(d.getWMostRecent())
     #print(d.getExpectedData())
     #print(d.trackClan('MIA',[['mod','shitter'],['ddak','absolut trash'],['warlord','legend']]))
-    d.addToClanlist('asdf')
-    print(d.read('','ClanList'))
+    #d.addToClanlist('asdf')
+    #print(d.read('','ClanList'))
+    print(d.getShipID("Dresden"))

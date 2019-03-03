@@ -11,21 +11,32 @@ class Stats():
 
     expected = []
 
-    def calculatePR(self,dmg,kills,WR): #player): #player is an object of Player()
+    def PRratios(self,dmg,kills,WR):
+        pass
+
+    def PRnorm(self,dmg,kills,WR):
+        nDmg = max(0,(dmg-0.4)/(1.0-0.4))
+        nWR = max(0,(WR-0.7)/(1.0-0.7))
+        nKills = max(0,(kills-0.1)/(1.0-0.1))
+        return nDmg,nKills,nWR
+
+    def PRcalculate(self,dmg,kills,WR): #player): #player is an object of Player()
 
         #self.expectedWins = (self.expectedWR/100)*self.Battles
         #print(self.expectedWins)
 
-        rDmg = dmg#/self.expectedDmg
-        rWR = WR#/self.expectedWR
-        rKills = kills#/self.expectedKills
+        rDmg = float(dmg)#/self.expectedDmg
+        rWR = float(WR)#/self.expectedWR
+        rKills = float(kills)#/self.expectedKills
 
-        nDmg = max(0,(rDmg-0.4)/(1-0.4))
-        nWR = max(0,(rWR-0.7)/(1-0.7))
-        nKills = max(0,(rKills-0.1)/(1-0.1))
+        nDmg = max(0,(rDmg-0.4)/(1.0-0.4))
+        nWR = max(0,(rWR-0.7)/(1.0-0.7))
+        nKills = max(0,(rKills-0.1)/(1.0-0.1))
 
         return (700*nDmg + 300*nKills + 150*nWR)
         #may need to save PR in update.py as the average PR of the partial values of all ships
+
+
 
     def pullExpectedData(self):
         dt = Data()
@@ -55,7 +66,7 @@ class Stats():
         tkl = 0.0 #total avg kills
         for i in data:
             print(i)
-            if(len(i)!=1):
+            if(len(i)>3):
                 count+=1
                 tdg+=float("%.3f" % float(i[len(i)-3]))
                 tkl+=float("%.3f" % float(i[len(i)-2]))
@@ -74,17 +85,18 @@ if(__name__=="__main__"):
     #print(d.calculatePR(a,b,c))
     s = Stats()
     #u = Update()
-    a = API()
+    d = Data()
     #u = Update()
-    s.getServerAvg()
+    #s.getServerAvg()
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
     #print(s.pullExpectedData())
-    d=input("dmg:")
-    wr=input("wr:")
-    ak=input("avg kills:")
-    print(s.calculatePR(d,ak,wr))
+    #d=float((46516/14102.207358134+14782/16015.896946565)/2)
+    #wr=float((0/48.257995811777+100/51.231125954199)/2)
+    #ak=float((2/0.70378500451673+2/0.72540076335877)/2)
+    print(d.getExpectedData())
+    #print(s.calculatePR(d,ak,wr))
     #print(s.getShipData('4292818736'))
-    print(s.getShipData(a.getShip))
+    #print(s.getShipData(a.getShip))
