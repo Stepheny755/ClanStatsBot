@@ -57,9 +57,9 @@ class Stats():
             print(i)
             if(len(i)!=1):
                 count+=1
-                tdg+=float("%.3f" % float(i[1]))
-                tkl+=float("%.3f" % float(i[2]))
-                twr+=float("%.3f" % float(i[3]))
+                tdg+=float("%.3f" % float(i[len(i)-3]))
+                tkl+=float("%.3f" % float(i[len(i)-2]))
+                twr+=float("%.3f" % float(i[len(i)-1]))
         print(tdg/count)
         print(tkl/count)
         print(twr/count)
