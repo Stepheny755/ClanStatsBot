@@ -93,6 +93,12 @@ class Data():
                 return int(ship[0])
         return None
 
+    def getShipStats(self,sID):
+        data = self.getExpectedData()
+        for ship in data:
+            if(ship[0]==sID):
+                return ship[len(ship)-3],ship[len(ship)-2],ship[len(ship)-1]
+
     def getSMostRecent(self,path):
         lst = []
         rpath = os.path.join(adir,path).strip()
