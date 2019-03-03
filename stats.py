@@ -16,15 +16,16 @@ class Stats():
         #self.expectedWins = (self.expectedWR/100)*self.Battles
         #print(self.expectedWins)
 
-        rDmg = dmg/self.expectedDmg
-        rWR = WR/self.expectedWR
-        rKills = kills/self.expectedKills
+        rDmg = dmg#/self.expectedDmg
+        rWR = WR#/self.expectedWR
+        rKills = kills#/self.expectedKills
 
         nDmg = max(0,(rDmg-0.4)/(1-0.4))
         nWR = max(0,(rWR-0.7)/(1-0.7))
         nKills = max(0,(rKills-0.1)/(1-0.1))
 
         return (700*nDmg + 300*nKills + 150*nWR)
+        #may need to save PR in update.py as the average PR of the partial values of all ships
 
     def pullExpectedData(self):
         dt = Data()
@@ -72,12 +73,24 @@ if(__name__=="__main__"):
     #d = Stats()
     #print(d.calculatePR(a,b,c))
     s = Stats()
+<<<<<<< HEAD
+    #u = Update()
+=======
     a = API()
     #u = Update()
     s.getServerAvg()
+>>>>>>> fdf0f5526372e5112919c475453c3792493ade07
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
     #print(s.pullExpectedData())
+<<<<<<< HEAD
+    d=input("dmg:")
+    wr=input("wr:")
+    ak=input("avg kills:")
+    print(s.calculatePR(d,ak,wr))
+    #print(s.getShipData('4292818736'))
+=======
     print(s.getShipData(a.getShip))
+>>>>>>> fdf0f5526372e5112919c475453c3792493ade07
