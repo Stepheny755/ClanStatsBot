@@ -73,24 +73,18 @@ if(__name__=="__main__"):
     #d = Stats()
     #print(d.calculatePR(a,b,c))
     s = Stats()
-<<<<<<< HEAD
     #u = Update()
-=======
     a = API()
     #u = Update()
     s.getServerAvg()
->>>>>>> fdf0f5526372e5112919c475453c3792493ade07
     #d.saveExpValues()
     #dt = Data('test')
     #dt.write('wowsnumbers',str('test'+'.csv'),'test')
     #u.saveExpValues()
     #print(s.pullExpectedData())
-<<<<<<< HEAD
     d=input("dmg:")
     wr=input("wr:")
     ak=input("avg kills:")
     print(s.calculatePR(d,ak,wr))
     #print(s.getShipData('4292818736'))
-=======
     print(s.getShipData(a.getShip))
->>>>>>> fdf0f5526372e5112919c475453c3792493ade07
