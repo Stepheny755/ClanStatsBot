@@ -59,7 +59,7 @@ class API():
         data={'application_id':self.ID,'account_id':pID,'ship_id':sID}
         r = requests.post(self.shipstatep,data)
         try:
-            return json.loads(r.text)['data'][str(ID)]['pvp']
+            return json.loads(r.text)['data'][str(pID)][0]['pvp']
         except:
             return None
 
