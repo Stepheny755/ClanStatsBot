@@ -11,32 +11,23 @@ class Stats():
 
     expected = []
 
-    def PRratios(self,dmg,kills,WR):
-        pass
+    def PRratios(self,dmg,kills,WR,sID):
+        d = Data()
+        val = d.getShipStats(sID)
+        rD = float(dmg/float(val[0]))
+        rK = float(kills/float(val[1]))
+        rWR = float(WR/float(val[2]))
+        return rD,rK,rWR
 
     def PRnorm(self,dmg,kills,WR):
-        nDmg = max(0,(dmg-0.4)/(1.0-0.4))
-        nWR = max(0,(WR-0.7)/(1.0-0.7))
-        nKills = max(0,(kills-0.1)/(1.0-0.1))
+        nDmg = float(max(0,(dmg-0.4)/(1.0-0.4)))
+        nWR = float(max(0,(WR-0.7)/(1.0-0.7)))
+        nKills = float(max(0,(kills-0.1)/(1.0-0.1)))
         return nDmg,nKills,nWR
 
     def PRcalculate(self,dmg,kills,WR): #player): #player is an object of Player()
-
-        #self.expectedWins = (self.expectedWR/100)*self.Battles
-        #print(self.expectedWins)
-
-        rDmg = float(dmg)#/self.expectedDmg
-        rWR = float(WR)#/self.expectedWR
-        rKills = float(kills)#/self.expectedKills
-
-        nDmg = max(0,(rDmg-0.4)/(1.0-0.4))
-        nWR = max(0,(rWR-0.7)/(1.0-0.7))
-        nKills = max(0,(rKills-0.1)/(1.0-0.1))
-
-        return (700*nDmg + 300*nKills + 150*nWR)
+        return (700*dmg + 300*kills + 150*WR)
         #may need to save PR in update.py as the average PR of the partial values of all ships
-
-
 
     def pullExpectedData(self):
         dt = Data()
@@ -97,7 +88,20 @@ if(__name__=="__main__"):
     #d=float((46516/14102.207358134+14782/16015.896946565)/2)
     #wr=float((0/48.257995811777+100/51.231125954199)/2)
     #ak=float((2/0.70378500451673+2/0.72540076335877)/2)
-    print(a.getPlayerShipStats(a.getPlayerID("Modulatus"),d.getShipID("Dresden")))
+    #print(a.getPlayerShipStats(a.getPlayerID("Modulatus"),d.getShipID("Dresden")))
+    a = s.PRratios(46516,2,0,d.getShipID("Dresden"))
+    a1 = s.PRratios(14782,2,100,d.getShipID("Diana"))
+    b = []
+    for i in range(3):
+        b.append(float((a[i]+a1[i])))
+    #a = s.PRnorm(b[0],b[1],b[2])
+    a = s.PRnorm(2.03525425704,2.79879641255,1.00513501602)
+    #a = s.PRnorm(b[0],b[1],b[2])
+    c = s.PRcalculate(a[0],a[1],a[2])
+    print(a)
+    print(b)
+    print(c)
+
     #print(s.calculatePR(d,ak,wr))
     #print(s.getShipData('4292818736'))
     #print(s.getShipData(a.getShip))
