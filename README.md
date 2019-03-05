@@ -13,7 +13,7 @@ If you would like to copy the source code, you can [generate your own Wargamimg 
 
 A couple of assumptions are made when taking statistics of players:
 1. Individual player statistics are not hidden
-2. Players have at least 1 random battle
+2. Players have played at least 1 battle in random battles/PvP
 
 
 ## Structure
