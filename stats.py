@@ -13,6 +13,7 @@ class Stats():
 
     def PRnumerator(self):
         pass
+
     def PRdenominator(self):
         pass
 
@@ -36,10 +37,11 @@ class Stats():
 
         data = a.getPlayerShipStats(playerID)
         for ship in data:
-            d = a.getShipDmg(i)
-            k = a.getShipKills(i)
-            w = a.getShipWins(i)
-            id = a.getShipID(i)
+            print(ship)
+            d = a.getShipDmg(ship)
+            k = a.getShipKills(ship)
+            w = a.getShipWins(ship)
+            id = a.getShipID(ship)
         #return (700*dmg + 300*kills + 150*WR)
         pass
 
@@ -98,17 +100,15 @@ if(__name__=="__main__"):
     #wr=float((0/48.257995811777+100/51.231125954199)/2)
     #ak=float((2/0.70378500451673+2/0.72540076335877)/2)
     #print(a.getPlayerShipStats(a.getPlayerID("Modulatus"),d.getShipID("Dresden")))
-    a = s.PRratios(46516,2,0,d.getShipID("Dresden"))
-    a1 = s.PRratios(14782,2,100,d.getShipID("Diana"))
-    b = []
-    for i in range(3):
-        b.append(float((a[i]+a1[i])))
+    #a = s.PRratios(46516,2,0,d.getShipID("Dresden"))
+    #a1 = s.PRratios(14782,2,100,d.getShipID("Diana"))
+    #b = []
+    #for i in range(3):
+        #b.append(float((a[i]+a1[i])))
     #a = s.PRnorm(b[0],b[1],b[2])
-    a = s.PRnorm(1.44653083935,2.51747177976,1.24949075502)
+    #a = s.PRnorm(1.44653083935,2.51747177976,1.24949075502)
     #a = s.PRnorm(b[0],b[1],b[2])
-    c = s.PRcalculate(a[0],a[1],a[2])
-    print(a)
-    print(b)
+    c = s.PRcalculate(a.getPlayerID("Modulatus"))
     print(c)
 
     #print(s.calculatePR(d,ak,wr))
