@@ -1,6 +1,7 @@
 from data import Data
 from API import API
 from util import Util
+from stats import Stats
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 import time
@@ -39,10 +40,31 @@ class Update():
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
         return temp['data']
 
+    def save(self):
+        dt = Data()
+        api = API()
+        ut = Util()
+        stats = Stats()
+
+        curtime = ut.getGMTTime()
+        clanlist = dt.read('','ClanList')
+
+        for clan in clanlist:
+            players = api.getClanMembers(api.getClanID(clan[0]))
+
+            if IDs is not None:
+                for player in IDs:
+                    name = api.getPlayerName(player)
+                    pr = stats.PRcalculate(player)
+                    # calculate avg dmg, wr,kills,
+
+        pass
+
     def saveStats(self):
         dt = Data()
         api = API()
         ut = Util()
+
 
         curtime = ut.getGMTTime()
 
