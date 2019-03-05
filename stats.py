@@ -3,6 +3,7 @@ import json
 
 from API import API
 from data import Data
+from util import Util
 from update import Update
 
 class Stats():
@@ -11,39 +12,62 @@ class Stats():
 
     expected = []
 
-    def PRnumerator(self):
-        pass
-
-    def PRdenominator(self):
-        pass
-
-    def PRratios(self,dmg,kills,WR,sID):
-        d = Data()
-        val = d.getShipStats(sID)
-        rD = float(dmg/float(val[0]))
-        rK = float(kills/float(val[1]))
-        rWR = float(WR/float(val[2]))
-        return rD,rK,rWR
-
-    def PRnorm(self,dmg,kills,WR):
+    def PRnormDmg(self,dmg):
         nDmg = float(max(0,(dmg-0.4)/(1.0-0.4)))
-        nWR = float(max(0,(WR-0.7)/(1.0-0.7)))
+        return nDmg
+
+    def PRnormWin(self,wins):
+        nWins = float(max(0,(wins-0.7)/(1.0-0.7)))
+        return nWins
+
+    def PRnormKil(self,kills):
         nKills = float(max(0,(kills-0.1)/(1.0-0.1)))
-        return nDmg,nKills,nWR
+        return nKills
 
     def PRcalculate(self,playerID): #player PR calculation
         a = API()
         d = Data()
+        u = Util()
+
+        eDmg = 0
+        eWin = 0
+        eKil = 0
+
+        aDmg = 0
+        aWin = 0
+        aKil = 0
+
+        btot = 0
 
         data = a.getPlayerShipStats(playerID)
-        for ship in data:
-            print(ship)
-            d = a.getShipDmg(ship)
-            k = a.getShipKills(ship)
-            w = a.getShipWins(ship)
-            id = a.getShipID(ship)
-        #return (700*dmg + 300*kills + 150*WR)
-        pass
+        for shipdata in data:
+            #print(shipdata)
+            b = a.getShipBattles(shipdata)
+            id = a.getShipID(shipdata)
+            expectedstats = d.getShipStats(id)
+            print(expectedstats)
+
+            if expectedstats is not None:
+                eDmg += float(expectedstats[0]) * b
+                eKil += float(expectedstats[1]) * b
+                eWin += float(expectedstats[2]) * b/100
+
+                aDmg += a.getShipDmg(shipdata)
+                aKil += a.getShipKills(shipdata)
+                aWin += a.getShipWins(shipdata)
+
+                btot += b
+            print(b)
+            print(str(aWin))
+
+        print("WR: "+str(u.round(aWin/btot*100)))
+        print("avg dmg: "+str(u.round(aDmg/btot)))
+
+        dmg = self.PRnormDmg(aDmg/eDmg)
+        kills = self.PRnormKil(aKil/eKil)
+        wins = self.PRnormWin(aWin/eWin)
+        print(str(dmg)+" "+str(kills)+" "+str(wins))
+        return (700*dmg + 300*kills + 150*wins)
 
         #may need to save PR in update.py as the average PR of the partial values of all ships
 
@@ -108,7 +132,7 @@ if(__name__=="__main__"):
     #a = s.PRnorm(b[0],b[1],b[2])
     #a = s.PRnorm(1.44653083935,2.51747177976,1.24949075502)
     #a = s.PRnorm(b[0],b[1],b[2])
-    c = s.PRcalculate(a.getPlayerID("Modulatus"))
+    c = s.PRcalculate(a.getPlayerID("ddak26"))
     print(c)
 
     #print(s.calculatePR(d,ak,wr))

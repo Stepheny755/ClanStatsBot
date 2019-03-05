@@ -30,6 +30,9 @@ class Util():
         else:
             return b
 
+    def round(self,input):
+        return format(input,'.3f')
+
 if(__name__=='__main__'):
     test = Util()
     #print(test.getEarlier(123222222456,test.getGMTTime()))
