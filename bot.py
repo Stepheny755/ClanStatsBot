@@ -5,7 +5,6 @@ import sys
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 #from stats import Stats
-from clan import Clan,Time
 from API import API
 from update import Update
 from util import Util
@@ -34,15 +33,6 @@ async def on_message(message):
     elif message.content.startswith('!sleep'):
         await asyncio.sleep(5)
         await client.send(message.channel, 'Done sleeping')
-
-    elif message.content.startswith('!available EST'):
-        await client.send_message(message.channel,'Rename available at '+Time.available('EST')+' EST')
-
-    elif message.content.startswith('!available PST'):
-        await client.send_message(message.channel,'Rename available at '+Time.available('PST')+' PST')
-
-    elif message.content.startswith('!available'):
-        await client.send_message(message.channel,'Rename available at '+Time.available('UTC')+' UTC')
 
     #elif message.content.find("cv"):
         #await client.send_message(message.channel,'ree')

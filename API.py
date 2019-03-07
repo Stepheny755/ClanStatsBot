@@ -3,6 +3,8 @@ import numpy as np
 import json,requests
 import urllib.request
 
+from util import Util
+
 #TODO:
 #Pull API Data for players from WG API
 
@@ -23,13 +25,8 @@ class API():
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
 
-    def getClanMembers(self,ID):
-        data={'application_id':self.ID,'clan_id':ID}
-        r = requests.post(self.claninfoep,data)
-        try:
-            return json.loads(r.text)['data'][str(ID)]['members_ids']
-        except:
-            return None
+# INIT
+# PLAYER RELATED FUNCTIONS
 
     def getPlayerID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
@@ -59,6 +56,35 @@ class API():
         data=self.getPlayerCard(ID)
         return data['statistics']
 
+    def getPlayerBattles(self,ID):
+        data = self.getPlayerStats(ID)
+        return int(data['pvp']['battles'])
+
+    def getPlayerWins(self,ID):
+        data=self.getPlayerStats(ID)
+        return int(data['pvp']['wins'])
+
+    def getPlayerAvgWR(self,ID):
+        u = Util()
+        return u.round3(float(self.getPlayerWins(ID))/float(self.getPlayerBattles(ID))*100)
+
+    def getPlayerAvgDmg(self,ID):
+        data = self.getPlayerStats(ID)
+        battles = self.getPlayerBattles(ID)
+        u = Util()
+        temp = float(data['pvp']['damage_dealt'])/float(battles)
+        return u.round2(temp)
+
+    def getPlayerAvgKills(self,ID):
+        data = self.getPlayerStats(ID)
+        battles = self.getPlayerBattles(ID)
+        u = Util()
+        temp = float(data['pvp']['frags'])/float(battles)
+        return u.round3(temp)
+
+# PLAYER RELATED FUNCTIONS
+# SHIP RELATED FUNCTIONS
+
     def getPlayerShipStats(self,pID):
         data={'application_id':self.ID,'account_id':pID}
         r = requests.post(self.shipstatep,data)
@@ -66,6 +92,16 @@ class API():
             return json.loads(r.text)['data'][str(pID)]
         except:
             return None
+
+    def getShipName(self,ID):
+        data={'application_id':self.ID,'ship_id':ID}
+        r = requests.post(self.pediaep,data)
+        if json.loads(r.text)['data'][str(ID)] is not None:
+            out = json.loads(r.text)['data'][str(ID)]['name']
+            print(out)
+            return out
+        else:
+            pass
 
     def getShipDmg(self,data):
         return float(data['pvp']['damage_dealt'])
@@ -88,6 +124,9 @@ class API():
 
     def getShipID(self,data):
         return int(data['ship_id'])
+
+# SHIP RELATED FUNCTIONS
+# CLAN RELATED FUNCTIONS
 
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
@@ -113,15 +152,16 @@ class API():
         except:
             return None
 
-    def getShipName(self,ID):
-        data={'application_id':self.ID,'ship_id':ID}
-        r = requests.post(self.pediaep,data)
-        if json.loads(r.text)['data'][str(ID)] is not None:
-            out = json.loads(r.text)['data'][str(ID)]['name']
-            print(out)
-            return out
-        else:
-            pass
+    def getClanMembers(self,ID):
+        data={'application_id':self.ID,'clan_id':ID}
+        r = requests.post(self.claninfoep,data)
+        try:
+            return json.loads(r.text)['data'][str(ID)]['members_ids']
+        except:
+            return None
+
+# CLAN RELATED FUNCTIONS
+# OTHER
 
     def expectedValues(self):
         r = requests.get(self.wowsnumep)
@@ -136,5 +176,5 @@ if(__name__=="__main__"):
     #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
-    temp = a.getPlayerStats(a.getPlayerID("Modulatus"))
+    temp = a.getPlayerAvgWR(a.getPlayerID("Modulatus"))
     print(temp)
