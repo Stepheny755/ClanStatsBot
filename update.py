@@ -60,6 +60,10 @@ class Update():
                     name = api.getPlayerName(player)
                     pr = stats.PRcalculate(player)
 
+                    bt = api.getPlayerBattles(player)
+                    if(bt==0):
+                        break
+
                     avgdmg = api.getPlayerAvgDmg(player)
                     avgwr = api.getPlayerAvgWR(player)
                     avgkills = api.getPlayerAvgKills(player)
@@ -70,6 +74,7 @@ class Update():
                     data.append([name])
                     data.append([player])
                     data.append([pr])
+                    data.append([bt])
                     data.append([avgdmg])
                     data.append([avgkills])
                     data.append([avgwr])
