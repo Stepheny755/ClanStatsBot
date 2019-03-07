@@ -91,7 +91,7 @@ if(__name__=="__main__"):
     #while True:
         #time.sleep(10)
     u = Update()
-    #u.saveExpValues()
+    u.saveExpValues()
     u.saveStats()
 
 #@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
