@@ -30,8 +30,11 @@ class Util():
         else:
             return b
 
-    def round(self,input):
+    def round3(self,input):
         return format(input,'.3f')
+
+    def round2(self,input):
+        return format(input,'.2f')
 
 if(__name__=='__main__'):
     test = Util()
