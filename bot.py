@@ -12,9 +12,6 @@ from util import Util
 
 token = open('token.txt',"r").read().strip()
 
-RENAMETIME=1547524924
-CDDUR = 2592000
-
 client = discord.Client()
 
 @client.event
@@ -23,7 +20,6 @@ async def on_read():
     print(client.user.name)
     print(client.user.id)
     print('------')
-
 
 @client.event
 async def on_message(message):

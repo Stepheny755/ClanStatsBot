@@ -57,7 +57,12 @@ class Update():
                     name = api.getPlayerName(player)
                     pr = stats.PRcalculate(player)
                     # calculate avg dmg, wr,kills,
+                    temppath = str(clan[0])+"/"+str(name)
+                    filename = str(curtime)+".txt"
+                    print(temppath+" "+filename)
+                    print(stats)
 
+                    dt.writetxt(temppath,filename,stats)
         pass
 
     def saveStats(self):

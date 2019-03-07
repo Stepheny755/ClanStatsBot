@@ -104,7 +104,7 @@ class Data():
         lst = []
         rpath = os.path.join(adir,path).strip()
         for file in os.listdir(rpath):
-            if file.endswith('.txt'):
+            if file.endswith('.txt') or file.endswith('.csv'):
                 lst.append(file)
         if lst:
             t = max(lst)
@@ -137,5 +137,8 @@ if(__name__=="__main__"):
     #print(d.trackClan('MIA',[['mod','shitter'],['ddak','absolut trash'],['warlord','legend']]))
     #d.addToClanlist('asdf')
     #print(d.read('','ClanList'))
-    print(d.getShipID("Dresden"))
-    print(d.getShipStats(d.getShipID("Alaska")))
+    #print(d.getShipID("Dresden"))
+    #print(d.getShipStats(d.getShipID("Alaska")))'
+    ut = Util()
+    data = [["wr",50.532],["avgdmg",203021],['kills',2],['pr',2410]]
+    d.testwrite("MIA/test",str(ut.getGMTTime())+'.csv',data)
