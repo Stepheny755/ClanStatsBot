@@ -59,13 +59,10 @@ class Stats():
             #print(b)
             #print(str(aWin))
 
-        print("WR: "+str(u.round(aWin/btot*100)))
-        print("avg dmg: "+str(u.round(aDmg/btot)))
-
         dmg = self.PRnormDmg(aDmg/eDmg)
         kills = self.PRnormKil(aKil/eKil)
         wins = self.PRnormWin(aWin/eWin)
-        print(str(dmg)+" "+str(kills)+" "+str(wins))
+        #print(str(dmg)+" "+str(kills)+" "+str(wins))
         return (700*dmg + 300*kills + 150*wins)
 
         #may need to save PR in update.py as the average PR of the partial values of all ships

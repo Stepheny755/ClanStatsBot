@@ -31,10 +31,10 @@ class Util():
             return b
 
     def round3(self,input):
-        return format(input,'.3f')
+        return float(format(input,'.3f'))
 
     def round2(self,input):
-        return format(input,'.2f')
+        return float(format(input,'.2f'))
 
 if(__name__=='__main__'):
     test = Util()
