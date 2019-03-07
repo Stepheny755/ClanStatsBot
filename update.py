@@ -40,7 +40,7 @@ class Update():
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
         return temp['data']
 
-    def save(self):
+    def saveStats(self):
         dt = Data()
         api = API()
         ut = Util()
@@ -52,43 +52,19 @@ class Update():
         for clan in clanlist:
             players = api.getClanMembers(api.getClanID(clan[0]))
 
-            if IDs is not None:
-                for player in IDs:
+            if players is not None:
+                for player in players:
                     name = api.getPlayerName(player)
                     pr = stats.PRcalculate(player)
+                    avgdmg = api.
                     # calculate avg dmg, wr,kills,
                     temppath = str(clan[0])+"/"+str(name)
                     filename = str(curtime)+".txt"
                     print(temppath+" "+filename)
                     print(stats)
 
-                    dt.writetxt(temppath,filename,stats)
+                    #dt.writetxt(temppath,filename,stats)
         pass
-
-    def saveStats(self):
-        dt = Data()
-        api = API()
-        ut = Util()
-
-
-        curtime = ut.getGMTTime()
-
-        clanlist = dt.read('','ClanList')
-
-        for clan in clanlist:
-            IDs = api.getClanMembers(api.getClanID(clan[0]))
-            print(IDs)
-            if IDs is not None:
-                for player in IDs:
-                    name = api.getPlayerName(player)
-                    stats = api.getPlayerStats(player)
-
-                    temppath = str(clan[0])+"/"+str(name)
-                    filename = str(curtime)+".txt"
-                    print(temppath+" "+filename)
-                    print(stats)
-
-                    dt.writetxt(temppath,filename,stats)
 
 if(__name__=="__main__"):
     #sched = AsyncIOScheduler()
@@ -97,7 +73,7 @@ if(__name__=="__main__"):
     #while True:
         #time.sleep(10)
     u = Update()
-    u.saveExpValues()
+    #u.saveExpValues()
     u.saveStats()
 
 #@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
