@@ -54,14 +54,31 @@ class Update():
 
             if players is not None:
                 for player in players:
+
+                    data = []
+
                     name = api.getPlayerName(player)
                     pr = stats.PRcalculate(player)
-                    avgdmg = api.
+
+                    avgdmg = api.getPlayerAvgDmg(player)
+                    avgwr = api.getPlayerAvgWR(player)
+                    avgkills = api.getPlayerAvgKills(player)
+                    avgspdmg = api.getPlayerAvgSpottingDmg(player)
+                    avgptdmg = api.getPlayerAvgPotentialDmg(player)
                     # calculate avg dmg, wr,kills,
+
+                    data.append(name)
+                    data.append(ID)
+                    data.append(pr)
+                    data.append(avgdmg)
+                    data.append(avgkills)
+                    data.append(avgwr)
+
                     temppath = str(clan[0])+"/"+str(name)
                     filename = str(curtime)+".txt"
+                    
                     print(temppath+" "+filename)
-                    print(stats)
+                    print(data)
 
                     #dt.writetxt(temppath,filename,stats)
         pass

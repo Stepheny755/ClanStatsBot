@@ -82,6 +82,20 @@ class API():
         temp = float(data['pvp']['frags'])/float(battles)
         return u.round3(temp)
 
+    def getPlayerAvgSpottingDmg(self,ID):
+        data = self.getPlayerStats(ID)
+        battles = self.getPlayerBattles(ID)
+        u = Util()
+        temp = float(data['pvp']['damage_scouting'])/float(battles)
+        return u.round2(temp)
+
+    def getPlayerAvgPotentialDmg(self,ID):
+        data = self.getPlayerStats(ID)
+        battles = self.getPlayerBattles(ID)
+        u = Util()
+        temp = float(data['pvp']['torpedo_agro']+data['pvp']['art_agro'])/float(battles)
+        return u.round2(temp)
+
 # PLAYER RELATED FUNCTIONS
 # SHIP RELATED FUNCTIONS
 
@@ -176,5 +190,5 @@ if(__name__=="__main__"):
     #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
-    temp = a.getPlayerAvgWR(a.getPlayerID("Modulatus"))
-    print(temp)
+    print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
+    print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))
