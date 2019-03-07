@@ -19,13 +19,9 @@ A couple of assumptions are made when taking statistics of players:
 ## Structure
 
 * bot.py
-  * stats.py
-    * data.py
-    * API.py
-    * update.py
-      * data.py
-      * API.py
-  * clan.py
-  * player.py
+  * update.py
+   * stats.py
+     * data.py
+     * API.py
 
 * util.py
