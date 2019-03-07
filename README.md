@@ -23,7 +23,5 @@ A couple of assumptions are made when taking statistics of players:
    * stats.py
      * data.py
      * API.py
-  * clan.py
-  * player.py
 
 * util.py
