@@ -4,7 +4,6 @@ import json
 from API import API
 from data import Data
 from util import Util
-from update import Update
 
 class Stats():
     def __init__(self):
@@ -45,7 +44,7 @@ class Stats():
             b = a.getShipBattles(shipdata)
             id = a.getShipID(shipdata)
             expectedstats = d.getShipStats(id)
-            print(expectedstats)
+            #print(expectedstats)
 
             if expectedstats is not None:
                 eDmg += float(expectedstats[0]) * b
@@ -57,8 +56,8 @@ class Stats():
                 aWin += a.getShipWins(shipdata)
 
                 btot += b
-            print(b)
-            print(str(aWin))
+            #print(b)
+            #print(str(aWin))
 
         print("WR: "+str(u.round(aWin/btot*100)))
         print("avg dmg: "+str(u.round(aDmg/btot)))
@@ -70,38 +69,6 @@ class Stats():
         return (700*dmg + 300*kills + 150*wins)
 
         #may need to save PR in update.py as the average PR of the partial values of all ships
-
-    def pullExpectedData(self):
-        dt = Data()
-        api = API()
-
-        file = dt.getExpectedData()
-        val = []
-
-        for i in file:
-            val.append(i)
-
-        self.expected = val
-        return val
-
-    def getServerAvg(self):
-        data = self.pullExpectedData()
-        count = 0
-        tdg = 0.0 #total damage
-        twr = 0.0 #total wr
-        tkl = 0.0 #total avg kills
-        for i in data:
-            print(i)
-            if(len(i)>3):
-                count+=1
-                tdg+=float("%.3f" % float(i[len(i)-3]))
-                tkl+=float("%.3f" % float(i[len(i)-2]))
-                twr+=float("%.3f" % float(i[len(i)-1]))
-        print(tdg/count)
-        print(tkl/count)
-        print(twr/count)
-
-        print(count)
 
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
