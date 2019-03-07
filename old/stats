@@ -1,0 +1,31 @@
+def pullExpectedData(self):
+    dt = Data()
+    api = API()
+
+    file = dt.getExpectedData()
+    val = []
+
+    for i in file:
+        val.append(i)
+
+    self.expected = val
+    return val
+
+def getServerAvg(self):
+    data = self.pullExpectedData()
+    count = 0
+    tdg = 0.0 #total damage
+    twr = 0.0 #total wr
+    tkl = 0.0 #total avg kills
+    for i in data:
+        print(i)
+        if(len(i)>3):
+            count+=1
+            tdg+=float("%.3f" % float(i[len(i)-3]))
+            tkl+=float("%.3f" % float(i[len(i)-2]))
+            twr+=float("%.3f" % float(i[len(i)-1]))
+    print(tdg/count)
+    print(tkl/count)
+    print(twr/count)
+
+    print(count)
