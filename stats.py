@@ -11,15 +11,27 @@ class Stats():
 
     expected = []
 
-    def PRnormDmg(self,dmg):
+    def PRnormDmg(self,dmg,edmg):
+        if(edmg!=0):
+            dmg/=edmg
+        else:
+            return 0
         nDmg = float(max(0,(dmg-0.4)/(1.0-0.4)))
         return nDmg
 
-    def PRnormWin(self,wins):
+    def PRnormWin(self,wins,ewins):
+        if(ewins!=0):
+            wins/=ewins
+        else:
+            return 0
         nWins = float(max(0,(wins-0.7)/(1.0-0.7)))
         return nWins
 
-    def PRnormKil(self,kills):
+    def PRnormKil(self,kills,ekills):
+        if(ekills!=0):
+            kills/=ekills
+        else:
+            return 0
         nKills = float(max(0,(kills-0.1)/(1.0-0.1)))
         return nKills
 
@@ -59,9 +71,9 @@ class Stats():
             #print(b)
             #print(str(aWin))
 
-        dmg = self.PRnormDmg(aDmg/eDmg)
-        kills = self.PRnormKil(aKil/eKil)
-        wins = self.PRnormWin(aWin/eWin)
+        dmg = self.PRnormDmg(aDmg,eDmg)
+        kills = self.PRnormKil(aKil,eKil)
+        wins = self.PRnormWin(aWin,eWin)
         #print(str(dmg)+" "+str(kills)+" "+str(wins))
         return (700*dmg + 300*kills + 150*wins)
 
