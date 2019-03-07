@@ -1,0 +1,24 @@
+def saveStats(self):
+    dt = Data()
+    api = API()
+    ut = Util()
+
+
+    curtime = ut.getGMTTime()
+
+    clanlist = dt.read('','ClanList')
+
+    for clan in clanlist:
+        IDs = api.getClanMembers(api.getClanID(clan[0]))
+        print(IDs)
+        if IDs is not None:
+            for player in IDs:
+                name = api.getPlayerName(player)
+                stats = api.getPlayerStats(player)
+
+                temppath = str(clan[0])+"/"+str(name)
+                filename = str(curtime)+".txt"
+                print(temppath+" "+filename)
+                print(stats)
+
+                dt.writetxt(temppath,filename,stats)
