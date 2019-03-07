@@ -1,5 +1,3 @@
-
-import numpy as np
 import json,requests
 import urllib.request
 

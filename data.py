@@ -1,4 +1,3 @@
-import numpy as np
 import json,csv,os
 
 from util import Util
@@ -14,6 +13,9 @@ class Data():
     def __init__(self): #,inp):
         #self.name = inp
         pass
+
+# INIT
+# READ WRITE APPEND FUNCTIONS
 
     def testread(self,filename):
         rdarr = []
@@ -64,6 +66,9 @@ class Data():
         with open(os.path.join(temppath,filename).strip(),'a+') as a:
             a.write(output+"\n")
 
+# READ WRITE APPEND FUNCTIONS
+# CLAN RELATED FUNCTIONS
+
     def addToClanlist(self,name):
         templist = self.read('','ClanList')
         for clanname in templist:
@@ -71,6 +76,18 @@ class Data():
                 print(clanname[0])
                 return
         self.append('','ClanList',name)
+
+    def trackClan(self,clanname,data):
+        temppath = os.path.join(adir,clanname).strip()
+        if not os.path.exists(temppath):
+            os.makedirs(temppath)
+        u = Util()
+        time = u.getGMTTime()
+        self.write(clanname,str(time)+'.csv',data)
+        pass
+
+# CLAN RELATED FUNCTIONS
+# WOWSNUMBERS FUNCTIONS
 
     def getWMostRecent(self):
         #TODO: Find value (either ID or name of ship) in expected value csv, and return associated dmg,frag, and WR data
@@ -85,6 +102,9 @@ class Data():
         file = self.read('wowsnumbers',filename)
         #print(file)
         return file
+
+# WOWSNUMBERS FUNCTIONS
+# SHIP RELATED FUNCTIONS
 
     def getShipID(self,name):
         data = self.getExpectedData()
@@ -111,15 +131,6 @@ class Data():
         else:
             return None
         return self.readtxt(str(path),t)
-
-    def trackClan(self,clanname,data):
-        temppath = os.path.join(adir,clanname).strip()
-        if not os.path.exists(temppath):
-            os.makedirs(temppath)
-        u = Util()
-        time = u.getGMTTime()
-        self.write(clanname,str(time)+'.csv',data)
-        pass
 
 if(__name__=="__main__"):
 
