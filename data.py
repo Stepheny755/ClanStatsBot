@@ -97,7 +97,7 @@ class Data():
         data = self.getExpectedData()
         for ship in data:
             if(int(ship[0])==sID and len(ship)>2):
-                print(ship[1])
+                #print(ship[1])
                 return ship[len(ship)-3],ship[len(ship)-2],ship[len(ship)-1]
 
     def getSMostRecent(self,path):

@@ -67,21 +67,22 @@ class Update():
                     avgptdmg = api.getPlayerAvgPotentialDmg(player)
                     # calculate avg dmg, wr,kills,
 
-                    data.append(name)
-                    data.append(ID)
-                    data.append(pr)
-                    data.append(avgdmg)
-                    data.append(avgkills)
-                    data.append(avgwr)
+                    data.append([name])
+                    data.append([player])
+                    data.append([pr])
+                    data.append([avgdmg])
+                    data.append([avgkills])
+                    data.append([avgwr])
+                    data.append([avgspdmg])
+                    data.append([avgptdmg])
 
                     temppath = str(clan[0])+"/"+str(name)
                     filename = str(curtime)+".txt"
-                    
+
                     print(temppath+" "+filename)
                     print(data)
-
-                    #dt.writetxt(temppath,filename,stats)
-        pass
+                    dt.write(temppath,filename,data)
+        return 0
 
 if(__name__=="__main__"):
     #sched = AsyncIOScheduler()
