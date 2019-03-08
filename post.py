@@ -17,11 +17,19 @@ class Post():
         clanlist = dt.read('','ClanList')
 
     def getPlayerData(self,clanID):
+        api = API()
+        clantag = api.getClanTag(ID)
+        players = api.getClanMembers(ID)
+        if players is not None:
+            for player in players:
+                name = api.getPlayerName(player)
 
     def getClanData(self,clanID):
         api = API()
-        clantag 
+        clantag = api.getClanTag(ID)
+
 
 
 if(__name__=="__main__"):
     d = Data()
+    print(d.getSMostRecent("MIA"))
