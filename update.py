@@ -52,6 +52,21 @@ class Update():
         for clan in clanlist:
             players = api.getClanMembers(api.getClanID(clan[0]))
 
+            clanID = api.getClanID(clan[0])
+            clanname = api.getClanTag(clanID)
+            playernum = len(players)
+            clanavgpr = 0.0
+            clanavgbt = 0
+            clanavgdmg = 0.0
+            clanavgkills = 0.0
+            clanavgwr = 0.0
+            clanavgspd = 0.0
+            clanavgptd = 0.0
+
+            data2 = []
+            data.append([int(clanID)])
+            data.append([clanname])
+
             if players is not None:
                 for player in players:
 
@@ -81,12 +96,31 @@ class Update():
                     data.append([avgspdmg])
                     data.append([avgptdmg])
 
+                    clanavgpr += pr
+                    clanavgbt += bt
+                    clanavgdmg += avgdmg
+                    clanavgkills += avgkills
+                    clanavgwr += avgwr
+                    clanavgspd += avgspdmg
+                    clanavgptd += avgptdmg
+
                     temppath = str(clan[0])+"/"+str(name)
-                    filename = str(curtime)+".txt"
+                    filename = str(curtime)+".csv"
 
                     print(temppath+" "+filename)
                     print(data)
                     dt.write(temppath,filename,data)
+
+            data2.append([float(clanavgpr / playernum)])
+            data2.append([int(clanavgbt / playernum)])
+            data2.append([float(clanavgdmg / playernum)])
+            data2.append([float(clanavgkills / playernum)])
+            data2.append([float(clanavgwr / playernum)])
+            data2.append([float(clanavgspd / playernum)])
+            data2.append([float(clanavgptd / playernum)])
+
+            dt.write(str(clan[0]),str(curtime)+".csv",data2)
+
         return 0
 
 if(__name__=="__main__"):
