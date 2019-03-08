@@ -20,7 +20,8 @@ A couple of assumptions are made when taking statistics of players:
 
 * bot.py
   * update.py
-   * stats.py
+  * post.py
+     * stats.py
      * data.py
      * API.py
 
