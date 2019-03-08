@@ -15,7 +15,12 @@ class Post():
 
         curtime = ut.getGMTTime()
         clanlist = dt.read('','ClanList')
-        
+
+    def getPlayerData(self,clanID):
+
+    def getClanData(self,clanID):
+        api = API()
+        clantag 
 
 
 if(__name__=="__main__"):
