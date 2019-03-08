@@ -26,10 +26,15 @@ class Post():
 
     def getClanData(self,clanID):
         api = API()
-        clantag = api.getClanTag(ID)
-
+        clantag = str(api.getClanTag(ID))
+        temp = d.getMostRecent(clantag)
+        data = d.read(clantag,str(temp))
+        return data
 
 
 if(__name__=="__main__"):
     d = Data()
-    print(d.getSMostRecent("MIA"))
+    a = API()
+    p = Post()
+    print(d.getMostRecent("MIA"))
+    print(p.getClanData(a.getClanID("MIA")))
