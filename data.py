@@ -120,7 +120,7 @@ class Data():
                 #print(ship[1])
                 return ship[len(ship)-3],ship[len(ship)-2],ship[len(ship)-1]
 
-    def getSMostRecent(self,path):
+    def getMostRecent(self,path):
         lst = []
         rpath = os.path.join(adir,path).strip()
         for file in os.listdir(rpath):
@@ -130,7 +130,7 @@ class Data():
             t = max(lst)
         else:
             return None
-        return self.readtxt(str(path),t)
+        return t
 
 if(__name__=="__main__"):
 
