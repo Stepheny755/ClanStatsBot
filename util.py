@@ -19,10 +19,11 @@ class Util():
         return int(calendar.timegm(time.gmtime()))
 
     def getEarlier(self,a,b):
-        if(a>b):
-            return b
-        else:
-            return a
+        return a if a<b else b
+
+    def getLater(self,a,b):
+        return a if a>b else b
+
 
     def dToS(self,num):
         return 24*60*60*num
@@ -35,12 +36,6 @@ class Util():
         curtime -= self.dToS(days)
         return self.SecToGTime(curtime)
 
-    def getLater(self,a,b):
-        if(a>b):
-            return a
-        else:
-            return b
-
     def round3(self,input):
         return float(format(input,'.3f'))
 
@@ -49,10 +44,10 @@ class Util():
 
 if(__name__=='__main__'):
     test = Util()
-    print(test.dToS(2))
-    print(test.sToD(134124))
-    print(test.countPreviousDays(7))
-    #print(test.getEarlier(123222222456,test.getGMTTime()))
+    #print(test.dToS(2))
+    #print(test.sToD(134124))
+    #print(test.countPreviousDays(7))
+    print(test.getLater(12322456,test.getGMTTime()))
     #a = calendar.timegm(time.gmtime())
     #print(a)
     #b = test.SecToGTime(a)
