@@ -24,6 +24,17 @@ class Util():
         else:
             return a
 
+    def dToS(self,num):
+        return 24*60*60*num
+
+    def sToD(self,num):
+        return num/(60*60*24)
+
+    def countPreviousDays(self,days):
+        curtime = self.getGMTTime()
+        curtime -= self.dToS(days)
+        return self.SecToGTime(curtime)
+
     def getLater(self,a,b):
         if(a>b):
             return a
@@ -38,6 +49,9 @@ class Util():
 
 if(__name__=='__main__'):
     test = Util()
+    print(test.dToS(2))
+    print(test.sToD(134124))
+    print(test.countPreviousDays(7))
     #print(test.getEarlier(123222222456,test.getGMTTime()))
     #a = calendar.timegm(time.gmtime())
     #print(a)

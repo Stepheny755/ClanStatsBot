@@ -26,9 +26,13 @@ class Post():
 
     def getClanData(self,clanID):
         api = API()
-        clantag = str(api.getClanTag(ID))
+        clantag = str(api.getClanTag(clanID))
         temp = d.getMostRecent(clantag)
-        data = d.read(clantag,str(temp))
+        tempdata = d.read(clantag,str(temp))
+        data = []
+        for i in tempdata:
+            val = float(i[0])
+            data.append(val)
         return data
 
 
