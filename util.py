@@ -47,7 +47,7 @@ if(__name__=='__main__'):
     #print(test.dToS(2))
     #print(test.sToD(134124))
     #print(test.countPreviousDays(7))
-    print(test.getLater(12322456,test.getGMTTime()))
+    #print(test.getLater(12322456,test.getGMTTime()))
     #a = calendar.timegm(time.gmtime())
     #print(a)
     #b = test.SecToGTime(a)

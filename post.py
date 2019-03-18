@@ -24,6 +24,17 @@ class Post():
             for player in players:
                 name = api.getPlayerName(player)
 
+    def createEmbed(self,clantag,embed):
+        api = API()
+        d = Data()
+        for i in api.getClanMembers(api.getClanID(clantag)):
+            name = api.getPlayerName(i)
+            rpath = str(clantag)+"/"+str(name)
+            temp = d.read(rpath,d.getMostRecent(rpath))
+            print(temp)
+            embed.add_field(name=api.getPlayerName(i),value="test",inline=True)
+        return embed
+
     def getClanData(self,clanID):
         api = API()
         clantag = str(api.getClanTag(clanID))

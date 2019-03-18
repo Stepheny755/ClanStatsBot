@@ -151,5 +151,6 @@ if(__name__=="__main__"):
     #print(d.getShipID("Dresden"))
     #print(d.getShipStats(d.getShipID("Alaska")))'
     ut = Util()
-    data = [["wr",50.532],["avgdmg",203021],['kills',2],['pr',2410]]
-    d.testwrite("MIA/test",str(ut.getGMTTime())+'.csv',data)
+    print(d.read("MIA-E/Modulatus",d.getMostRecent("MIA-E/Modulatus/")))
+    #data = [["wr",50.532],["avgdmg",203021],['kills',2],['pr',2410]]
+    #d.testwrite("MIA/test",str(ut.getGMTTime())+'.csv',data)
