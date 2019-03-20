@@ -27,7 +27,7 @@ class Update():
             lst = []
             lst.append(shipid)
             print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
-            #print(shipdata['average_damage_dealt'])
+            print(shipdata)
             name = api.getShipName(shipid)
             if name is None:
                 lst.append("None")
