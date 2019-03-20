@@ -35,6 +35,7 @@ class Update():
             for key in shipdata:
                 lst.append(shipdata[key])
             out.append(lst)
+            print(lst)
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
