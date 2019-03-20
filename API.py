@@ -188,5 +188,6 @@ if(__name__=="__main__"):
     #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
+    print(a.expectedValues())
     print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
     print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))
