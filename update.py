@@ -33,9 +33,10 @@ class Update():
                 lst.append("None")
             else:
                 lst.append(name)
-            lst.append(shipdata['average_damage_dealt'])
-            lst.append(shipdata['average_frags'])
-            lst.append(shipdata['win_rate'])
+            if(len(shipdata)!=0):
+                lst.append(shipdata['average_damage_dealt'])
+                lst.append(shipdata['average_frags'])
+                lst.append(shipdata['win_rate'])
             out.append(lst)
             print(lst)
 
