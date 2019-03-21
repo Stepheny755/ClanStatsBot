@@ -27,6 +27,7 @@ class Post():
     def createEmbed(self,clantag,embed):
         api = API()
         d = Data()
+        u = Util()
         for i in api.getClanMembers(api.getClanID(clantag)):
             name = api.getPlayerName(i)
             bt = api.getPlayerBattles(i)
@@ -34,8 +35,21 @@ class Post():
                 break
             rpath = str(clantag)+"/"+str(name)
             temp = d.read(rpath,d.getMostRecent(rpath))
-            print(temp)
-            embed.add_field(name=api.getPlayerName(i),value=,inline=True)
+            postname=api.getPlayerName(i)+"   (ID: "+str(i)+")"
+
+            PR = float(temp[2][0])
+            print(PR)
+            dmg = temp[4][0]
+            bt = temp[3][0]
+            k = temp[5][0]
+            wr = temp[6][0]
+
+            ret1 = "PR: "+str(u.round3(PR))+" Battles: "+bt+" Avg Damage: "+dmg+" Avg Kills: "+k+" Win Rate "+wr
+            print(ret1)
+            ret2 = "```diff\n+c +c \n-c +x```"
+            ret = ret1+"\n"+ret2
+
+            embed.add_field(name=postname,value=ret,inline=False)
         return embed
 
     def getClanData(self,clanID):

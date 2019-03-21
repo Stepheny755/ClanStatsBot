@@ -52,7 +52,7 @@ class API():
             return None
 
     def getPlayerStats(self,ID):
-        sleep(0.05)
+        sleep(0.1)
         data=self.getPlayerCard(ID)
         return data['statistics']
 
