@@ -67,7 +67,10 @@ class Post():
         string = ret + "\n" + ret2
 
         return string
-
+        #TODO:
+        #make delta functions and cur array just ints/floats. That way you can manipulate them easier
+        #add + for positive numbers
+        #format string with spacing
     def getWeekDeltas(self,rpath):
         ut = Util()
         dt = Data()
