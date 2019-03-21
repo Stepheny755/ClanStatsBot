@@ -44,7 +44,7 @@ class Post():
             k = temp[5][0]
             wr = temp[6][0]
 
-            ret1 = "PR: "+str(u.round3(PR))+" Battles: "+bt+" Avg Damage: "+dmg+" Avg Kills: "+k+" Win Rate "+wr
+            ret1 = "**PR:** "+str(u.round3(PR))+" **Battles:** "+bt+" Avg Damage: "+dmg+" Avg Kills: "+k+" Win Rate "+wr
             print(ret1)
             ret2 = "```diff\n+c +c \n-c +x```"
             ret = ret1+"\n"+ret2
