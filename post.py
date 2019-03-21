@@ -44,10 +44,18 @@ class Post():
             k = temp[5][0]
             wr = temp[6][0]
 
-            ret1 = "**PR:** "+str(u.round3(PR))+" **Battles:** "+bt+" **Avg Damage:** "+dmg+" **Avg Kills:** "+k+" **WR:** "+wr+"%"
-            print(ret1)
-            ret2 = "```diff\n +c +c \n-c +x```"
-            ret = ret1+"\n"+ret2
+            retp = "**PR:** "+str(u.round3(PR))+" "
+            retb = "**Battles:** "+bt+" "
+            retd = "**Avg Damage:** "+dmg+" "
+            retk = "**Avg Kills:** "+k+" "
+            retw = "**WR:** "+wr+"%"
+
+            dpdt = "```diff\n+x```"
+            dbdt = "```diff\n-3```"
+            dddt = "```diff\n+1234```"
+            dkdt = "```diff\n+222```"
+            dwdt = "```diff\n+45.32%```"
+            ret = retp+dpdt+retb+dbdt+retd+dddt+retk+dkdt+retw+dwdt
 
             embed.add_field(name=postname,value=ret,inline=False)
         return embed

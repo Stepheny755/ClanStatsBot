@@ -44,7 +44,7 @@ class Util():
 
 if(__name__=='__main__'):
     test = Util()
-    #print(test.dToS(2))
+    print(test.countPreviousDays(test.dToS(7)))
     #print(test.sToD(134124))
     #print(test.countPreviousDays(7))
     #print(test.getLater(12322456,test.getGMTTime()))

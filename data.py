@@ -120,6 +120,9 @@ class Data():
                 #print(ship[1])
                 return ship[len(ship)-3],ship[len(ship)-2],ship[len(ship)-1]
 
+# SHIP RELATED FUNCTIONS
+# SAVED STATS FUNCTIONS
+
     def getMostRecent(self,path):
         lst = []
         rpath = os.path.join(adir,path).strip()
