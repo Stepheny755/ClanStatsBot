@@ -36,6 +36,14 @@ class Util():
         curtime -= self.dToS(days)
         return self.SecToGTime(curtime)
 
+    def countWeekSec(self):
+        curtime = self.getGMTTime()
+        return curtime - self.dToS(7)
+
+    def countMonthSec(self):
+        curtime = self.getGMTTime()
+        return curtime - self.dToS(30)
+
     def round3(self,input):
         return float(format(input,'.3f'))
 
@@ -44,7 +52,8 @@ class Util():
 
 if(__name__=='__main__'):
     test = Util()
-    print(test.countPreviousDays(test.dToS(7)))
+    print(test.countWeekSec())
+    print(test.countMonthSec())
     #print(test.sToD(134124))
     #print(test.countPreviousDays(7))
     #print(test.getLater(12322456,test.getGMTTime()))

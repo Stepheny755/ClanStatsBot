@@ -135,6 +135,19 @@ class Data():
             return None
         return t
 
+    def getLatestbeforeDate(self,path,time):
+        lst = []
+        rpath = os.path.join(adir,path).strip()
+        for file in os.listdir(rpath):
+            if file.endswith('.csv'):
+                if(int(file[:-4])<time):
+                    lst.append(file)
+        if lst:
+            t = max(lst)
+        else:
+            return None
+        return t
+
 if(__name__=="__main__"):
 
     d = Data()
@@ -155,5 +168,6 @@ if(__name__=="__main__"):
     #print(d.getShipStats(d.getShipID("Alaska")))'
     ut = Util()
     print(d.read("MIA-E/Modulatus",d.getMostRecent("MIA-E/Modulatus/")))
+    print(d.read("MIA-E/Modulatus",d.getLatestbeforeDate("MIA-E/Modulatus",ut.countWeekSec())))
     #data = [["wr",50.532],["avgdmg",203021],['kills',2],['pr',2410]]
     #d.testwrite("MIA/test",str(ut.getGMTTime())+'.csv',data)
