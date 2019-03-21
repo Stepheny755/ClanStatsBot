@@ -27,7 +27,7 @@ class Update():
             lst = []
             lst.append(shipid)
             print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
-            print(shipdata)
+            #print(shipdata)
             name = api.getShipName(shipid)
             if name is None:
                 lst.append("None")
@@ -38,7 +38,7 @@ class Update():
                 lst.append(shipdata['average_frags'])
                 lst.append(shipdata['win_rate'])
             out.append(lst)
-            print(lst)
+            #print(lst)
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
@@ -134,7 +134,7 @@ if(__name__=="__main__"):
     #while True:
     #time.sleep(10)
     u = Update()
-    u.saveExpValues()
+    #u.saveExpValues()
     u.saveStats()
 
 #@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')

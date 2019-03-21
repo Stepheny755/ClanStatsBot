@@ -74,17 +74,20 @@ async def on_message(message):
         await client.send_message(message.channel,ret)
 
     elif(message.content.startswith('!embed')):
-        embed = discord.Embed(title="Tile", description="Desc", color=0x00ff00)
-        embed.add_field(name="Field1", value="hi", inline=True)
-        p = Post()
-        embed = p.createEmbed("MIA-E",embed)
-        embed.set_author(name='Someone', icon_url=client.user.default_avatar_url)
-        embed.set_footer(text='Text')
-        embed.set_image(url='https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116277083/original/b687431d2dc4e6f66692a75d9bff6d9fb88a8390/create-a-discord-profile-picture-animated-or-nonanimated.jpg')
-        print(embed.to_dict())
+        embed = postValues("MIA-E")
         await client.send_message(message.channel, embed=embed)
 
     print(str(message.channel)+": "+message.content)
+
+async def postValues(clanname):
+    embed = discord.Embed(title="Tile", description="Desc", color=0x00ff00)
+    embed.add_field(name="Field1", value="hi", inline=True)
+    p = Post()
+    embed = p.createEmbed(clanname,embed)
+    embed.set_author(name='Someone', icon_url=client.user.default_avatar_url)
+    embed.set_footer(text='Text')
+    embed.set_image(url='https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116277083/original/b687431d2dc4e6f66692a75d9bff6d9fb88a8390/create-a-discord-profile-picture-animated-or-nonanimated.jpg')
+    print(embed.to_dict())
 
 def scheduled_job():
     print("Updated Started")
