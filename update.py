@@ -35,7 +35,6 @@ class Update():
             for key in shipdata:
                 lst.append(shipdata[key])
             out.append(lst)
-            print(lst)
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
@@ -65,8 +64,8 @@ class Update():
             clanavgptd = 0.0
 
             data2 = []
-            data2.append([int(clanID)])
-            data2.append([clanname])
+            data.append([int(clanID)])
+            data.append([clanname])
 
             if players is not None:
                 for player in players:
@@ -89,7 +88,6 @@ class Update():
 
                     data.append([name])
                     data.append([player])
-                    data.append([pr])
                     data.append([bt])
                     data.append([avgdmg])
                     data.append([avgkills])
@@ -129,7 +127,7 @@ if(__name__=="__main__"):
     #sched.start()
     #input('any key to exit')
     #while True:
-    #time.sleep(10)
+        #time.sleep(10)
     u = Update()
     u.saveExpValues()
     u.saveStats()
