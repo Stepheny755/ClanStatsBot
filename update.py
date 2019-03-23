@@ -67,8 +67,8 @@ class Update():
             clanavgptd = 0.0
 
             data2 = []
-            data.append([int(clanID)])
-            data.append([clanname])
+            data2.append([int(clanID)])
+            data2.append([clanname])
 
             if players is not None:
                 for player in players:
@@ -91,6 +91,7 @@ class Update():
 
                     data.append([name])
                     data.append([player])
+                    data.append([pr])
                     data.append([bt])
                     data.append([avgdmg])
                     data.append([avgkills])
