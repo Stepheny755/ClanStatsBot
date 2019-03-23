@@ -56,7 +56,7 @@ class Stats():
             b = a.getShipBattles(shipdata)
             id = a.getShipID(shipdata)
             expectedstats = d.getShipStats(id)
-            print(expectedstats)
+            #print(expectedstats)
 
             if expectedstats is not None:
                 eDmg += float(expectedstats[0]) * b

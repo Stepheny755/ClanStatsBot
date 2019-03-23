@@ -74,17 +74,28 @@ async def on_message(message):
         await client.send_message(message.channel,ret)
 
     elif(message.content.startswith('!embed')):
-        embed = discord.Embed(title="Tile", description="Desc", color=0x00ff00)
-        embed.add_field(name="Field1", value="hi", inline=True)
-        p = Post()
-        embed = p.createEmbed("MIA-E",embed)
-        embed.set_author(name='Someone', icon_url=client.user.default_avatar_url)
-        embed.set_footer(text='Text')
-        embed.set_image(url='https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116277083/original/b687431d2dc4e6f66692a75d9bff6d9fb88a8390/create-a-discord-profile-picture-animated-or-nonanimated.jpg')
-        print(embed.to_dict())
+        temp = message.content
+        input = temp[7:]
+        await client.send_message(message.channel,str('Processing '+input+' Statistics'))
+        embed = await postValues(input)
         await client.send_message(message.channel, embed=embed)
 
     print(str(message.channel)+": "+message.content)
+
+async def postValues(clanname):
+    start_time=time.time()
+    embed = discord.Embed()
+    #embed.add_field(name="Field1", value="hi", inline=True)
+    p = Post()
+    a = API()
+    u = Util()
+    embed = p.createEmbed(clanname,embed)
+    postname = "["+str(clanname)+"] "+a.getClanName(a.getClanID(clanname))+" Statistics"
+    embed.set_author(name=postname, icon_url=client.user.default_avatar_url)
+    runtime = "Runtime: "+str(u.round3(time.time()-start_time))+" Seconds"
+    embed.set_footer(text=str(runtime))
+    #embed.set_image(url='https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116277083/original/b687431d2dc4e6f66692a75d9bff6d9fb88a8390/create-a-discord-profile-picture-animated-or-nonanimated.jpg')
+    return embed
 
 def scheduled_job():
     print("Updated Started")

@@ -27,14 +27,21 @@ class Update():
             lst = []
             lst.append(shipid)
             print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
+            #print(shipdata)
             name = api.getShipName(shipid)
             if name is None:
                 lst.append("None")
             else:
                 lst.append(name)
-            for key in shipdata:
-                lst.append(shipdata[key])
+            if(len(shipdata)!=0):
+                lst.append(shipdata['average_damage_dealt'])
+                lst.append(shipdata['average_frags'])
+                lst.append(shipdata['win_rate'])
             out.append(lst)
+<<<<<<< HEAD
+=======
+            #print(lst)
+>>>>>>> 697152c63f06d47ad3af6d57351cddc91cf4043d
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
