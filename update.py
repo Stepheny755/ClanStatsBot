@@ -38,10 +38,6 @@ class Update():
                 lst.append(shipdata['average_frags'])
                 lst.append(shipdata['win_rate'])
             out.append(lst)
-<<<<<<< HEAD
-=======
-            #print(lst)
->>>>>>> 697152c63f06d47ad3af6d57351cddc91cf4043d
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
