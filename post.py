@@ -1,3 +1,5 @@
+import asyncio
+
 from data import Data
 from API import API
 from util import Util
@@ -40,11 +42,11 @@ class Post():
 
             cur = []
 
-            cur.append(str(u.round3(float(temp[2][0]))))
-            cur.append(str(int(temp[3][0])))
-            cur.append(str(float(temp[4][0])))
-            cur.append(str(float(temp[5][0])))
-            cur.append(str(float(temp[6][0])))
+            cur.append(u.round3(float(temp[2][0])))
+            cur.append(int(temp[3][0]))
+            cur.append(float(temp[4][0]))
+            cur.append(float(temp[5][0]))
+            cur.append(float(temp[6][0]))
 
             wdelta = self.getWeekDeltas(rpath)
             mdelta = self.getMonthDeltas(rpath)
@@ -55,17 +57,32 @@ class Post():
         return embed
 
     def formatString(self,cur,wdelta,mdelta):
+        u = Util()
+
         string = ""
-        retp = "**PR:** "+cur[0]+" "
-        retb = "**Battles:** "+cur[1]+" "
-        retd = "**Avg Damage:** "+cur[2]+" "
-        retk = "**Avg Kills:** "+cur[3]+" "
-        retw = "**WR:** "+cur[4]+"%"
+        retp = "**PR:** "+str(cur[0])+" "
+        retb = "**Battles:** "+str(cur[1])+" "
+        retd = "**Avg Damage:** "+str(cur[2])+" "
+        retk = "**Avg Kills:** "+str(cur[3])+" "
+        retw = "**WR:** "+str(cur[4])+"%"
 
-        ret = retp+retb+retd+retk+retw
-        ret2 = wdelta[0]+wdelta[1]+wdelta[2]+wdelta[3]+wdelta[4]
-        string = ret + "\n" + ret2
+        temp =[retp,retb,retd,retk,retw]
 
+        retwe = "W"
+        retmo = "M"
+
+        for i in range(5):
+            if(len(wdelta)>=0):
+                retwe+=self.equalizeString(temp[i],u.ifPos(wdelta[i]))+" "+ "\t"+ "\u200b"
+            #if(len(mdelta)>=0):
+                #retmo+=self.equalizeString(temp[i],u.ifPos(mdelta[i]))+" "
+
+        string = retp+retb+retd+retk+retw
+        if(len(retwe)>1):
+            string += "\n" + retwe
+        if(len(retmo)>1):
+            string += "\n" + retmo
+        print(string)
         return string
         #TODO:
         #make delta functions and cur array just ints/floats. That way you can manipulate them easier
@@ -83,11 +100,11 @@ class Post():
 
         values = []
 
-        values.append(str(ut.round3((float(recent[2][0])-float(week[2][0]))/7))+" ")
-        values.append(str(ut.round2((int(recent[3][0])-int(week[3][0]))/7))+" ")
-        values.append(str(ut.round2((float(recent[4][0])-float(week[4][0]))/7))+" ")
-        values.append(str(ut.round3((float(recent[5][0])-float(week[5][0]))/7))+" ")
-        values.append(str(ut.round3((float(recent[6][0])-float(week[6][0]))/7))+" ")
+        values.append(ut.round3((float(recent[2][0])-float(week[2][0]))/7))
+        values.append(ut.round2((int(recent[3][0])-int(week[3][0]))/7))
+        values.append(ut.round2((float(recent[4][0])-float(week[4][0]))/7))
+        values.append(ut.round3((float(recent[5][0])-float(week[5][0]))/7))
+        values.append(ut.round3((float(recent[6][0])-float(week[6][0]))/7))
 
         return values
 
@@ -103,11 +120,11 @@ class Post():
 
         values = []
 
-        values.append(str(ut.round3((float(recent[2][0])-float(month[2][0]))/30))+" ")
-        values.append(str(ut.round2((int(recent[3][0])-int(month[3][0]))/30))+" ")
-        values.append(str(ut.round2((float(recent[4][0])-float(month[4][0]))/30))+" ")
-        values.append(str(ut.round3((float(recent[5][0])-float(month[5][0]))/30))+" ")
-        values.append(str(ut.round3((float(recent[6][0])-float(month[6][0]))/30))+" ")
+        values.append(ut.round3((float(recent[2][0])-float(month[2][0]))/30))
+        values.append(ut.round2((int(recent[3][0])-int(month[3][0]))/30))
+        values.append(ut.round2((float(recent[4][0])-float(month[4][0]))/30))
+        values.append(ut.round3((float(recent[5][0])-float(month[5][0]))/30))
+        values.append(ut.round3((float(recent[6][0])-float(month[6][0]))/30))
 
         return values
 
@@ -122,10 +139,24 @@ class Post():
             data.append(val)
         return data
 
+    def addString(self,string,num):
+        ret = ""
+        for i in range(num):
+            ret += " "
+        ret += string
+        return ret
+
+    def equalizeString(self,s1,s2):
+        len1 = len(s1)
+        len2 = len(s2)
+        ret = self.addString(s2,len1-len2)
+        return ret
 
 if(__name__=="__main__"):
     d = Data()
     a = API()
     p = Post()
-    print(d.getMostRecent("MIA"))
-    print(p.getClanData(a.getClanID("MIA")))
+    #print(d.getMostRecent("MIA"))
+    #print(p.getClanData(a.getClanID("MIA")))
+    print(p.equalizeString("PR: 32","+0.339"))
+    print(len(""))

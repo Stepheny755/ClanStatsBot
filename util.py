@@ -24,6 +24,11 @@ class Util():
     def getLater(self,a,b):
         return a if a>b else b
 
+    def ifPos(self,a):
+        if a > 0:
+            return "+"+str(a)
+        else:
+            return str(a)
 
     def dToS(self,num):
         return 24*60*60*num
