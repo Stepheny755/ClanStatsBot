@@ -81,9 +81,9 @@ class Post():
 
         for i in range(5):
             if(len(wdelta)>0):
-                retwe+=self.equalizeString(temp[i],u.ifPos(wdelta[i]))+" "
+                retwe+=self.equalizeToString(temp[i],u.ifPos(wdelta[i]))+" "
             if(len(mdelta)>0):
-                retmo+=self.equalizeString(temp[i],u.ifPos(mdelta[i]))+" "
+                retmo+=self.equalizeToString(temp[i],u.ifPos(mdelta[i]))+" "
 
         string = retp+retb+retd+retk+retw
         if(len(retwe)>1):
@@ -155,7 +155,7 @@ class Post():
         ret += string
         return ret
 
-    def equalizeString(self,s1,s2):
+    def equalizeToString(self,s1,s2):
         len1 = len(s1)
         len2 = len(s2)
         ret = self.addString(s2,len1-len2)
@@ -167,5 +167,5 @@ if(__name__=="__main__"):
     p = Post()
     #print(d.getMostRecent("MIA"))
     #print(p.getClanData(a.getClanID("MIA")))
-    print(p.equalizeString("PR: 32","+0.339"))
+    print(p.equalizeToString("PR: 32","+0.339"))
     print(len(""))
