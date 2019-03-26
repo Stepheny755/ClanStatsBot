@@ -155,7 +155,7 @@ class Post():
             data.append(val)
         return data
 
-    def addString(self,string,num):
+    def addSpace(self,string,num):
         ret = ""
         for i in range(num):
             ret += " "
@@ -165,7 +165,7 @@ class Post():
     def equalizeToString(self,s1,s2):
         len1 = len(s1)
         len2 = len(s2)
-        ret = self.addString(s2,len1-len2)
+        ret = self.addSpace(s2,len1-len2)
         return ret
 
 if(__name__=="__main__"):
