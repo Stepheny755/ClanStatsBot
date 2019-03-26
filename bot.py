@@ -92,10 +92,7 @@ async def on_message(message):
 async def postValues(clanname,start,end):
     start_time=time.time()
     embed = discord.Embed(description="Note: Colors only represent PR changes")
-<<<<<<< HEAD
-=======
     #TODO: Check member size to determine if multiple embeds are required
->>>>>>> a000fafb4bd121bedb74f58d8fad8008499843c5
     p = Post()
     a = API()
     u = Util()
