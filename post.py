@@ -76,14 +76,21 @@ class Post():
 
         temp =[retp,retb,retd,retk,retw]
 
-        retwe = "W"
-        retmo = "M"
+        retwe = "```diff\nW"
+        retmo = "```diff\nM"
+
+        print(wdelta)
+        print(mdelta)
+        print(cur)
 
         for i in range(5):
             if(len(wdelta)>0):
                 retwe+=self.equalizeToString(temp[i],u.ifPos(wdelta[i]))+" "
             if(len(mdelta)>0):
                 retmo+=self.equalizeToString(temp[i],u.ifPos(mdelta[i]))+" "
+
+        retwe += "```"
+        retmo += "```"
 
         string = retp+retb+retd+retk+retw
         if(len(retwe)>1):
