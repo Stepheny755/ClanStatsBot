@@ -38,7 +38,6 @@ class Update():
                 lst.append(shipdata['average_frags'])
                 lst.append(shipdata['win_rate'])
             out.append(lst)
-            #print(lst)
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
@@ -132,7 +131,7 @@ if(__name__=="__main__"):
     #sched.start()
     #input('any key to exit')
     #while True:
-    #time.sleep(10)
+        #time.sleep(10)
     u = Update()
     u.saveExpValues()
     u.saveStats()
