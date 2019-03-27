@@ -105,6 +105,7 @@ class Post():
 
         try:
             week = dt.read(rpath,dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
+            print(dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
             recent = dt.read(rpath,dt.getMostRecent(rpath))
         except:
             return []
