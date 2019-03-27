@@ -60,13 +60,7 @@ class Post():
             templen+=len(ret)
             print(len(ret))
             print(ret)
-            #embed.add_field(name=postname,value=ret,inline=False) REMOVE COMMENT LATER
-
-
-            #REMOVE COMMENT LATER
-
-
-
+            embed.add_field(name=postname,value=ret,inline=False)
 
         print(templen)
         return embed
