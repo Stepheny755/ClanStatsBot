@@ -79,10 +79,6 @@ class Post():
         retwe = "W"
         retmo = "M"
 
-        print(wdelta)
-        print(mdelta)
-        print(cur)
-
         for i in range(5):
             if(len(wdelta)>0):
                 retwe+=self.equalizeToString(temp[i],u.ifPos(wdelta[i]))+" "
@@ -96,7 +92,7 @@ class Post():
         if(len(retmo)>1):
             string += "\n" + retmo
         string+="```"
-        print(string)
+        #print(string)
         return string
         #TODO:
         #make delta functions and cur array just ints/floats. That way you can manipulate them easier
