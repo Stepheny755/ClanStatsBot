@@ -26,11 +26,16 @@ class Post():
             for player in players:
                 name = api.getPlayerName(player)
 
-    def createEmbed(self,clantag,embed):
+    def createEmbed(self,clantag,embed,start,end):
         api = API()
         d = Data()
         u = Util()
-        for i in api.getClanMembers(api.getClanID(clantag)):
+        players = api.getClanMembers(api.getClanID(clantag))
+        print(players[start:])
+        templen = 0
+        if(end>len(players)):
+            end = len(players)
+        for i in players[start:end]:
             name = api.getPlayerName(i)
             bt = api.getPlayerBattles(i)
             if(bt==0):
@@ -52,8 +57,11 @@ class Post():
             mdelta = self.getMonthDeltas(rpath)
 
             ret = self.formatString(cur,wdelta,mdelta)
+            templen+=len(ret)
+            print(len(ret))
 
             embed.add_field(name=postname,value=ret,inline=False)
+        print(templen)
         return embed
 
     def formatString(self,cur,wdelta,mdelta):
@@ -68,18 +76,26 @@ class Post():
 
         temp =[retp,retb,retd,retk,retw]
 
-        retwe = "W"
-        retmo = "M"
+        retwe = "```diff\nW"
+        retmo = "```diff\nM"
+
+        print(wdelta)
+        print(mdelta)
+        print(cur)
 
         for i in range(5):
-            if(len(wdelta)>=0):
-                retwe+=self.equalizeString(temp[i],u.ifPos(wdelta[i]))+" "+ "\t"+ "\u200b"
-            #if(len(mdelta)>=0):
-                #retmo+=self.equalizeString(temp[i],u.ifPos(mdelta[i]))+" "
+            if(len(wdelta)>0):
+                retwe+=self.equalizeToString(temp[i],u.ifPos(wdelta[i]))+" "
+            if(len(mdelta)>0):
+                retmo+=self.equalizeToString(temp[i],u.ifPos(mdelta[i]))+" "
+
+        retwe += "```"
+        retmo += "```"
 
         string = retp+retb+retd+retk+retw
         if(len(retwe)>1):
             string += "\n" + retwe
+            print(retwe)
         if(len(retmo)>1):
             string += "\n" + retmo
         print(string)
@@ -139,17 +155,17 @@ class Post():
             data.append(val)
         return data
 
-    def addString(self,string,num):
+    def addSpace(self,string,num):
         ret = ""
         for i in range(num):
             ret += " "
         ret += string
         return ret
 
-    def equalizeString(self,s1,s2):
+    def equalizeToString(self,s1,s2):
         len1 = len(s1)
         len2 = len(s2)
-        ret = self.addString(s2,len1-len2)
+        ret = self.addSpace(s2,len1-len2)
         return ret
 
 if(__name__=="__main__"):
@@ -158,5 +174,5 @@ if(__name__=="__main__"):
     p = Post()
     #print(d.getMostRecent("MIA"))
     #print(p.getClanData(a.getClanID("MIA")))
-    print(p.equalizeString("PR: 32","+0.339"))
+    print(p.equalizeToString("PR: 32","+0.339"))
     print(len(""))

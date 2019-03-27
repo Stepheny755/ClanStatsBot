@@ -77,25 +77,33 @@ async def on_message(message):
         temp = message.content
         input = temp[7:]
         await client.send_message(message.channel,str('Processing '+input+' Statistics'))
-        embed = await postValues(input)
-        await client.send_message(message.channel, embed=embed)
+        a = API()
+        if(len(a.getClanMembers(a.getClanID(input)))>25):
+            embed0 = await postValues(input,0,10)
+            await client.send_message(message.channel,embed=embed0)
+            #embed1 = await postValues(input,25,50)
+            #await client.send_message(message.channel,embed=embed1)
+        else:
+            embed = await postValues(input,0,25)
+            await client.send_message(message.channel,embed=embed)
 
     print(str(message.channel)+": "+message.content)
 
-async def postValues(clanname):
+async def postValues(clanname,start,end):
     start_time=time.time()
     embed = discord.Embed(description="Note: Colors only represent PR changes")
     #TODO: Check member size to determine if multiple embeds are required
     p = Post()
     a = API()
     u = Util()
-    embed = p.createEmbed(clanname,embed)
+
+    embed = p.createEmbed(clanname,embed,start,end)
     postname = "["+str(clanname)+"] "+a.getClanName(a.getClanID(clanname))+" Statistics"
     embed.set_author(name=postname, icon_url=client.user.default_avatar_url)
     runtime = "Runtime: "+str(u.round3(time.time()-start_time))+" Seconds"
     embed.set_footer(text=str(runtime))
-    #embed.set_image(url='https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116277083/original/b687431d2dc4e6f66692a75d9bff6d9fb88a8390/create-a-discord-profile-picture-animated-or-nonanimated.jpg')
     return embed
+
 
 def scheduled_job():
     print("Updated Started")
