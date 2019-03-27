@@ -59,8 +59,15 @@ class Post():
             ret = self.formatString(cur,wdelta,mdelta)
             templen+=len(ret)
             print(len(ret))
+            print(ret)
+            #embed.add_field(name=postname,value=ret,inline=False) REMOVE COMMENT LATER
 
-            embed.add_field(name=postname,value=ret,inline=False)
+
+            #REMOVE COMMENT LATER
+
+
+
+
         print(templen)
         return embed
 
@@ -168,5 +175,5 @@ if(__name__=="__main__"):
     p = Post()
     #print(d.getMostRecent("MIA"))
     #print(p.getClanData(a.getClanID("MIA")))
-    print(p.equalizeToString("PR: 32","+0.339"))
-    print(len(""))
+    #print(p.equalizeToString("PR: 32","+0.339"))
+    print(p.createEmbed("MIA-C",'',0,24))
