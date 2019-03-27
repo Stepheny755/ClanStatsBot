@@ -79,10 +79,10 @@ async def on_message(message):
         await client.send_message(message.channel,str('Processing '+input+' Statistics'))
         a = API()
         if(len(a.getClanMembers(a.getClanID(input)))>25):
-            embed0 = await postValues(input,0,10)
+            embed0 = await postValues(input,0,24)
             await client.send_message(message.channel,embed=embed0)
-            #embed1 = await postValues(input,25,50)
-            #await client.send_message(message.channel,embed=embed1)
+            embed1 = await postValues(input,25,50)
+            await client.send_message(message.channel,embed=embed1)
         else:
             embed = await postValues(input,0,25)
             await client.send_message(message.channel,embed=embed)
@@ -91,7 +91,7 @@ async def on_message(message):
 
 async def postValues(clanname,start,end):
     start_time=time.time()
-    embed = discord.Embed(description="Note: Colors only represent PR changes")
+    embed = discord.Embed()
     #TODO: Check member size to determine if multiple embeds are required
     p = Post()
     a = API()
