@@ -92,7 +92,7 @@ class Post():
             print(retwe)
         if(len(retmo)>1):
             string += "\n" + retmo
-        string+="```"
+        string+=" ```"
         #print(string)
         return string
         #TODO:
