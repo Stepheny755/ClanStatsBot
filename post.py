@@ -76,8 +76,8 @@ class Post():
 
         temp =[retp,retb,retd,retk,retw]
 
-        retwe = "```diff\nW"
-        retmo = "```diff\nM"
+        retwe = "W"
+        retmo = "M"
 
         print(wdelta)
         print(mdelta)
@@ -89,15 +89,13 @@ class Post():
             if(len(mdelta)>0):
                 retmo+=self.equalizeToString(temp[i],u.ifPos(mdelta[i]))+" "
 
-        retwe += "```"
-        retmo += "```"
-
-        string = retp+retb+retd+retk+retw
+        string = retp+retb+retd+retk+retw+"\n```"
         if(len(retwe)>1):
             string += "\n" + retwe
             print(retwe)
         if(len(retmo)>1):
             string += "\n" + retmo
+        string+="```"
         print(string)
         return string
         #TODO:
@@ -163,7 +161,7 @@ class Post():
         return ret
 
     def equalizeToString(self,s1,s2):
-        len1 = len(s1)
+        len1 = int(len(s1)/2)
         len2 = len(s2)
         ret = self.addSpace(s2,len1-len2)
         return ret
