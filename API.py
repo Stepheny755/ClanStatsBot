@@ -14,7 +14,7 @@ import time
 
 class API():
 
-    ID = ''
+    key = ''
     claninfoep = 'https://api.worldofwarships.com/wows/clans/info/'
     clanlistep = 'https://api.worldofwarships.com/wows/clans/list/'
     accinfoep =  'https://api.worldofwarships.com/wows/account/info/'
@@ -27,7 +27,7 @@ class API():
     #from the official wows-numbers website: https://wows-numbers.com
 
     def __init__(self):
-        self.ID=open('ID.txt',"r").read().strip()
+        self.key=open('ID.txt',"r").read().strip()
         self.data = {}
 
         self.backoff_tries = 20
@@ -56,77 +56,77 @@ class API():
 # PLAYER RELATED FUNCTIONS
 
     def getPlayerID(self,name):
-        data={'application_id':self.ID,'search':name.strip()}
+        data={'application_id':self.key,'search':name.strip()}
         r = self.post_with_backoff(self.acclistep,data)
         try:
             return json.loads(r.text)['data'][0]['account_id']
         except:
             return None
 
-    def getPlayerName(self,ID):
-        data={'application_id':self.ID,'account_id':ID}
+    def getPlayerName(self,pID):
+        data={'application_id':self.key,'account_id':pID}
         r = self.post_with_backoff(self.accinfoep,data)
         try:
-            return json.loads(r.text)['data'][str(ID)]['nickname']
+            return json.loads(r.text)['data'][str(pID)]['nickname']
         except:
             return None
 
-    def getPlayerCard(self,ID):
-        if ID not in self.data:
+    def getPlayerCard(self,pID):
+        if pID not in self.data:
             # print('Getting player card for id={}'.format(ID) )
 
-            data={'application_id':self.ID,'account_id':ID}
+            data={'application_id':self.key,'account_id':pID}
             r = self.post_with_backoff(self.accinfoep,data)
             try:
-                self.data[ID] = json.loads(r.text)['data'][str(ID)]
+                self.data[pID] = json.loads(r.text)['data'][str(pID)]
             except Exception as e:
-                print('hit exception {e} for player={id}'.format(e=e.with_traceback, id=ID))
+                print('hit exception {e} for player={pID}'.format(e=e.with_traceback, pID=pID))
         else:
             pass
             # print('using cached data for id={}'.format(ID) )
-        return self.data[ID]
+        return self.data[pID]
 
-    def getPlayerStats(self,ID):
+    def getPlayerStats(self,pID):
         # sleep(0.1)
-        data=self.getPlayerCard(ID)
+        data=self.getPlayerCard(pID)
         return data['statistics']
 
-    def getPlayerBattles(self,ID):
-        data = self.getPlayerStats(ID)
+    def getPlayerBattles(self,pID):
+        data = self.getPlayerStats(pID)
         return int(data['pvp']['battles'])
 
-    def getPlayerWins(self,ID):
-        data=self.getPlayerStats(ID)
+    def getPlayerWins(self,pID):
+        data=self.getPlayerStats(pID)
         return int(data['pvp']['wins'])
 
-    def getPlayerAvgWR(self,ID):
+    def getPlayerAvgWR(self,pID):
         u = Util()
-        return u.round3(float(self.getPlayerWins(ID))/float(self.getPlayerBattles(ID))*100)
+        return u.round3(float(self.getPlayerWins(pID))/float(self.getPlayerBattles(pID))*100)
 
-    def getPlayerAvgDmg(self,ID):
-        data = self.getPlayerStats(ID)
-        battles = self.getPlayerBattles(ID)
+    def getPlayerAvgDmg(self,pID):
+        data = self.getPlayerStats(pID)
+        battles = self.getPlayerBattles(pID)
         u = Util()
         temp = float(data['pvp']['damage_dealt'])/float(battles)
         return u.round2(temp)
 
-    def getPlayerAvgKills(self,ID):
-        data = self.getPlayerStats(ID)
-        battles = self.getPlayerBattles(ID)
+    def getPlayerAvgKills(self,pID):
+        data = self.getPlayerStats(pID)
+        battles = self.getPlayerBattles(pID)
         u = Util()
         temp = float(data['pvp']['frags'])/float(battles)
         return u.round3(temp)
 
-    def getPlayerAvgSpottingDmg(self,ID):
-        data = self.getPlayerStats(ID)
-        battles = self.getPlayerBattles(ID)
+    def getPlayerAvgSpottingDmg(self,pID):
+        data = self.getPlayerStats(pID)
+        battles = self.getPlayerBattles(pID)
         u = Util()
         temp = float(data['pvp']['damage_scouting'])/float(battles)
         return u.round2(temp)
 
-    def getPlayerAvgPotentialDmg(self,ID):
-        data = self.getPlayerStats(ID)
-        battles = self.getPlayerBattles(ID)
+    def getPlayerAvgPotentialDmg(self,pID):
+        data = self.getPlayerStats(pID)
+        battles = self.getPlayerBattles(pID)
         u = Util()
         temp = float(data['pvp']['torpedo_agro']+data['pvp']['art_agro'])/float(battles)
         return u.round2(temp)
@@ -135,18 +135,18 @@ class API():
 # SHIP RELATED FUNCTIONS
 
     def getPlayerShipStats(self,pID):
-        data={'application_id':self.ID,'account_id':pID}
+        data={'application_id':self.key,'account_id':pID}
         r = self.post_with_backoff(self.shipstatep,data)
         try:
             return json.loads(r.text)['data'][str(pID)]
         except Exception as e:
             return None
 
-    def getShipName(self,ID):
-        data={'application_id':self.ID,'ship_id':ID}
+    def getShipName(self,sID):
+        data={'application_id':self.key,'ship_id':sID}
         r = self.post_with_backoff(self.pediaep,data)
-        if json.loads(r.text)['data'][str(ID)] is not None:
-            out = json.loads(r.text)['data'][str(ID)]['name']
+        if json.loads(r.text)['data'][str(sID)] is not None:
+            out = json.loads(r.text)['data'][str(sID)]['name']
             #print(out)
             return out
         else:
@@ -178,34 +178,34 @@ class API():
 # CLAN RELATED FUNCTIONS
 
     def getClanID(self,name):
-        data={'application_id':self.ID,'search':name.strip()}
+        data={'application_id':self.key,'search':name.strip()}
         r = self.post_with_backoff(self.clanlistep,data)
         try:
             return json.loads(r.text)['data'][0]['clan_id']
         except:
             return None
 
-    def getClanTag(self,ID):
-        data={'application_id':self.ID,'clan_id':ID}
+    def getClanTag(self,cID):
+        data={'application_id':self.key,'clan_id':cID}
         r = self.post_with_backoff(self.claninfoep,data)
         try:
-            return json.loads(r.text)['data'][str(ID)]['tag']
+            return json.loads(r.text)['data'][str(cID)]['tag']
         except:
             return None
 
-    def getClanName(self,ID):
-        data={'application_id':self.ID,'clan_id':ID}
+    def getClanName(self,cID):
+        data={'application_id':self.key,'clan_id':cID}
         r = self.post_with_backoff(self.claninfoep,data)
         try:
-            return json.loads(r.text)['data'][str(ID)]['name']
+            return json.loads(r.text)['data'][str(cID)]['name']
         except:
             return None
 
-    def getClanMembers(self,ID):
-        data={'application_id':self.ID,'clan_id':ID}
+    def getClanMembers(self,cID):
+        data={'application_id':self.key,'clan_id':cID}
         r = self.post_with_backoff(self.claninfoep,data)
         try:
-            return json.loads(r.text)['data'][str(ID)]['members_ids']
+            return json.loads(r.text)['data'][str(cID)]['members_ids']
         except:
             return None
 
