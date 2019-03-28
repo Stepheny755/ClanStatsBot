@@ -94,7 +94,7 @@ class Update():
                 data = []
 
                 name = api.getPlayerName(player)
-                pr = stats.PRcalculate(player)
+                pr = stats.calcOverallPR(player)
 
                 bt = api.getPlayerBattles(player)
                 if(bt==0):

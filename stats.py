@@ -12,6 +12,17 @@ class Stats():
     expected = []
 
     def PRnormDmg(self,dmg,edmg):
+        """
+        Note: not average dmg, total dmg (per ship)
+        To find edmg, multiply expected average damage by number of battles a player has played
+
+        Parameters:
+        dmg: actual damage
+        edmg: expected damage
+
+        Returns:
+        normalized damage value (float)
+        """
         if(edmg!=0):
             dmg/=edmg
         else:
@@ -20,6 +31,17 @@ class Stats():
         return nDmg
 
     def PRnormWin(self,wins,ewins):
+        """
+        Note: not win rate, total wins (per ship)
+        To find ewins, multiply expected WR by number of battles a player has played
+
+        Parameters:
+        wins: actual wins
+        ewins: expected wins
+
+        Returns:
+        normalized WR value (float)
+        """
         if(ewins!=0):
             wins/=ewins
         else:
@@ -28,6 +50,17 @@ class Stats():
         return nWins
 
     def PRnormKil(self,kills,ekills):
+        """
+        Note: not average kills, total kills (per ship)
+        To find ekills, multiple expected average kills by number of battles a player has played
+
+        Parameters:
+        kills: actual kills
+        ekills: expected kills
+
+        Returns:
+        normalized kills value (float)
+        """
         if(ekills!=0):
             kills/=ekills
         else:
@@ -35,7 +68,15 @@ class Stats():
         nKills = float(max(0,(kills-0.1)/(1.0-0.1)))
         return nKills
 
-    def PRcalculate(self,playerID): #player PR calculation
+    def calcOverallPR(self,playerID): #player PR calculation
+        """
+        Parameters:
+        playerID: WG player ID
+
+        Returns:
+        PR value of player (float)
+        """
+
         a = API()
         d = Data()
         u = Util()
@@ -79,6 +120,21 @@ class Stats():
 
         #may need to save PR in update.py as the average PR of the partial values of all ships
 
+    def calcShipPR(self,playerID,shipID):
+        """
+        Implement this first 901
+
+        Parameters:
+        playerID: WG player ID
+        shipID: WG ship ID
+
+        Returns:
+        PR value of player's ship (float)
+        """
+
+        #print(str(dmg)+" "+str(kills)+" "+str(wins))
+        #return (700*dmg + 300*kills + 150*wins)
+
 if(__name__=="__main__"):
     #a = float(input("dmg: "))
     #b = float(input("kills: "))
@@ -108,7 +164,7 @@ if(__name__=="__main__"):
     #a = s.PRnorm(b[0],b[1],b[2])
     #a = s.PRnorm(1.44653083935,2.51747177976,1.24949075502)
     #a = s.PRnorm(b[0],b[1],b[2])
-    c = s.PRcalculate(a.getPlayerID("ddak26"))
+    c = s.calcOverallPR(a.getPlayerID("ddak26"))
     print(c)
 
     #print(s.calculatePR(d,ak,wr))

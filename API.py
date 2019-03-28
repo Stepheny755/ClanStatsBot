@@ -6,11 +6,6 @@ from util import Util
 
 import asyncio
 import time
-#TODO:
-#Pull API Data for players from WG API
-
-
-
 
 class API():
 
@@ -56,6 +51,13 @@ class API():
 # PLAYER RELATED FUNCTIONS
 
     def getPlayerID(self,name):
+        """
+        Parameters:
+        name: name of player
+
+        Returns:
+        WG ID of player (int)
+        """
         data={'application_id':self.key,'search':name.strip()}
         r = self.post_with_backoff(self.acclistep,data)
         try:
@@ -64,6 +66,13 @@ class API():
             return None
 
     def getPlayerName(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        name of player (str)
+        """
         data={'application_id':self.key,'account_id':pID}
         r = self.post_with_backoff(self.accinfoep,data)
         try:
@@ -72,6 +81,15 @@ class API():
             return None
 
     def getPlayerCard(self,pID):
+        """
+        Caches to reduce # of api calls and runtime
+
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        All the data on a players overall values from the WG api (dict)
+        """
         if pID not in self.data:
             # print('Getting player card for id={}'.format(ID) )
 
@@ -87,23 +105,58 @@ class API():
         return self.data[pID]
 
     def getPlayerStats(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        the statistics portion of the data from WG api (dict)
+        """
         # sleep(0.1)
         data=self.getPlayerCard(pID)
         return data['statistics']
 
     def getPlayerBattles(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        number of battles played by player (int)
+        """
         data = self.getPlayerStats(pID)
         return int(data['pvp']['battles'])
 
     def getPlayerWins(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        number of wins player has (int)
+        """
         data=self.getPlayerStats(pID)
         return int(data['pvp']['wins'])
 
     def getPlayerAvgWR(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        overall win rate of player (float)
+        """
         u = Util()
         return u.round3(float(self.getPlayerWins(pID))/float(self.getPlayerBattles(pID))*100)
 
     def getPlayerAvgDmg(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        overall average damage of player (float)
+        """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
         u = Util()
@@ -111,6 +164,13 @@ class API():
         return u.round2(temp)
 
     def getPlayerAvgKills(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        overall average kills of player (float)
+        """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
         u = Util()
@@ -118,6 +178,13 @@ class API():
         return u.round3(temp)
 
     def getPlayerAvgSpottingDmg(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        overall average spotting damage (float)
+        """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
         u = Util()
@@ -125,6 +192,13 @@ class API():
         return u.round2(temp)
 
     def getPlayerAvgPotentialDmg(self,pID):
+        """
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        overall average potential damage (float)
+        """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
         u = Util()
@@ -135,6 +209,19 @@ class API():
 # SHIP RELATED FUNCTIONS
 
     def getPlayerShipStats(self,pID):
+        """
+        Function not cached because we expect it to only run once per player
+        Note: Similar to getPlayerCard(), but instead of overall values this
+        returns ship valuess
+
+        Parameters:
+        pID: WG player ID
+
+        Returns:
+        all the data on every ship that a player has played (list of dicts)
+        - Each index in the list is an individual ship (represented by a dict)
+        - Feed the individual dicts into the functions below
+        """
         data={'application_id':self.key,'account_id':pID}
         r = self.post_with_backoff(self.shipstatep,data)
         try:
@@ -143,6 +230,13 @@ class API():
             return None
 
     def getShipName(self,sID):
+        """
+        Parameters:
+        sID: WG ship ID
+
+        Returns:
+        Name of the ship (str)
+        """
         data={'application_id':self.key,'ship_id':sID}
         r = self.post_with_backoff(self.pediaep,data)
         if json.loads(r.text)['data'][str(sID)] is not None:
@@ -153,39 +247,95 @@ class API():
             pass
 
     def getShipDmg(self,data):
+        """
+        Parameters:
+        data: dict returned by getPlayerShipStats()
+
+        Returns:
+        average damage of a ship (float)
+        """
         return float(data['pvp']['damage_dealt'])
 
     def getShipWR(self,data):
+        """
+        Parameters:
+        data: dict returned by getPlayerShipStats()
+
+        Returns:
+        average win rate of a ship (float)
+        """
         if(data['pvp']['wins']==0 or data['pvp']['battles']==0):
             return 0.0
         return float(data['pvp']['wins']/data['pvp']['battles']*100)
 
     def getShipWins(self,data):
+        """
+        Parameters:
+        data: dict returned by getPlayerShipStats()
+
+        Returns:
+        total wins of a ship (int)
+        """
         if(data['pvp']['wins']==0 or data['pvp']['battles']==0):
             return 0.0
         return int(data['pvp']['wins'])
 
     def getShipKills(self,data):
+        """
+        Parameters:
+        data: dict returned by getPlayerShipStats()
+
+        Returns:
+        average kills of a ship (float)
+        """
         return float(data['pvp']['frags'])
 
     def getShipBattles(self,data):
+        """
+        Parameters:
+        data: dict returned by getPlayerShipStats()
+
+        Returns:
+        tota battles of a ship (int)
+        """
         return int(data['pvp']['battles'])
 
     def getShipID(self,data):
+        """
+        Parameters:
+        data: dict returned by getPlayerShipStats()
+
+        Returns:
+        the ID of the ship in dict data (int)
+        """
         return int(data['ship_id'])
 
 # SHIP RELATED FUNCTIONS
 # CLAN RELATED FUNCTIONS
 
     def getClanID(self,name):
+        """
+        Parameters:
+        name: tag of a clan (e.g. MIA,MIA-E)
+
+        Returns:
+        WG ID of the clan (int)
+        """
         data={'application_id':self.key,'search':name.strip()}
         r = self.post_with_backoff(self.clanlistep,data)
         try:
-            return json.loads(r.text)['data'][0]['clan_id']
+            return int(json.loads(r.text)['data'][0]['clan_id'])
         except:
             return None
 
     def getClanTag(self,cID):
+        """
+        Parameters:
+        cID: WG clan ID
+
+        Returns:
+        the name/tag of the clan (e.g. MIA,MIA-E) (str)
+        """
         data={'application_id':self.key,'clan_id':cID}
         r = self.post_with_backoff(self.claninfoep,data)
         try:
@@ -194,6 +344,13 @@ class API():
             return None
 
     def getClanName(self,cID):
+        """
+        Parameters:
+        cID: WG clan ID
+
+        Returns:
+        the full name of the clan (e.g. Mortem in Aquam) (str)
+        """
         data={'application_id':self.key,'clan_id':cID}
         r = self.post_with_backoff(self.claninfoep,data)
         try:
@@ -202,6 +359,13 @@ class API():
             return None
 
     def getClanMembers(self,cID):
+        """
+        Parameters:
+        cID: WG clan ID
+
+        Returns:
+        the member id's of all players in a clan (lst)
+        """
         data={'application_id':self.key,'clan_id':cID}
         r = self.post_with_backoff(self.claninfoep,data)
         try:
@@ -213,6 +377,11 @@ class API():
 # OTHER
 
     def expectedValues(self):
+        """
+        Returns:
+        expected values from wows-numbers.com
+        (link to website: https://wows-numbers.com/personal/rating)
+        """
         r = requests.get(self.wowsnumep)
         data = json.loads(r.text)
         return data
@@ -226,5 +395,6 @@ if(__name__=="__main__"):
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
     # print(a.expectedValues())
+    print(a.getClanMembers(a.getClanID("MIA")))
     print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
     print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))
