@@ -5,6 +5,7 @@ from time import sleep
 from util import Util
 
 import asyncio
+import time
 #TODO:
 #Pull API Data for players from WG API
 
@@ -41,11 +42,12 @@ class API():
             j = r.json()
             if 'error' in j:
                 if j['error']['code'] == 407:
-                    # print('Backing off for {} seconds'.format(backoff))
-                    asyncio.sleep(backoff)
-                    backoff = backoff + 1
-                else:
-                    print ('error:{}'.format(j))
+                    if j['error']['message'] == 'REQUEST_LIMIT_EXCEEDED':
+                        time.sleep(backoff)
+                        backoff = backoff * 2
+                    else:
+                        print ('error:{}'.format(j))
+                        raise RuntimeError('Unexpected error from WG API')
             else:
                 return r
         raise RuntimeError('Exceeded allowed backoff attempts!')
