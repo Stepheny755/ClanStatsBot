@@ -31,7 +31,7 @@ class Post():
         d = Data()
         u = Util()
         players = api.getClanMembers(api.getClanID(clantag))
-        print(players[start:])
+        #print(players[start:])
         templen = 0
         if(end>len(players)):
             end = len(players)
@@ -41,7 +41,7 @@ class Post():
             if(bt==0):
                 break
             rpath = str(clantag)+"/"+str(name)
-            print(rpath)
+            #print(rpath)
             temp = d.read(rpath,d.getMostRecent(rpath))
             postname=api.getPlayerName(i)+"   (ID: "+str(i)+")"
 
@@ -58,11 +58,11 @@ class Post():
 
             ret = self.formatString(cur,wdelta,mdelta)
             templen+=len(ret)
-            print(len(ret))
-            print(ret)
+            #print(len(ret))
+            #print(ret)
             embed.add_field(name=postname,value=ret,inline=False)
 
-        print(templen)
+        #print(templen)
         return embed
 
     def formatString(self,cur,wdelta,mdelta):
@@ -89,7 +89,7 @@ class Post():
         string = retp+retb+retd+retk+retw+"\n```"
         if(len(retwe)>1):
             string += "\n" + retwe
-            print(retwe)
+            #print(retwe)
         if(len(retmo)>1):
             string += "\n" + retmo
         string+=" ```"
@@ -105,9 +105,9 @@ class Post():
 
         try:
             week = dt.read(rpath,dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
-            print(dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
+            #print(dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
             recent = dt.read(rpath,dt.getMostRecent(rpath))
-            print(dt.getMostRecent(rpath))
+            #print(dt.getMostRecent(rpath))
         except:
             return []
 
