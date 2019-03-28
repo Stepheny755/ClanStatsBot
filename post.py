@@ -31,7 +31,7 @@ class Post():
         d = Data()
         u = Util()
         players = api.getClanMembers(api.getClanID(clantag))
-        #print(players[start:])
+        # print(players[start:])
         templen = 0
         if(end>len(players)):
             end = len(players)
@@ -169,7 +169,7 @@ if(__name__=="__main__"):
     d = Data()
     a = API()
     p = Post()
-    #print(d.getMostRecent("MIA"))
-    #print(p.getClanData(a.getClanID("MIA")))
+    # print(d.getMostRecent("MIA-E"))
+    # print(p.getClanData(a.getClanID("MIA-E")))
     #print(p.equalizeToString("PR: 32","+0.339"))
-    print(p.createEmbed("MIA-C",'',0,24))
+    print(p.createEmbed("MIA-E",'',0,24))

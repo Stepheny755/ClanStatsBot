@@ -10,9 +10,9 @@ from update import Update
 from util import Util
 from post import Post
 
-token = open('token.txt',"r").read().strip()
+# token = open('token.txt',"r").read().strip()
 
-client = discord.Client()
+# client = discord.Client()
 
 @client.event
 async def on_read():
@@ -115,9 +115,12 @@ def scheduled_job():
     print("Update Finished: "+str(t.getGMTTime()))
 
 if(__name__=="__main__"):
-    sched = AsyncIOScheduler()
-    sched.add_job(scheduled_job,'cron',hour=4,minute=20,timezone='UTC')
-    sched.start()
-    print("Scheduler Started")
-    print("Bot Started")
-    client.run(token)
+    # sched = AsyncIOScheduler()
+    # sched.add_job(scheduled_job,'cron',hour=4,minute=20,timezone='UTC')
+    # sched.start()
+    # print("Scheduler Started")
+    # print("Bot Started")
+    # client.run(token)
+
+    a = API()
+    print(a.getClanMembers('MIA-E'))

@@ -23,6 +23,7 @@ class API():
 
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
+        self.data = {}
 
 # INIT
 # PLAYER RELATED FUNCTIONS
@@ -44,15 +45,22 @@ class API():
             return None
 
     def getPlayerCard(self,ID):
-        data={'application_id':self.ID,'account_id':ID}
-        r = requests.post(self.accinfoep,data)
-        try:
-            return json.loads(r.text)['data'][str(ID)]
-        except:
-            return None
+        if ID not in self.data:
+            # print('Getting player card for id={}'.format(ID) )
+
+            data={'application_id':self.ID,'account_id':ID}
+            r = requests.post(self.accinfoep,data)
+            try:
+                self.data[ID] = json.loads(r.text)['data'][str(ID)]
+            except:
+                return None
+        else:
+            pass
+            # print('using cached data for id={}'.format(ID) )
+        return self.data[ID]
 
     def getPlayerStats(self,ID):
-        sleep(0.1)
+        # sleep(0.1)
         data=self.getPlayerCard(ID)
         return data['statistics']
 
@@ -190,6 +198,6 @@ if(__name__=="__main__"):
     #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
-    print(a.expectedValues())
+    # print(a.expectedValues())
     print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
     print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))

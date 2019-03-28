@@ -1,3 +1,5 @@
+import asyncio
+
 from data import Data
 from API import API
 from util import Util
@@ -11,11 +13,12 @@ class Update():
     def __init__(self):
         u = Util()
         print("Updated Started: "+str(u.getGMTTime()))
+        self.clanvals = {}
 
     #TODO:post data differences for players
     #TODO: Remake Update (Save Avg Dmg, WR, Battles Played, Spotting, Potential, Capping, PR and WTR)
 
-    def saveExpValues(self):
+    async def saveExpValues(self):
         dt = Data()
         api = API()
 
@@ -23,6 +26,15 @@ class Update():
         time = temp['time']
 
         out = []
+
+
+        from concurrent.futures import ThreadPoolExecutor
+        executor = ThreadPoolExecutor(max_workers=20)
+        loop = asyncio.get_event_loop()
+
+        futures = [loop.run_in_executor(executor, getPlayerData, clan, player) for player in players]
+        await asyncio.wait(futures)
+
         for shipid,shipdata in temp['data'].items():
             lst = []
             lst.append(shipid)
@@ -43,7 +55,7 @@ class Update():
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
         return temp['data']
 
-    def saveStats(self):
+    async def saveStats(self):
         dt = Data()
         api = API()
         ut = Util()
@@ -58,71 +70,100 @@ class Update():
             clanID = api.getClanID(clan[0])
             clanname = api.getClanTag(clanID)
             playernum = len(players)
-            clanavgpr = 0.0
-            clanavgbt = 0
-            clanavgdmg = 0.0
-            clanavgkills = 0.0
-            clanavgwr = 0.0
-            clanavgspd = 0.0
-            clanavgptd = 0.0
+            clan = str(clan).replace('[','')
+            clan = str(clan).replace(']','')
+            clan = str(clan).replace("'",'')
+            print('Adding clan {}'.format(clan))
+            self.clanvals[clan] = {
+                'clanavgpr' : 0,
+                'clanavgbt': 0,
+                'clanavgdmg': 0,
+                'clanavgkills': 0,
+                'clanavgwr': 0,
+                'clanavgspd': 0,
+                'clanavgptd': 0
+            }
 
             data2 = []
             data2.append([int(clanID)])
             data2.append([clanname])
 
+
+            def getPlayerData(clan, player):
+                data = []
+
+                name = api.getPlayerName(player)
+                pr = stats.PRcalculate(player)
+
+                bt = api.getPlayerBattles(player)
+                if(bt==0):
+                    return
+
+                avgdmg = api.getPlayerAvgDmg(player)
+                avgwr = api.getPlayerAvgWR(player)
+                avgkills = api.getPlayerAvgKills(player)
+                avgspdmg = api.getPlayerAvgSpottingDmg(player)
+                avgptdmg = api.getPlayerAvgPotentialDmg(player)
+                # calculate avg dmg, wr,kills,
+
+                data.append([name])
+                data.append([player])
+                data.append([pr])
+                data.append([bt])
+                data.append([avgdmg])
+                data.append([avgkills])
+                data.append([avgwr])
+                data.append([avgspdmg])
+                data.append([avgptdmg])
+
+                self.clanvals[clan]['clanavgpr'] += pr
+                self.clanvals[clan]['clanavgbt'] += bt
+                self.clanvals[clan]['clanavgdmg'] += avgdmg
+                self.clanvals[clan]['clanavgkills'] += avgkills
+                self.clanvals[clan]['clanavgwr'] += avgwr
+                self.clanvals[clan]['clanavgspd'] += avgspdmg
+                self.clanvals[clan]['clanavgptd'] += avgptdmg
+
+
+                temppath = str(clan)+"/"+str(name)
+                filename = str(curtime)+".csv"
+
+                print(temppath+" "+filename)
+                print(data)
+                dt.write(temppath,filename,data)
+
             if players is not None:
-                for player in players:
+                print('getting {numb} players for {clan}'.format(
+                    numb=len(players), clan=clan
+                ))
+                from concurrent.futures import ThreadPoolExecutor
+                executor = ThreadPoolExecutor(max_workers=10)
+                loop = asyncio.get_event_loop()
 
-                    data = []
+                futures = [loop.run_in_executor(executor, getPlayerData, clan, player) for player in players]
+                await asyncio.wait(futures)
+            print('**************')
+            print('**************')
+            print('**************')
+            print('Clan: {}'.format(clan))
+            print(self.clanvals[clan])
 
-                    name = api.getPlayerName(player)
-                    pr = stats.PRcalculate(player)
 
-                    bt = api.getPlayerBattles(player)
-                    if(bt==0):
-                        break
+            print('**************')
+            print('**************')
 
-                    avgdmg = api.getPlayerAvgDmg(player)
-                    avgwr = api.getPlayerAvgWR(player)
-                    avgkills = api.getPlayerAvgKills(player)
-                    avgspdmg = api.getPlayerAvgSpottingDmg(player)
-                    avgptdmg = api.getPlayerAvgPotentialDmg(player)
-                    # calculate avg dmg, wr,kills,
 
-                    data.append([name])
-                    data.append([player])
-                    data.append([pr])
-                    data.append([bt])
-                    data.append([avgdmg])
-                    data.append([avgkills])
-                    data.append([avgwr])
-                    data.append([avgspdmg])
-                    data.append([avgptdmg])
 
-                    clanavgpr += pr
-                    clanavgbt += bt
-                    clanavgdmg += avgdmg
-                    clanavgkills += avgkills
-                    clanavgwr += avgwr
-                    clanavgspd += avgspdmg
-                    clanavgptd += avgptdmg
 
-                    temppath = str(clan[0])+"/"+str(name)
-                    filename = str(curtime)+".csv"
+            # data2.append([float(clanavgpr / playernum)])
+            # data2.append([int(clanavgbt / playernum)])
+            # data2.append([float(clanavgdmg / playernum)])
+            # data2.append([float(clanavgkills / playernum)])
+            # data2.append([float(clanavgwr / playernum)])
+            # data2.append([float(clanavgspd / playernum)])
+            # data2.append([float(clanavgptd / playernum)])
 
-                    print(temppath+" "+filename)
-                    print(data)
-                    dt.write(temppath,filename,data)
-
-            data2.append([float(clanavgpr / playernum)])
-            data2.append([int(clanavgbt / playernum)])
-            data2.append([float(clanavgdmg / playernum)])
-            data2.append([float(clanavgkills / playernum)])
-            data2.append([float(clanavgwr / playernum)])
-            data2.append([float(clanavgspd / playernum)])
-            data2.append([float(clanavgptd / playernum)])
-
-            dt.write(str(clan[0]),str(curtime)+".csv",data2)
+            # dt.write(str(clan[0]),str(curtime)+".csv",data2)
 
         return 0
 
@@ -133,8 +174,13 @@ if(__name__=="__main__"):
     #while True:
         #time.sleep(10)
     u = Update()
-    u.saveExpValues()
-    u.saveStats()
+    loop = asyncio.get_event_loop()
+    # loop.run_until_complete(u.saveExpValues())
+
+    loop.run_until_complete(u.saveStats())
+
+
+    
 
 #@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
 #def scheduled_job():
