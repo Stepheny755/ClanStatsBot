@@ -31,7 +31,7 @@ class API():
         self.data = {}
 
         self.backoff_tries = 20
-        self.backoff_start_interval_sec = 1 
+        self.backoff_start_interval_sec = 1
 
     def post_with_backoff(self, uri, payload):
 
@@ -147,7 +147,7 @@ class API():
         r = self.post_with_backoff(self.pediaep,data)
         if json.loads(r.text)['data'][str(ID)] is not None:
             out = json.loads(r.text)['data'][str(ID)]['name']
-            print(out)
+            #print(out)
             return out
         else:
             pass
