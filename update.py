@@ -24,21 +24,14 @@ class Update():
 
         temp = api.expectedValues()
         time = temp['time']
-
+        #print(temp)
         out = []
 
+        def save(shipid,shipdata):
 
-        from concurrent.futures import ThreadPoolExecutor
-        executor = ThreadPoolExecutor(max_workers=20)
-        loop = asyncio.get_event_loop()
-
-        futures = [loop.run_in_executor(executor, getPlayerData, clan, player) for player in players]
-        await asyncio.wait(futures)
-
-        for shipid,shipdata in temp['data'].items():
             lst = []
             lst.append(shipid)
-            print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
+            #print(shipid) #this function takes a while so print ship ID's to keep us occupied. The dark is scary
             #print(shipdata)
             name = api.getShipName(shipid)
             if name is None:
@@ -49,11 +42,19 @@ class Update():
                 lst.append(shipdata['average_damage_dealt'])
                 lst.append(shipdata['average_frags'])
                 lst.append(shipdata['win_rate'])
+            print(lst)
             out.append(lst)
+
+        from concurrent.futures import ThreadPoolExecutor
+        executor = ThreadPoolExecutor(max_workers=5)
+        loop = asyncio.get_event_loop()
+
+        futures = [loop.run_in_executor(executor, save, ship, data) for ship,data in temp['data'].items()]
+        await asyncio.wait(futures)
 
         #print(out)
         dt.write('wowsnumbers',(str(time)+'.csv').strip(),out)
-        return temp['data']
+        return 0
 
     async def saveStats(self):
         dt = Data()
@@ -144,19 +145,15 @@ class Update():
                 await asyncio.wait(futures)
 
 
-        
-            print('**************')
+            self.clanvals[clan]={k: x/playernum for k, x in self.clanvals[clan].items()}
+
             print('**************')
             print('**************')
             print('Clan: {}'.format(clan))
             print(self.clanvals[clan])
 
-
             print('**************')
             print('**************')
-
-
-
 
             # data2.append([float(clanavgpr / playernum)])
             # data2.append([int(clanavgbt / playernum)])
@@ -180,10 +177,10 @@ if(__name__=="__main__"):
     loop = asyncio.get_event_loop()
     # loop.run_until_complete(u.saveExpValues())
 
+    loop.run_until_complete(u.saveExpValues())
     loop.run_until_complete(u.saveStats())
 
 
-    
 
 #@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
 #def scheduled_job():
