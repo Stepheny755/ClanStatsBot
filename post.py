@@ -104,8 +104,8 @@ class Post():
         dt = Data()
 
         try:
-            week = dt.read(rpath,dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
-            #print(dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
+            week = dt.read(rpath,dt.getLatestBeforeDate(rpath,ut.countWeekSec()))
+            #print(dt.getLatestBeforeDate(rpath,ut.countWeekSec()))
             recent = dt.read(rpath,dt.getMostRecent(rpath))
             #print(dt.getMostRecent(rpath))
         except:
@@ -126,7 +126,7 @@ class Post():
         dt = Data()
 
         try:
-            month = dt.read(rpath,dt.getLatestbeforeDate(rpath,ut.countWeekSec()))
+            month = dt.read(rpath,dt.getLatestBeforeDate(rpath,ut.countWeekSec()))
             recent = dt.read(rpath,dt.getMostRecent(rpath))
         except:
             return []
