@@ -137,11 +137,14 @@ class Update():
                     numb=len(players), clan=clan
                 ))
                 from concurrent.futures import ThreadPoolExecutor
-                executor = ThreadPoolExecutor(max_workers=10)
+                executor = ThreadPoolExecutor(max_workers=15)
                 loop = asyncio.get_event_loop()
 
                 futures = [loop.run_in_executor(executor, getPlayerData, clan, player) for player in players]
                 await asyncio.wait(futures)
+
+
+        
             print('**************')
             print('**************')
             print('**************')
