@@ -4,8 +4,13 @@ import urllib.request
 from time import sleep
 from util import Util
 
+import asyncio
+import time
 #TODO:
 #Pull API Data for players from WG API
+
+
+
 
 class API():
 
@@ -23,13 +28,36 @@ class API():
 
     def __init__(self):
         self.ID=open('ID.txt',"r").read().strip()
+        self.data = {}
+
+        self.backoff_tries = 20
+        self.backoff_start_interval_sec = 1 
+
+    def post_with_backoff(self, uri, payload):
+
+        # Backoff but retry 407 errors (rate limiting from WG)
+        backoff = self.backoff_start_interval_sec
+        for i in range(self.backoff_tries):
+            r = requests.post(uri, payload)
+            j = r.json()
+            if 'error' in j:
+                if j['error']['code'] == 407:
+                    if j['error']['message'] == 'REQUEST_LIMIT_EXCEEDED':
+                        time.sleep(backoff)
+                        backoff = backoff * 2
+                    else:
+                        print ('error:{}'.format(j))
+                        raise RuntimeError('Unexpected error from WG API')
+            else:
+                return r
+        raise RuntimeError('Exceeded allowed backoff attempts!')
 
 # INIT
 # PLAYER RELATED FUNCTIONS
 
     def getPlayerID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
-        r = requests.post(self.acclistep,data)
+        r = self.post_with_backoff(self.acclistep,data)
         try:
             return json.loads(r.text)['data'][0]['account_id']
         except:
@@ -37,22 +65,29 @@ class API():
 
     def getPlayerName(self,ID):
         data={'application_id':self.ID,'account_id':ID}
-        r = requests.post(self.accinfoep,data)
+        r = self.post_with_backoff(self.accinfoep,data)
         try:
             return json.loads(r.text)['data'][str(ID)]['nickname']
         except:
             return None
 
     def getPlayerCard(self,ID):
-        data={'application_id':self.ID,'account_id':ID}
-        r = requests.post(self.accinfoep,data)
-        try:
-            return json.loads(r.text)['data'][str(ID)]
-        except:
-            return None
+        if ID not in self.data:
+            # print('Getting player card for id={}'.format(ID) )
+
+            data={'application_id':self.ID,'account_id':ID}
+            r = self.post_with_backoff(self.accinfoep,data)
+            try:
+                self.data[ID] = json.loads(r.text)['data'][str(ID)]
+            except Exception as e:
+                print('hit exception {e} for player={id}'.format(e=e.with_traceback, id=ID))
+        else:
+            pass
+            # print('using cached data for id={}'.format(ID) )
+        return self.data[ID]
 
     def getPlayerStats(self,ID):
-        sleep(0.1)
+        # sleep(0.1)
         data=self.getPlayerCard(ID)
         return data['statistics']
 
@@ -101,15 +136,15 @@ class API():
 
     def getPlayerShipStats(self,pID):
         data={'application_id':self.ID,'account_id':pID}
-        r = requests.post(self.shipstatep,data)
+        r = self.post_with_backoff(self.shipstatep,data)
         try:
             return json.loads(r.text)['data'][str(pID)]
-        except:
+        except Exception as e:
             return None
 
     def getShipName(self,ID):
         data={'application_id':self.ID,'ship_id':ID}
-        r = requests.post(self.pediaep,data)
+        r = self.post_with_backoff(self.pediaep,data)
         if json.loads(r.text)['data'][str(ID)] is not None:
             out = json.loads(r.text)['data'][str(ID)]['name']
             print(out)
@@ -144,7 +179,7 @@ class API():
 
     def getClanID(self,name):
         data={'application_id':self.ID,'search':name.strip()}
-        r = requests.post(self.clanlistep,data)
+        r = self.post_with_backoff(self.clanlistep,data)
         try:
             return json.loads(r.text)['data'][0]['clan_id']
         except:
@@ -152,7 +187,7 @@ class API():
 
     def getClanTag(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
-        r = requests.post(self.claninfoep,data)
+        r = self.post_with_backoff(self.claninfoep,data)
         try:
             return json.loads(r.text)['data'][str(ID)]['tag']
         except:
@@ -160,7 +195,7 @@ class API():
 
     def getClanName(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
-        r = requests.post(self.claninfoep,data)
+        r = self.post_with_backoff(self.claninfoep,data)
         try:
             return json.loads(r.text)['data'][str(ID)]['name']
         except:
@@ -168,7 +203,7 @@ class API():
 
     def getClanMembers(self,ID):
         data={'application_id':self.ID,'clan_id':ID}
-        r = requests.post(self.claninfoep,data)
+        r = self.post_with_backoff(self.claninfoep,data)
         try:
             return json.loads(r.text)['data'][str(ID)]['members_ids']
         except:
@@ -190,6 +225,6 @@ if(__name__=="__main__"):
     #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
     #print(a.getShipName(4287510224))
-    print(a.expectedValues())
+    # print(a.expectedValues())
     print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
     print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))
