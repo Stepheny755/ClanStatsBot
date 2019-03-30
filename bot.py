@@ -4,15 +4,15 @@ import time
 import sys
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-#from stats import Stats
+from stats import Stats
 from API import API
 from update import Update
 from util import Util
 from post import Post
 
-# token = open('token.txt',"r").read().strip()
+token = open('token.txt',"r").read().strip()
 
-# client = discord.Client()
+client = discord.Client()
 
 @client.event
 async def on_read():
