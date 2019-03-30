@@ -109,7 +109,8 @@ def scheduled_job():
     print("Updated Started")
     #TODO: send a discord message
     u = Update()
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     loop.run_until_complete(u.saveExpValues())
     loop.run_until_complete(u.saveStats())
     t = Util()
