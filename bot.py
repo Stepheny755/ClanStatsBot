@@ -118,7 +118,7 @@ def scheduled_job():
 
 if(__name__=="__main__"):
     sched = AsyncIOScheduler()
-    sched.add_job(scheduled_job,'cron',hour=5,minute=30,timezone='UTC')
+    sched.add_job(scheduled_job,'cron',hour=5,minute=37,timezone='UTC')
     sched.start()
     print("Scheduler Started")
     print("Bot Started")
