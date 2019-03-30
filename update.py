@@ -15,9 +15,6 @@ class Update():
         print("Updated Started: "+str(u.getGMTTime()))
         self.clanvals = {}
 
-    #TODO:post data differences for players
-    #TODO: Remake Update (Save Avg Dmg, WR, Battles Played, Spotting, Potential, Capping, PR and WTR)
-
     async def saveExpValues(self):
         dt = Data()
         api = API()
@@ -178,13 +175,3 @@ if(__name__=="__main__"):
 
     loop.run_until_complete(u.saveExpValues())
     loop.run_until_complete(u.saveStats())
-
-
-
-#@sched.scheduled_job('cron', hour=4, minute=17, timezone='UTC')
-#def scheduled_job():
-#    u = Update()
-#    u.saveExpValues()
-#    u.saveStats()
-#    t = Util()
-#    print("Update Finished: "+str(t.getGMTTime()))
