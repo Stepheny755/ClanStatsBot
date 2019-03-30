@@ -134,7 +134,7 @@ class Update():
                 dt.write(temppath,filename,data)
 
             if players is not None:
-                print('getting {numb} players for {clan}'.format(
+                print('Getting {numb} players for {clan}'.format(
                     numb=len(players), clan=clan
                 ))
                 from concurrent.futures import ThreadPoolExecutor
@@ -151,7 +151,6 @@ class Update():
             print('**************')
             print('Clan: {}'.format(clan))
             print(self.clanvals[clan])
-
             print('**************')
             print('**************')
 

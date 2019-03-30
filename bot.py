@@ -109,18 +109,19 @@ def scheduled_job():
     print("Updated Started")
     #TODO: send a discord message
     u = Update()
-    u.saveExpValues()
-    u.saveStats()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(u.saveExpValues())
+    loop.run_until_complete(u.saveStats())
     t = Util()
     print("Update Finished: "+str(t.getGMTTime()))
 
 if(__name__=="__main__"):
-    # sched = AsyncIOScheduler()
-    # sched.add_job(scheduled_job,'cron',hour=4,minute=20,timezone='UTC')
-    # sched.start()
-    # print("Scheduler Started")
-    # print("Bot Started")
-    # client.run(token)
+    sched = AsyncIOScheduler()
+    sched.add_job(scheduled_job,'cron',hour=5,minute=30,timezone='UTC')
+    sched.start()
+    print("Scheduler Started")
+    print("Bot Started")
+    client.run(token)
 
     a = API()
     print(a.getClanMembers('MIA-E'))
