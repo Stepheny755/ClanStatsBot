@@ -16,6 +16,7 @@ A couple of assumptions are made when taking statistics of players:
 ## Requirements
 
 If you would like to copy the source code, you can [generate your own Wargamimg API ID](https://developers.wargaming.net/)
+
 Use `pip3 install -r requirements.txt` to install required libraries
 
 ## Structure
