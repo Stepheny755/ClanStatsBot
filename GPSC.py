@@ -223,9 +223,9 @@ class ClanStats:
                                 #outlist.append((ci,pName,str(int(np.round(shippr[SID])))))
 
                         if minbattles == -1:
-                            PRstrTag = ' ' + SN + 'PR: ' 
+                            PRstrTag = SN + ' PR: ' 
                         else:
-                            PRstrTag = ' ' + SN + 'PR (Minimum Battles: ' + str(minbattles) + '): ' 
+                            PRstrTag = SN + ' PR (Minimum Battles: ' + str(minbattles) + '): ' 
                     else:
                         print('SID Not Found - Exiting')
                         exit()
@@ -237,8 +237,9 @@ class ClanStats:
                 exit()
         sortedlist = sorted(outlist, key=operator.itemgetter(2, 0, 1), reverse=True) #Sort by pr, clan, name
         #sortedlist = sorted(outlist, key=operator.itemgetter(0, 1)) #Sort by clan, name
+        print(PRstrTag)
         for items in sortedlist:
-            print('Clan: ' + self.clanList[items[0]] + ' Player Name: ' + items[1] + PRstrTag + items[2])
+            print('Clan: [' + self.clanList[items[0]] + '] Player Name: ' + items[1] + 'PR: ' + items[2])
             
         
     
@@ -251,10 +252,10 @@ class ClanStats:
             print(self.a.getShipName(shipid))
 
 if (__name__ == '__main__'):
-    clanstats = ClanStats(['MIA'])
+    clanstats = ClanStats(['MIA', 'MIA-P', 'MIA-E', 'MIA-I'])
     clanstats.calcStats()
-    clanstats.printStats(minbattles=6000)
-    #clanstats.printStats(SN='Yamato', minbattles=10)
+    #clanstats.printStats(minbattles=6000)
+    clanstats.printStats(SN='Henri IV', minbattles=20)
     #clanstats.findMissingShips()
 
 
