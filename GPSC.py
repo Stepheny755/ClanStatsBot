@@ -189,7 +189,10 @@ class ClanStats:
         #self.playerPR = np.zeros(self.totalPlayers)
         self.calcPlayerOverall()
         print('Completing Player PR Calculation')
-
+    """
+    def saveStats(self):
+        with open('')
+    """
     def printStats(self, SN=None, minbattles=-1):
         """
         SN - Ship Name
@@ -202,7 +205,7 @@ class ClanStats:
             for w in range(self.totalPlayers):
                 if pr[w] != -1:
                     pName, ci = self.pName[self.pID[w]]
-                    outlist.append([ci,pName,str(int(np.round(pr[w])))])
+                    outlist.append([ci,pName,int(np.round(pr[w]))])
             
             if minbattles == -1:
                 PRstrTag = 'PR: ' 
@@ -219,7 +222,7 @@ class ClanStats:
                         for w in range(self.totalPlayers):
                             if shippr[w] != -1:
                                 pName, ci = self.pName[self.pID[w]]
-                                outlist.append( (ci,pName, str(int(np.round(shippr[w]))) ) )
+                                outlist.append( (ci,pName, int(np.round(shippr[w])) ) )
                                 #outlist.append((ci,pName,str(int(np.round(shippr[SID])))))
 
                         if minbattles == -1:
@@ -235,11 +238,11 @@ class ClanStats:
             except (ValueError, AttributeError):
                 print('Ship IDs not initialized')
                 exit()
-        sortedlist = sorted(outlist, key=operator.itemgetter(2, 0, 1), reverse=True) #Sort by pr, clan, name
+        sortedlist = sorted(outlist, key=operator.itemgetter(2), reverse=True) #Sort by pr, clan, name
         #sortedlist = sorted(outlist, key=operator.itemgetter(0, 1)) #Sort by clan, name
         print(PRstrTag)
         for items in sortedlist:
-            print('Clan: [' + self.clanList[items[0]] + '] Player Name: ' + items[1] + 'PR: ' + items[2])
+            print('Clan: [' + self.clanList[items[0]] + '] Player Name: ' + items[1] + ' PR: ' + str(items[2]))
             
         
     
