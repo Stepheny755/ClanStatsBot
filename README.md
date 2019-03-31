@@ -1,5 +1,5 @@
 # ClanStatsBot
-###### Made by [MIA]Modulatus
+###### Made by [MIA]Modulatus,[MIA]enderland07,[MIA]901234
 
 A (WIP) World of Warships discord bot that mainly focuses on calculating and tracking changes in clan statistics :~)
 
@@ -8,13 +8,15 @@ All the data used in this bot is either retrieved from the Wargaming API for Wor
 
 PR Calculation Formula is provided by [na.wows-numbers.com](https://na.wows-numbers.com/personal/rating)
 
-If you would like to copy the source code, you can [generate your own Wargamimg API ID](https://developers.wargaming.net/)
-
-
 A couple of assumptions are made when taking statistics of players:
 1. Individual player statistics are not hidden
 2. Players have played at least 1 battle in random battles/PvP
+ 
 
+## Requirements
+
+If you would like to copy the source code, you can [generate your own Wargamimg API ID](https://developers.wargaming.net/)
+Use `pip3 install -r requirements.txt` to install required libraries
 
 ## Structure
 
