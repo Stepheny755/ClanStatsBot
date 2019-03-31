@@ -26,3 +26,8 @@ A couple of assumptions are made when taking statistics of players:
      * API.py
 
 * util.py
+
+## Vectorized
+requires: API.py
+* GPSC.py
+* stats_v.py
