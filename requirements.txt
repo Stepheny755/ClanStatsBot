@@ -1,3 +1,5 @@
 apscheduler==3.5.3
 discord==0.16.12
 requests==2.21.0
+operator
+pickle
