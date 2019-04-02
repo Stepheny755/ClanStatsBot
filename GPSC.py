@@ -20,12 +20,13 @@ class ClanStats:
             #print(clan)
             #cid = self.a.getClanID(clan)
             t = self.a.getClanMembers(self.a.getClanID(clan))
-            #print(t)
             self.pID.extend(t)
             for pID in t:
+                #print(type(pID))
                 n = self.a.getPlayerName(pID)
                 self.pName[pID] = (n, ci)
                 #print(str(pID) + ': ' + n)
+        #self.pID.sort()
         self.totalPlayers = len(self.pID)
         #print(self.pID)
 
@@ -77,7 +78,6 @@ class ClanStats:
         self.SID = {}
         self.ns = set()
         for shipid in self.expected:
-            #print(str(self.a.getShipName(shipid)) + ' ' + str(shipid))
             self.SID[self.a.getShipName(shipid)] = shipid
             shipdata = self.expected[shipid]
             if len(shipdata) != 0:
@@ -89,14 +89,9 @@ class ClanStats:
                 self.ns.add(shipid)
                 #print('no stats' + str(shipid))
             self.shipArrPos[int(shipid)] = counter
-            #print(self.a.getShipName(shipid))
-            #print(self.shipArrPos)
+
             counter += 1
-        #self.expectedstats[-1,:] = np.sum(self.expectedstats[:-1,:],axis=1)
-        #except:
-            #print(self.expected)
-        #print(self.expectedstats[:-1,:])
-        #print(np.sum(self.expectedstats[:-1,:],axis=0))
+
         print('Extract Completed')
         
                 
@@ -112,54 +107,25 @@ class ClanStats:
                 dmg = self.a.getShipDmg(ships)
                 frags = self.a.getShipKills(ships)
                 wins = self.a.getShipWins(ships)
-                #print(str(battles) + ' ' + str(frags) + ' ' + str(dmg) )
                 if shipid in self.shipArrPos:
                     self.playerShipStats[pI][self.shipArrPos[shipid]][:4] = np.array([battles, dmg, frags, wins])
-                    #print(self.expectedstats[self.shipArrPos[shipid]] * battles)
-                    #self.playerExpected[pI,:] += self.expectedstats[self.shipArrPos[shipid]] * battles #I think I can replace this with a matrix multiplication later...
+                    
                 else:
                     #print('not found: ' + str(shipid))
                     if shipid not in self.nf:
                         self.nf.add(shipid)
 
-        #print(self.playerShipStats[:,:-1,:])
-        #print(np.sum(self.playerShipStats[:,:-1,:], axis=1))
-        #self.playerShipStats[:,-1,:] = np.sum(self.playerShipStats[:,:-1,:], axis=1)
-        #print(self.playerShipStats[:,-1,:])
-        #self.expectedstats[-1,:] = np.sum(np.where(self.playerShipStats[:,:,0] > 0,self.expectedstats[:-1,:], 0))
-        #b = self.playerShipStats[:,:,0]
-        #self.playerShipStats[:,:,4] = np.where(b > 0, self.playerShipStats[:,:,1] / b, 0)
-        #self.playerShipStats[:,:,5] = np.where(b > 0, self.playerShipStats[:,:,2] / b, 0)
-        #self.playerShipStats[:,:,6] = np.where(b > 0, self.playerShipStats[:,:,3] / b, 0)
-        #print('Player Stats')
-        #print(self.playerShipStats[:,:,1])
-        #print(b)
-        #print(self.playerShipStats[:,:,4:7])
-
     def calcPR(self, pd, ed, pf, ef, pw, ew):
         return 700*self.s.PRnormDmg(pd, ed) + 300*self.s.PRnormKil(pf, ef) + 150*self.s.PRnormWin(pw, ew)
 
     def calcShipPR(self): 
-        #print(self.playerShipStats[:,:,7].shape)
-        #print(self.expectedstats[:,0].shape)
         b = self.playerShipStats[:,:,0]
-        #print(700*self.s.PRnormDmg(self.playerShipStats[:,:,4], self.expectedstats[:,0]) + 300*self.s.PRnormKil(self.playerShipStats[:,:,5], self.expectedstats[:,1]) + 150*self.s.PRnormWin(self.playerShipStats[:,:,6], self.expectedstats[:,2]))
         self.playerShipStats[:,:,4] = self.calcPR(self.playerShipStats[:,:,1], self.expectedstats[:,0] * b, self.playerShipStats[:,:,2], self.expectedstats[:,1] * b, self.playerShipStats[:,:,3], self.expectedstats[:,2] * b)
 
-    """
-    def calcPlayerPR_2(self): #Useless - calcPlayerPR runs faster and self.playerExpected no longer works
-        playersum = np.sum(self.playerShipStats[:,:-1,:], axis=1)
-        print(playersum[:1,4])
-        print(playersum.shape)
-        print(self.playerExpected)
-        self.playerPR = self.calcPR(playersum[:,1], self.playerExpected[:,0], playersum[:,2], self.playerExpected[:,1], playersum[:,3], self.playerExpected[:,2])
-    """
     def calcPlayerOverall(self):
         playersum = np.sum(self.playerShipStats[:,:-1,:], axis=1)
         expected = np.matmul(self.playerShipStats[:,:,0], self.expectedstats)
         playersum[:,4] = self.calcPR(playersum[:,1], expected[:,0], playersum[:,2], expected[:,1], playersum[:,3], expected[:,2])
-        #self.playerPR= self.calcPR(playersum[:,1], expected[:,0], playersum[:,2], expected[:,1], playersum[:,3], expected[:,2])
-        #print((np.where(playersum[:,0] > 0, np.divide(playersum[:,1:4] , playersum[:,0]), 0)))
         playersum[:,1:4] = np.transpose(np.where(playersum[:,0] > 0, np.transpose(playersum[:,1:4]) / playersum[:,0], 0))
         self.playerOverall = playersum
 
@@ -189,10 +155,41 @@ class ClanStats:
         #self.playerPR = np.zeros(self.totalPlayers)
         self.calcPlayerOverall()
         print('Completing Player PR Calculation')
-    """
+    
     def saveStats(self):
-        with open('')
-    """
+        with open('Stats_' + str(self.time) + '.pkl', 'wb') as f:
+            pickle.dump([self.playerShipStats, self.playerOverall, self.shipArrPos, self.expected, self.pID, self.clanList, self.time], f)
+    
+    def getStats(self, name):
+        with open(name, 'rb') as f:
+            self.pPlayerShipStats, self.pPlayerOverall, self.pShipArrPos, self.pExpected, self.pPID, self.pClanList, self.ptime = pickle.load(f)
+    
+    def usePreLoaded(self, name):
+        self.playerShipStats = self.pPlayerShipStats
+        self.playerOverall = self.pPlayerOverall
+        self.shipArrPos = self.pShipArrPos
+        self.pExpected = self.pExpected
+        self.pID = self.pPID
+        self.clanList = self.pClanList
+    
+    def alignPastArray(self, prevData, cPlayers, pPlayers, cShipArr, pShipArr):
+        aligned = np.full((len(cP), len(cSA), 5), -1) # -1 means no value
+        counter = 0
+        cPD = {}
+        for index in range(len(cPlayers)):
+            cPD[cPlayers[index]] = index
+
+        shipadj = np.full((len(pPlayers), len(cShipArr), 5), -1)
+        #Aligns Ships
+        for ship, pos in pShipArr:
+            if ship in cShipArr:
+                shipadj[:,cPlayers[ship],:] = prevData[:,pos,:]
+        #Aligns Players
+        for w in range(len(pPlayers)):
+            if pPlayers[w] in cPlayers:
+                aligned[cPlayers[pPlayers[w]],:,:] = shipadj[w,:,:]
+        return aligned
+
     def printStats(self, SN=None, minbattles=-1):
         """
         SN - Ship Name
@@ -231,10 +228,10 @@ class ClanStats:
                             PRstrTag = SN + ' PR (Minimum Battles: ' + str(minbattles) + '): ' 
                     else:
                         print('SID Not Found - Exiting')
-                        exit()
+
                 else:
                     print('Ship Not Entried - Exiting')
-                    exit()
+
             except (ValueError, AttributeError):
                 print('Ship IDs not initialized')
                 exit()
