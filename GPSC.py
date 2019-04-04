@@ -224,7 +224,7 @@ class ClanStats:
                 pr = np.transpose(np.where(stats[:,0] >= minbattles,np.transpose(stats),-1))
                 #print(pr)
                 #print(np.transpose( np.transpose(pr[:,1:4]) / pr[:,0] ).shape)
-                pr[:,1:4] = np.transpose( np.transpose(pr[:,1:4]) / pr[:,0] )
+                pr[:,1:3] = np.transpose( np.transpose(pr[:,1:3]) / pr[:,0] )
                 #print(pr)
                 #print(pr.shape)
                 #exit()
@@ -240,7 +240,7 @@ class ClanStats:
                         shippos = self.shipArrPos[SID]
                         pr = np.transpose(np.where(stats[:,shippos,0] >= minbattles,np.transpose(stats[:,shippos,:]),-1))
                         #pr = np.where(stats[:,shippos,0] >= minbattles,stats[:,shippos,:],-1)
-                        pr[:,1:4] = np.transpose( np.transpose(pr[:,1:4]) / pr[:,0] )
+                        pr[:,1:3] = np.transpose( np.transpose(pr[:,1:3]) / pr[:,0] )
                         outlist = self.produceList(pr)
                     else:
                         print('SID Not Found')
@@ -256,7 +256,7 @@ class ClanStats:
         for w in range(self.totalPlayers):
             if pr[w][0] != -1:
                 pName, ci = self.pName[self.pID[w]]
-                outlist.append((ci,pName, int(np.round(pr[w][0])),int(np.round(pr[w][1])) , int(np.round(pr[w][2])) , int(np.round(pr[w][3])), int(np.round(pr[w][4]))))
+                outlist.append((ci,pName, int(np.round(pr[w][0])), int(np.round(pr[w][1])) , np.round(pr[w][2], 2) , np.round(pr[w][3], 2), int(np.round(pr[w][4]))))
         #print(outlist)
         return outlist
 
@@ -279,7 +279,7 @@ class ClanStats:
             #sortedlist = sorted(outlist, key=operator.itemgetter(0, 1)) #Sort by clan, name
             print(PRstrTag)
             for items in sortedlist:
-                print('Clan: ['+self.clanList[items[0]]+'] Player Name: '+str(items[1])+' Battles: '+str(items[2])+' Average Damage: '+str(items[3])+' Average Frags: '+str(items[4])+' Win: '+str(items[5])+' PR: ' + str(items[6]))
+                print('Clan: ['+self.clanList[items[0]]+'] Player Name: '+str(items[1])+' Battles: '+str(items[2])+' Average Damage: '+str(items[3])+' Average Frags: '+str(items[4])+' Win Rate: '+str(items[5])+' PR: ' + str(items[6]))
     
     def printStatsFromGlobal(self, SN=None, minbattles=-1):
         if SN==None:
