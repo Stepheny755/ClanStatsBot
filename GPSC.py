@@ -56,16 +56,28 @@ class ClanStats:
         """
         self.expectedStats = np.zeros((self.shipLength, 3))
         """
+        ^^^
         Dimensions: [ship counter] [stat type]: stat type 0- exp avg dmg 1- exp avg frags 2- exp wr [decimals not %]
+        Dimensions: [ship counter] [stat type]: stat type 0- ship type [0 = DD,1 = CA,2 = BB,3 = CV] 1- tier 
+        vvv
         """
+        self.miscInfo = np.zeros((self.shipLength, 2)) 
+        self.classToID = {"Destroyer": 0, "Cruiser": 1, "Battleship": 2, "AirCarrier": 3,}
+
         self.shipArrPos = {} #used to make sure all ships are aligned correctly in playerShipStats [shipid] : position
         counter = 0
         #try: 
         self.SID = {}
         self.ns = set() #find ships with no stats
         for shipid in self.expected:
-            self.SID[self.a.getShipName(shipid)] = shipid
-            shipdata = self.expected[shipid]
+            shipinfo = self.a.getShipInfo(shipid)
+            #print(shipinfo)
+            #self.SID[self.a.getShipName(shipid)] = shipid
+            if shipinfo != None:
+                self.SID[shipinfo[0]] = shipid
+                shipdata = self.expected[shipid]
+                self.miscInfo[counter, 0] = self.classToID[shipinfo[1]]
+                self.miscInfo[counter, 1] = shipinfo[2]
             if len(shipdata) != 0:
                 self.expectedStats[counter, 0] = shipdata['average_damage_dealt']
                 self.expectedStats[counter, 1] = shipdata['average_frags']
@@ -76,6 +88,7 @@ class ClanStats:
                 #print('no stats' + str(shipid))
             self.shipArrPos[int(shipid)] = counter
             counter += 1
+        #print(self.miscInfo)
         print('Expected Extract Completed')
                 
     #^ WOWSNUMBERS STUFF ^
@@ -119,7 +132,7 @@ class ClanStats:
         #self.playerShipStats[:,:,4] = 
         return self.calcPR(playerStats[:,:,1], expected[:,0] * b, playerStats[:,:,2], expected[:,1] * b, playerStats[:,:,3], expected[:,2] * b)
 
-    def calcPlayerOverall(self, playerStats, shipExpected):
+    def calcPlayerOverall(self, playerStats, shipExpected, shipType=-1, tier=-1):
         """
         Takes: 
         playerShipStats like array Dimensions:[player index][ship index][0:battles, 1:dmg, 2:frags, 3:wins, 4:pr]
@@ -127,10 +140,30 @@ class ClanStats:
         Returns: 
         playersum - Dimensions:[player index][total battles, dmg, frags, battles won, overall pr]
         """
-        playersum = np.sum(playerStats[:,:-1,:], axis=1)
+        #tzeroarr = np.zeros(3)
+        #print(shipExpected[:,0:3].shape)
+        #rescaledMisc = np.tile(self.miscInfo, (4, 1))
+        rescaledMisc = np.repeat(self.miscInfo[:,:,np.newaxis], 4, axis=2)
+        if shipType != -1:
+            playerStats[:,:,0:4] = np.where(rescaledMisc[:,0] == shipType, playerStats[:,:,0:4] ,0)
+            #playerStats[:,:,0] = np.where(self.miscInfo[:,0] == shipType, playerStats[:,:,0] ,0)
+            #playerStats[:,:,1] = np.where(self.miscInfo[:,0] == shipType, playerStats[:,:,1] ,0)
+            #playerStats[:,:,2] = np.where(self.miscInfo[:,0] == shipType, playerStats[:,:,2] ,0)
+            #playerStats[:,:,3] = np.where(self.miscInfo[:,0] == shipType, playerStats[:,:,3] ,0)
+        if tier != -1:
+            playerStats[:,:,0:4] = np.where(rescaledMisc[:,1] == tier, playerStats[:,:,0:4] ,0)
+            #playerStats[:,:,0] = np.where(self.miscInfo[:,1] == tier, playerStats[:,:,0] ,0)
+            #playerStats[:,:,1] = np.where(self.miscInfo[:,1] == tier, playerStats[:,:,1] ,0)
+            #playerStats[:,:,2] = np.where(self.miscInfo[:,1] == tier, playerStats[:,:,2] ,0)
+            #playerStats[:,:,3] = np.where(self.miscInfo[:,1] == tier, playerStats[:,:,3] ,0)
+        
+
+        playersum = np.sum(playerStats[:,:,:], axis=1)
+        #print(playersum[:,1])
+        #print(playersum[:,0])
         expected = np.matmul(playerStats[:,:,0], shipExpected)
         playersum[:,4] = self.calcPR(playersum[:,1], expected[:,0], playersum[:,2], expected[:,1], playersum[:,3], expected[:,2])
-        playersum[:,1:4] = np.transpose(np.where(playersum[:,0] > 0, np.transpose(playersum[:,1:4]) / playersum[:,0], 0))
+        #playersum[:,1:4] = np.transpose(np.where(playersum[:,0] > 0, np.transpose(playersum[:,1:4]) / playersum[:,0], 0))
         return playersum
 
     def calcPlayerPR_O(self): #Technically the correct way to do it, but wowsnumbers is dumb I guess shrug
@@ -211,7 +244,7 @@ class ClanStats:
         aligned = self.alignPastArray(self.pPlayerShipStats, self.pID, self.pPID, self.shipArrPos, self.pShipArrPos)
         self.recent = np.where(aligned != -1, self.playerShipStats - aligned, 0)
         self.recent[:,:,4] = self.calcShipPR(aligned, self.expectedStats)
-        self.recentOverall = self.calcPlayerOverall(self.recent, self.expectedStats)
+        self.recentOverall = self.calcPlayerOverall(self.recent, self.expectedStats, tier=10)
     
     #Printing
     def compileStatsToList(self, stats, SN, minbattles):
@@ -224,7 +257,7 @@ class ClanStats:
                 pr = np.transpose(np.where(stats[:,0] >= minbattles,np.transpose(stats),-1))
                 #print(pr)
                 #print(np.transpose( np.transpose(pr[:,1:4]) / pr[:,0] ).shape)
-                pr[:,1:3] = np.transpose( np.transpose(pr[:,1:3]) / pr[:,0] )
+                pr[:,1:4] = pr[:,1:4] / np.repeat(pr[:,0,np.newaxis], 3, axis=1) 
                 #print(pr)
                 #print(pr.shape)
                 #exit()
@@ -240,7 +273,7 @@ class ClanStats:
                         shippos = self.shipArrPos[SID]
                         pr = np.transpose(np.where(stats[:,shippos,0] >= minbattles,np.transpose(stats[:,shippos,:]),-1))
                         #pr = np.where(stats[:,shippos,0] >= minbattles,stats[:,shippos,:],-1)
-                        pr[:,1:3] = np.transpose( np.transpose(pr[:,1:3]) / pr[:,0] )
+                        pr[:,1:4] = pr[:,1:4] / np.repeat(pr[:,0,np.newaxis], 3 ,axis=1) 
                         outlist = self.produceList(pr)
                     else:
                         print('SID Not Found')
@@ -302,6 +335,7 @@ class ClanStats:
     def findStatLessShips(self):
         for shipid in self.ns:
             print(self.a.getShipName(shipid))
+
 
 if (__name__ == '__main__'):
     clanstats = ClanStats(['MIA', 'MIA-P', 'MIA-E', 'MIA-I', 'MIA-C'])
