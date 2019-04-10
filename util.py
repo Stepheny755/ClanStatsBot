@@ -1,14 +1,9 @@
-import time,calendar,phonenumbers
-
+import time,calendar
 #TODO:
 #Phone Number Processing (from (778) 800-6793 to +17788006793) (E164 Formatting)
 
 class Util():
     def __init__(self): pass
-
-    def E164(self,num): return phonenumbers.format_number(num, phonenumbers.PhoneNumberFormat.E164)
-    def parseNum(self,numstr,cc): return phonenumbers.parse(numstr,cc)
-    def parseE164(self,numstr,cc): return self.E164(self.parseNum(numstr,cc))
 
     def GTimeToSec(self,a): return calendar.timegm(time.strptime(a))
     def SecToGTime(self,a): return time.asctime(time.gmtime(a))
@@ -27,9 +22,12 @@ class Util():
     def r1(self,input): return float(format(input,'.1f'))
     def ifPos(self,a): return ("+"+str(a)) if a>0 else (str(a))
 
+    def countNL(self,txt): return txt.count('\n')
+    def countLen(self,txt): return len(txt)
+
 if(__name__=="__main__"):
     u = Util()
     print(u.SecToGTime(10000000000))
     print(u.ifPos(-124124))
     print(u.countPreviousDays(1))
-    print(u.parseE164("7788914659","CA"))
+    print(u.countNL("hi\nasdasd\nasd\n"))
