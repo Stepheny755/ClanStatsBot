@@ -1,73 +1,35 @@
-# import numpy as np
-import time,calendar
+import time,calendar,phonenumbers
 
+#TODO:
+#Phone Number Processing (from (778) 800-6793 to +17788006793) (E164 Formatting)
 
-#Throw all the miscellaneous functions in here
 class Util():
-    def __init__(self):
-        pass
+    def __init__(self): pass
 
-    def GTimeToSec(self,a):
-        t = time.strptime(a)
-        return calendar.timegm(t)
+    def E164(self,num): return phonenumbers.format_number(num, phonenumbers.PhoneNumberFormat.E164)
+    def parseNum(self,numstr,cc): return phonenumbers.parse(numstr,cc)
+    def parseE164(self,numstr,cc): return self.E164(self.parseNum(numstr,cc))
 
-    def SecToGTime(self,a):
-        t = time.gmtime(a)
-        return time.asctime(t)
+    def GTimeToSec(self,a): return calendar.timegm(time.strptime(a))
+    def SecToGTime(self,a): return time.asctime(time.gmtime(a))
+    def getGMTTime(self): return int(calendar.timegm(time.gmtime())) #GMT == UTC
+    def smaller(self,a,b): return a if a<b else b
+    def larger(self,a,b): return a if a>b else b
 
-    def getGMTTime(self): #GMT == UTC
-        return int(calendar.timegm(time.gmtime()))
+    def daysToSec(self,num): return 24*60*60*num
+    def secToDays(self,num): return num/(60*60*24)
+    def countPreviousDays(self,days): return self.SecToGTime(self.getGMTTime()-self.daysToSec(days))
+    def countWeekSec(self): return self.getGMTTime() - self.daysToSec(7)
+    def countMonthSec(self):return self.getGMTTime() - self.daysToSec(30)
 
-    def getEarlier(self,a,b):
-        return a if a<b else b
+    def r3(self,input): return float(format(input,'.3f'))
+    def r2(self,input): return float(format(input,'.2f'))
+    def r1(self,input): return float(format(input,'.1f'))
+    def ifPos(self,a): return ("+"+str(a)) if a>0 else (str(a))
 
-    def getLater(self,a,b):
-        return a if a>b else b
-
-    def ifPos(self,a):
-        if a > 0:
-            return "+"+str(a)
-        else:
-            return str(a)
-
-    def dToS(self,num):
-        return 24*60*60*num
-
-    def sToD(self,num):
-        return num/(60*60*24)
-
-    def countPreviousDays(self,days):
-        curtime = self.getGMTTime()
-        curtime -= self.dToS(days)
-        return self.SecToGTime(curtime)
-
-    def countWeekSec(self):
-        curtime = self.getGMTTime()
-        return curtime - self.dToS(7)
-
-    def countMonthSec(self):
-        curtime = self.getGMTTime()
-        return curtime - self.dToS(30)
-
-    def round3(self,input):
-        return float(format(input,'.3f'))
-
-    def round2(self,input):
-        return float(format(input,'.2f'))
-
-if(__name__=='__main__'):
-    test = Util()
-    print(test.countWeekSec())
-    print(test.countMonthSec())
-    #print(test.sToD(134124))
-    #print(test.countPreviousDays(7))
-    #print(test.getLater(12322456,test.getGMTTime()))
-    #a = calendar.timegm(time.gmtime())
-    #print(a)
-    #b = test.SecToGTime(a)
-    #print(b)
-    # b is GMT/UTC, and c is localtime (PST)
-    #print()
-    #print(time.ctime(a))
-    #d = test.GTimeToSec(b)
-    #print(d)
+if(__name__=="__main__"):
+    u = Util()
+    print(u.SecToGTime(10000000000))
+    print(u.ifPos(-124124))
+    print(u.countPreviousDays(1))
+    print(u.parseE164("7788914659","CA"))
