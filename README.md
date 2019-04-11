@@ -1,5 +1,5 @@
 # ClanStatsBot
-###### Made by [MIA]Modulatus,[MIA]enderland07,[MIA]901234
+###### Made by [MIA]Modulatus,[WPS]enderland07,[MIA]901234
 
 A (WIP) World of Warships discord bot that mainly focuses on calculating and tracking changes in clan statistics :~)
 
@@ -24,4 +24,4 @@ If you would like to copy the source code, you can [generate your own Wargamimg 
 
 Use `pip3 install -r requirements.txt` to install required libraries
 
-Fonts used in discord picture uploading are in `/fonts`
+Fonts used in PIL image generation are in `/fonts`
