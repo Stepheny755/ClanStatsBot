@@ -17,4 +17,9 @@ A couple of assumptions are made when taking statistics of players:
 
 If you would like to copy the source code, you can [generate your own Wargamimg API ID](https://developers.wargaming.net/)
 
+## Vectorized
+requires: API.py
+* GPSC.py
+* stats_v.py
+
 Use `pip3 install -r requirements.txt` to install required libraries

@@ -23,7 +23,8 @@ class API():
 
     def __init__(self):
         self.key=open('ID.txt',"r").read().strip()
-        self.data = {}
+        self.playercard = {}
+        self.shipid = {}
 
         self.backoff_tries = 20
         self.backoff_start_interval_sec = 1
@@ -90,7 +91,7 @@ class API():
         Returns:
         All the data on a players overall values from the WG api (dict)
         """
-        if pID not in self.data:
+        if pID not in self.playercard:
             # print('Getting player card for id={}'.format(ID) )
 
             data={'application_id':self.key,'account_id':pID}
@@ -246,6 +247,26 @@ class API():
         else:
             pass
 
+    def getShipInfo(self, sID):
+        """
+        Parameters:
+        sID: WG ship ID
+
+        Returns:
+        Name of the ship (str)
+        Ship Class
+        Ship Tier
+        """
+        data={'application_id':self.key,'ship_id':sID}
+        r = self.post_with_backoff(self.pediaep,data)
+        if json.loads(r.text)['data'][str(sID)] is not None:
+            t = json.loads(r.text)['data'][str(sID)]
+            out = (t['name'], t['type'], t['tier'])
+            #print(out)
+            return out
+        else:
+            pass
+
     def getShipDmg(self,data):
         """
         Parameters:
@@ -308,6 +329,7 @@ class API():
         Returns:
         the ID of the ship in dict data (int)
         """
+        
         return int(data['ship_id'])
 
 # SHIP RELATED FUNCTIONS
@@ -393,8 +415,13 @@ if(__name__=="__main__"):
     #print(a.getClanTag('1000044001'))
     #print(a.getClanName('1000044001'))
     #print(a.getPlayerStats(a.getPlayerID('Modulatus')))
+    #t = a.getPlayerShipStats(a.getPlayerID('Modulatus'))
+    #print(type(t))
+    #for items in t:
+    #    print(items)
     #print(a.getShipName(4287510224))
+    print(a.getShipInfo(3751753168))
     # print(a.expectedValues())
-    print(a.getClanMembers(a.getClanID("MIA")))
-    print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
-    print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))
+    #print(a.getClanMembers(a.getClanID("MIA")))
+    #print(a.getPlayerAvgSpottingDmg(a.getPlayerID("Modulatus")))
+    #print(a.getPlayerAvgPotentialDmg(a.getPlayerID("Modulatus")))
