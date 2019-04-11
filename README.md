@@ -11,10 +11,17 @@ PR Calculation Formula is provided by [na.wows-numbers.com](https://na.wows-numb
 A couple of assumptions are made when taking statistics of players:
 1. Individual player statistics are not hidden
 2. Players have played at least 1 battle in random battles/PvP
- 
+
+## TODO:
+
+* Array Vectorization with numpy to decrease compute time
+* Database Storage with MongoDB to simplify and secure storage
+* Format Font as Image using PIL to allow for increased formatability (colors :D)
 
 ## Requirements
 
 If you would like to copy the source code, you can [generate your own Wargamimg API ID](https://developers.wargaming.net/)
 
 Use `pip3 install -r requirements.txt` to install required libraries
+
+Fonts used in discord picture uploading are in `/fonts`
