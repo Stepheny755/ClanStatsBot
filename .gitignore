@@ -3,3 +3,4 @@ ID.txt
 __pycache__/
 token.txt
 *.png
+*.bmp
