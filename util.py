@@ -22,7 +22,7 @@ class Util():
     def r1(self,input): return float(format(input,'.1f'))
     def ifPos(self,a): return ("+"+str(a)) if a>0 else (str(a))
 
-    def countNL(self,txt): return txt.count('\n')
+    def countNL(self,txt): return txt.count('\\')
     def countLen(self,txt): return len(txt)
 
 if(__name__=="__main__"):
