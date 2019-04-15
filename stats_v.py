@@ -1,16 +1,13 @@
-# import numpy as np
-import json
+from API import API
+from util import Util
 
 import numpy as np
-from API import API
-from data import Data
-from util import Util
+import json
 
 class Stats():
     def __init__(self):
         pass
 
-    expected = []
 
     def PRnormDmg(self,dmg,edmg):
         """
