@@ -102,7 +102,7 @@ class Front():
         ostats = "Overall | PR: xxxx.xx Battles: xxxx DMG: xxxxx.xx WR: xx.xx% Kills: x.xx"
         wstats = "Weekly | PR: +xxxx.x Battles: +xxx DMG: +xxxxx.x WR: +xx.x% Kills: +x.x"
         mstats = "Monthly | PR: +xxxx.x Battles: +xxx DMG: +xxxxx.x WR: +xx.x% Kills: +x.x"
-        
+
         a = str.splitlines(txt)
         print(a)
 
