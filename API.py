@@ -26,6 +26,8 @@ class API():
         self.playercard = {}
         self.shipid = {}
 
+        self.
+
         self.backoff_tries = 20
         self.backoff_start_interval_sec = 1
 
@@ -147,8 +149,8 @@ class API():
         Returns:
         overall win rate of player (float)
         """
-        u = Util()
-        return u.round3(float(self.getPlayerWins(pID))/float(self.getPlayerBattles(pID))*100)
+
+        return self.u.round3(float(self.getPlayerWins(pID))/float(self.getPlayerBattles(pID))*100)
 
     def getPlayerAvgDmg(self,pID):
         """
@@ -160,9 +162,9 @@ class API():
         """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
-        u = Util()
+
         temp = float(data['pvp']['damage_dealt'])/float(battles)
-        return u.round2(temp)
+        return self.u.round2(temp)
 
     def getPlayerAvgKills(self,pID):
         """
@@ -174,9 +176,9 @@ class API():
         """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
-        u = Util()
+
         temp = float(data['pvp']['frags'])/float(battles)
-        return u.round3(temp)
+        return self.u.round3(temp)
 
     def getPlayerAvgSpottingDmg(self,pID):
         """
@@ -188,9 +190,9 @@ class API():
         """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
-        u = Util()
+
         temp = float(data['pvp']['damage_scouting'])/float(battles)
-        return u.round2(temp)
+        return self.u.round2(temp)
 
     def getPlayerAvgPotentialDmg(self,pID):
         """
@@ -202,9 +204,9 @@ class API():
         """
         data = self.getPlayerStats(pID)
         battles = self.getPlayerBattles(pID)
-        u = Util()
+
         temp = float(data['pvp']['torpedo_agro']+data['pvp']['art_agro'])/float(battles)
-        return u.round2(temp)
+        return self.u.round2(temp)
 
 # PLAYER RELATED FUNCTIONS
 # SHIP RELATED FUNCTIONS
@@ -329,7 +331,7 @@ class API():
         Returns:
         the ID of the ship in dict data (int)
         """
-        
+
         return int(data['ship_id'])
 
 # SHIP RELATED FUNCTIONS
