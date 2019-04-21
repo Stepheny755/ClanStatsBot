@@ -45,6 +45,13 @@ class Data():
                 return
         self.append('','ClanList',name)
 
+    def readClanList(self):
+        templist = self.read('','ClanList')
+        finallist = []
+        for i in templist:
+            finallist.append(str(i[0]))
+        return finallist
+
     def trackClan(self,clanname,data):
         temppath = os.path.join(adir,clanname).strip()
         if not os.path.exists(temppath):
@@ -90,3 +97,4 @@ class Data():
 if(__name__=="__main__"):
 
     d = Data()
+    print(d.readClanList())
