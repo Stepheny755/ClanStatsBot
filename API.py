@@ -26,8 +26,6 @@ class API():
         self.playercard = {}
         self.shipid = {}
 
-        self.
-
         self.backoff_tries = 20
         self.backoff_start_interval_sec = 1
 
