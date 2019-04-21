@@ -4,3 +4,4 @@ __pycache__/
 token.txt
 *.png
 *.bmp
+*.pkl
