@@ -150,7 +150,7 @@ class ClanStats:
     def updatePlayerExpected(self):
         self.getAllPlayers()
         self.processExpected()
-        self.getTotalPlayerStats()
+        self.getCurrentTotalPlayerStats()
 
     def calcCurrent(self):
         print('Starting Player Ship Stats')
