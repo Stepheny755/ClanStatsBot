@@ -1,6 +1,9 @@
-from GPSC import ClanStats
+from ClanStats import ClanStats
+from data import Data
 
-clanstats = ClanStats(['MIA', 'MIA-P', 'MIA-E', 'MIA-I', 'MIA-C'])
+d = Data()
+
+clanstats = ClanStats(d.readClanList())
 clanstats.updatePlayerExpected()
 clanstats.calcCurrent()
 clanstats.saveStats()

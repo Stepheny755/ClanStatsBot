@@ -30,10 +30,9 @@ class ClanStats:
                 self.pName[pID] = (n, ci)
                 #print(str(pID) + ': ' + n)
         #self.pID.sort()
-        return
         self.totalPlayers = len(self.pID)
-
         print('Completed Player Collection')
+        
     #v WOWSNUMBERS STUFF v
     def processExpected(self):
         print('Acquiring Expected')
