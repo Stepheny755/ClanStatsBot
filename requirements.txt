@@ -1,6 +1,7 @@
 apscheduler==3.5.3
-discord==0.16.12
+discord>=0.16.12
 requests==2.21.0
 Pillow==6.0.0
+throwcolour==1.0.7
 operator
 pickle
