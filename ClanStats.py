@@ -1,6 +1,7 @@
 from API import API
 from util import Util
 from stats_v import Stats
+from data import Data
 
 import numpy as np
 import pickle,operator,time,os
@@ -15,24 +16,17 @@ class ClanStats:
     def getAllPlayers(self): #Gets every in clan within clanlist
         print('Starting Player Collection')
         self.pID = [] #Player ids of every player in every clan #player with index here will have same index value in stats array
-        #self.totalPlayers = 0
         self.pName = {} #{PID: name, ...}
-        #self. = {}
         for ci in range(len(self.clanList)):
             clan = self.clanList[ci]
-            #print(clan)
-            #cid = self.a.getClanID(clan)
             t = self.a.getClanMembers(self.a.getClanID(clan))
             self.pID.extend(t)
             for pID in t:
-                #print(type(pID))
                 n = self.a.getPlayerName(pID)
                 self.pName[pID] = (n, ci)
-                #print(str(pID) + ': ' + n)
-        #self.pID.sort()
         self.totalPlayers = len(self.pID)
         print('Completed Player Collection')
-        
+
     #v WOWSNUMBERS STUFF v
     def processExpected(self):
         print('Acquiring Expected')
@@ -167,11 +161,11 @@ class ClanStats:
         print('Completed Player PR Calculation')
 
     def saveStats(self):
-        with open('Stats_' + str(self.sTime) + '.pkl', 'wb') as f:
+        with open('Data\\Stats_' + str(self.sTime) + '.pkl', 'wb') as f:
             pickle.dump([self.playerShipStats, self.playerOverall, self.shipArrPos, self.expected, self.pID, self.clanList, self.eTime, self.sTime], f)
 
     def getStats(self, name):
-        with open(name, 'rb') as f:
+        with open("Data\\"+name, 'rb') as f:
             self.pPlayerShipStats, self.pPlayerOverall, self.pShipArrPos, self.pExpected, self.pPID, self.pClanList, self.pEtime, self.pSTime  = pickle.load(f)
         #print(type(self.pShipArrPos))
 
@@ -214,6 +208,7 @@ class ClanStats:
         #Current Stats Need to be created before this is run
         #Warning: This has not yet been tested
         #Subsequent printing functions have not been configured to work with the outputs of this function
+        print("Calculating  ")
         lenprevstats = len(names)
         prevstats = self.getStatsMultiple(names)
 
@@ -338,14 +333,16 @@ class ClanStats:
 
 
 if (__name__ == '__main__'):
-    clanstats = ClanStats(['MIA', 'MIA-P', 'MIA-E', 'MIA-I', 'MIA-C'])
+    d = Data()
+    clanstats = ClanStats(d.readClanList())
     #clanstats = ClanStats(['MIA'])
     clanstats.updatePlayerExpected()
     clanstats.calcCurrent()
     #clanstats.printStats(minbattles=6000)
     #clanstats.printStatsFromGlobal()
     #clanstats.findMissingShips()
-    #clanstats.calcRecent('Stats_1554313411.pkl')
-    #clanstats.printStatsFromRecent(minbattles=1)
+    d = Data()
+    clanstats.calcRecent(d.getMostRecent())
+    clanstats.printStatsFromRecent(minbattles=1)
 
-    #clanstats.saveStats()
+    clanstats.saveStats()
