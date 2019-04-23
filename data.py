@@ -69,12 +69,12 @@ class Data():
                 lst.append(file)
         return max(lst)
 
-    def getMostRecent(self,path):
+    def getMostRecent(self):
         lst = []
-        rpath = os.path.join(adir,path).strip()
-        for file in os.listdir(rpath):
-            if file.endswith('.txt') or file.endswith('.csv'):
+        for file in os.listdir(adir):
+            if file.endswith('.pkl'):
                 lst.append(file)
+                print(file)
         if lst:
             t = max(lst)
         else:
@@ -97,4 +97,4 @@ class Data():
 if(__name__=="__main__"):
 
     d = Data()
-    print(d.readClanList())
+    print(d.getMostRecent())
