@@ -1,5 +1,5 @@
 # ClanStatsBot
-###### Made by [MIA]Modulatus,[WPS]enderland07,[MIA]901234
+###### Made by [MIA]Modulatus,[NGAGE]enderland07,[MIA]901234
 
 A (WIP) World of Warships discord bot that mainly focuses on calculating and tracking changes in clan statistics :~)
 
